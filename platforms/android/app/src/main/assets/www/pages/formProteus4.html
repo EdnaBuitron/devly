@@ -1,0 +1,85 @@
+<template>
+    <div class="view view-main view-init safe-areas">
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarProteus();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Recorrido Mantenimiento</h2>
+
+                    <div style="text-align: left;">     
+                        <form class="list FWM-fixing-form"> 
+                            <span class="span FWM-span-form">Reparación a realizar:</span>
+                            <textarea class ="FWM-input" id="reparacion" name="comentariosEquipo"  cols="30" rows="10"></textarea>
+
+                            <span class="span FWM-span-form">¿Se valido el funcionamiento del equipo?</span>
+                            <div style="display: flex;justify-content: space-around;">
+                                <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="funcionamiento_1" onclick="funcionamientoProteus(this.id)" value="Si" >Si</label>
+                                <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="funcionamiento_2" onclick="funcionamientoProteus(this.id)" value="No" >No</label>
+                            </div>
+                        </form>                        
+                    </div>
+
+                    <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                        <div class="row align-items-stretch" style="text-align: center;">
+                            <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                <span class="resize-handler"></span>
+                                <a href="#" onclick="guardarMmtoCorrectivo();" class="boton-equipo">Guardar Revisión</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                $('.preloader').remove();
+                $('.infinite-scroll-preloader').remove();
+                var id_cedula = localStorage.getItem("IdCedula");
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("SELECT * from mmto_correctivo WHERE id_cedula = ?",
+                        [id_cedula],
+                            function(tx, results){
+                                var item = results.rows.item(0);
+                                if(results.rows.length == 0){
+                                } else {
+                                    $("#reparacion").val(item.reparacion);
+                                    if (item.funcionamiento =='Si'){
+                                        $("#funcionamiento_2").prop("checked", false);
+                                        $("#funcionamiento_1").prop("checked", true);
+                                    }else if(item.funcionamiento == 'No'){
+                                        $("#funcionamiento_1").prop("checked", false);
+                                        $("#funcionamiento_2").prop("checked", true);
+                                    }
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error:" + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+            }
+        }  
+    }
+</script>

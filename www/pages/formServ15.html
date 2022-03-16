@@ -1,0 +1,350 @@
+<style>
+   .text-divided-check{
+    margin-top: 0px;
+    font-size: 14px;
+    }
+    .sheet-modal.modal-in{
+        height: 80%;
+        z-index: 9999;
+    }
+    .text-check{
+        font-size: 15px;
+        line-height: 22px;
+    }
+    .select-check {
+        font-size: 14px !important;
+        line-height: 40px;
+    }
+    .multiple-input-divided-check {
+        font-size: 14px !important;
+        line-height: 40px;
+    }
+</style>
+<template>
+    <div class="view view-main view-init safe-areas">
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarRecorridoServInd1();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+ 
+                <div style="text-align: center; justify-content:center;width: 100%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Revisión y funcionamiento de partes eléctricas</h2>
+
+                    <div style="text-align: left;">
+                        <form class="list FWM-fixing-form" style="width: 96%;margin-left: 2%;"> 
+                            <div class="container-check" style="margin-bottom: 2px;">
+                                <span class="span FWM-span-form text-check">27.- Revisión y funcionamiento de compresor</span>
+                                <select id="10-1-select" name="Punto-27" class="select-check" style="margin-bottom: 0px;" onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div style="display: flex;justify-content: space-around;margin-bottom: 15px; margin-top: 7px;">
+                                <label class="text-divided-check" style="width: 33%; margin-top: 0px;"> &nbsp;Amp. <input type="text" id="10-2-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 33%; margin-top: 0px"> &nbsp;Volts <input type="text" id="10-3-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 33%; margin-top: 0px"> Kit de arranque <input type="text" id="10-4-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                            </div>
+
+                            <div class="container-check" style="margin-bottom: 5px;">
+                                <span class="span FWM-span-form text-check" style="padding-top: 8px;">28.- Resistencia de deshielo</span>
+                                <select id="10-5-select" name="Punto-28" class="select-check" style="margin-bottom: 0px;" onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div style="display: flex;justify-content: space-around;margin-bottom: 15px;">
+                                <label class="text-divided-check" style="width: 25%;"> &nbsp;Volts <input type="text" id="10-6-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%;"> &nbsp;Amp1 <input type="text" id="10-7-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%;"> &nbsp;Amp2 <input type="text" id="10-8-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%;"> &nbsp;Amp3 <input type="text" id="10-9-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                            </div>
+                            <div class="container-check" style="margin-bottom: 0px;">
+                                <span class="span FWM-span-form text-check" style="padding-top: 8px;">29.- Motores de condensador</span>
+                                <select id="10-10-select" name="Punto-29" class="select-check" style="margin-bottom: 0px;" onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div style="display: flex;justify-content: space-around;margin-bottom: 15px; margin-top: 7px;">
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;Volts <input type="text" id="10-11-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;Amp1 <input type="text" id="10-12-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;Amp2 <input type="text" id="10-13-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;Amp3 <input type="text" id="10-14-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                            </div>
+                            <div class="container-check" style="margin-bottom: 0px;">
+                            <span class="span FWM-span-form text-check" style="margin-top: 10px;">30.- Motores de evaporador</span>
+                            <select id="10-15-select" name="Punto-30" class="select-check" onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                <option value="0"></option>
+                                <option value="1">Bueno</option>
+                                <option value="2">Regular</option>
+                                <option value="3">Malo</option>
+                                <option value="4">Observación</option>
+                                <option value="5">N/A</option>
+                            </select>
+                            </div>
+                            <div style="display: flex;justify-content: space-around;margin-bottom: 15px;  margin-top: 0px">
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;Volts <input type="text" id="10-16-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;Amp1 <input type="text" id="10-17-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;Amp2 <input type="text" id="10-18-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;Amp3 <input type="text" id="10-19-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                            </div>
+                            <div class="container-check" style="margin-bottom: 0px;">
+                            <span class="span FWM-span-form text-check" style="margin-top: 10px;">31.- Solenoides de proceso</span>
+                            <select id="10-20-select" name="Punto-31" class="select-check" onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                <option value="0"></option>
+                                <option value="1">Bueno</option>
+                                <option value="2">Regular</option>
+                                <option value="3">Malo</option>
+                                <option value="4">Observación</option>
+                                <option value="5">N/A</option>
+                            </select>
+                            </div>
+                            <div style="display: flex;justify-content: space-around;margin-bottom: 15px; margin-top: 0px">
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;Volts <input type="text" id="10-21-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;</label>
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;</label>
+                                <label class="text-divided-check" style="width: 25%; margin-top: 0px"> &nbsp;</label>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check" style="margin-top: 8px; padding-top: 8px;">32.- Sistema de iluminación</span>
+                                <select id="10-22-select" name="Punto-32" class="select-check" onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="block-title FWM-subtitulo" style="text-align: left;">Evidencias:</div>  
+                        
+                        <div class="card data-table">
+                            <div class="infinite-scroll-content">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Pregunta</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Observaciones</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla_partes"></tbody>
+                                </table>
+                                <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                    <p>Sin registros</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 80px; margin-bottom: 20px;">
+                        <button class="btn-next" onclick="app.views.main.router.back('/formServ14/', {force: true, ignoreCache: true, reload: true});">Anterior</button>
+                        <a href="#" class="buble-float link popover-open" data-popover=".popover-links" style="background:cadetblue; width: 20%;">
+                            <i class="material-icons md-light" style="color: #ffffff;font-size: 35px;">book</i>
+                        </a>
+                        <button class="btn-next" onclick="guardarSuministrosServind(22, 10);">Siguiente</button>
+                        <!--<button class="btn-next" onclick="app.views.main.router.back('/formServ17/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>-->
+                    </div>
+    
+                    <div class="popover popover-links">
+                        <div class="popover-inner">
+                            <div class="list">
+                            <ul>
+                                <li><a class="list-button item-link popover-close" onclick="showTPM()">TPM</a></li>
+                                <li><a class="list-button item-link popover-close" onclick="showManual()">Manual</a></li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                var id_cedula = localStorage.getItem("IdCedula");
+                var tipoVisita = localStorage.getItem("TipoVisita");
+                var id_equipo = localStorage.getItem("insertId");
+
+                if(tipoVisita == 'PMP2'){
+                    databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select pregunta,valor,tipo from checklist_servind WHERE id_equipo = ? AND fase = '10'",
+                            [id_equipo],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#10-"+item.pregunta+"-"+item.tipo).val(item.valor);
+                                    id="10-"+item.pregunta+"-"+item.tipo;
+                                    if (item.tipo=='select'){
+                                        if(item.valor==1){
+                                            document.getElementById(id).style.setProperty('background-color', '#2BEB00', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==2){
+                                            document.getElementById(id).style.setProperty('background-color', 'yellow', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==3){
+                                            document.getElementById(id).style.setProperty('background-color', 'red', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==4){
+                                            document.getElementById(id).style.setProperty('background-color', 'gray', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==5){
+                                            document.getElementById(id).style.setProperty('background-color', '#EAEAEA', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }
+                                    }else{}
+                                } 
+                            },
+                            function(tx, error){
+                                console.log("Error al traer datos: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){},
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from fotos_check where id_equipo = ? AND fase = 10 ORDER BY id_foto ASC",
+                        [id_equipo],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                if (length==0){
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                }else{
+                                    $("#message-nr").css("display", "none");
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                }
+                            for(var i = 0; i< length; i++){
+                                var item = results.rows.item(i);
+                                $("#tabla_partes").append("<tr id='fila"+ item.id_foto +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.no_pregunta + "</td><td style='text-align: center;'>" + item.observaciones+ "</td><td style='text-align: center;'>" + item.fecha_foto + "</td></tr>");
+                            }
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){console.log("Error al guardar cedula: " + error.message);},
+                    function(){}
+                );
+                }else{
+                    databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select pregunta,valor,tipo from checklist_servind WHERE id_cedula = ? AND fase = '10'",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#10-"+item.pregunta+"-"+item.tipo).val(item.valor);
+                                    id="10-"+item.pregunta+"-"+item.tipo;
+                                    if (item.tipo=='select'){
+                                        if(item.valor==1){
+                                            document.getElementById(id).style.setProperty('background-color', '#2BEB00', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==2){
+                                            document.getElementById(id).style.setProperty('background-color', 'yellow', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==3){
+                                            document.getElementById(id).style.setProperty('background-color', 'red', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==4){
+                                            document.getElementById(id).style.setProperty('background-color', 'gray', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==5){
+                                            document.getElementById(id).style.setProperty('background-color', '#EAEAEA', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }
+                                    }else{}
+                                } 
+                            },
+                            function(tx, error){
+                                console.log("Error al traer datos: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){},
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from fotos_check where id_cedula = ? AND fase = 10 ORDER BY id_foto ASC",
+                        [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                if (length==0){
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                }else{
+                                    $("#message-nr").css("display", "none");
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                }
+                            for(var i = 0; i< length; i++){
+                                var item = results.rows.item(i);
+                                $("#tabla_partes").append("<tr id='fila"+ item.id_foto +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.no_pregunta + "</td><td style='text-align: center;'>" + item.observaciones+ "</td><td style='text-align: center;'>" + item.fecha_foto + "</td></tr>");
+                            }
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){console.log("Error al guardar cedula: " + error.message);},
+                    function(){}
+                );
+                }
+            }
+        }  
+    }
+</script>

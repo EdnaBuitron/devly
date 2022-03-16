@@ -1,0 +1,394 @@
+<style>  
+    .md .button {
+        text-decoration: none;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        font-weight: 600;
+        font-size: 25px;
+        color: #FFFFFF;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 100%;
+    }
+    .list .item-floating-label, .list .item-label {
+        width: 100%; 
+    }
+    #minuta{
+        text-align: center;
+    }
+    .sheet-modal.modal-in{
+        height: 80%;
+    }
+    .navbar .title{
+        font-weight: bold;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #fff;
+    }
+    .navbar a.link{
+        color: white;
+    }
+    .list .item-link {
+    color: inherit;
+    margin-top: 5px;
+    }
+    .button {
+    display: initial;
+    }
+    .navbar{
+        background-color: #063E7F;
+        height: 52px;
+    }
+    .navbar-inner{
+        height: 52px;
+    }
+    .list .item-title{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-inner{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-content{
+        padding-left: 0px;
+    }
+    #fecha{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    #otroA{
+    font-size: 16px;
+    font-family: 'ITC Avant Garde Gothic', sans-serif;
+    }
+    .list ul{
+        top: 10px;
+        padding-left: 16px;
+    }
+    #thaccion{
+    padding-left: 12px;
+    padding-right: 12px;
+    }
+    #thfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thcomentarios{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thtipo{
+    width: 190px;
+    }
+    #thfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 70px;
+    }
+    #tdaccion{
+    padding-left: 14px;
+    padding-right: 12px;
+    }
+    #tdfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    }
+    #tdtipo{
+    padding-left: 5px;
+    padding-right: 5px;
+    }
+    #tdcomentario{
+    width: min-content;
+    }
+    #tdfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+
+    footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    }
+
+</style>
+<template>
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarRecorridoVIC2();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Datos Generales</h2>
+                    <div style="text-align: left;">     
+                        <div class="list FWM-fixing-form"> 
+                             <!--Seleccionar opcion --> 
+                             <span class="span FWM-span-form">Nombre del Proyecto:</span>
+                             <a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true"
+                                    data-searchbar-placeholder="Busca">
+                                <select id="proyectos" onchange="ProyectoVIC(this.value)">
+                                    <option value="" selected>Selecciona un proyecto...</option>
+                                </select>
+                                <div class="item-content">
+                                <div class="item-inner" style="margin-top: 5px;margin-bottom: 10px;">
+                                    <div class="item-title">Proyecto...</div>
+                                </div>
+                                </div>
+                            </a>
+                            <!--Seleccionar opcion -->
+                            <span class="span FWM-span-form">Nombre Contacto:</span>
+                            <input type='text' id="Patiende" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Puesto Contacto:</span>
+                            <input type='text' id="Ppuesto" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Teléfono:</span>
+                            <input type='text' id="Ptelefono" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Correo:</span>
+                            <input type='text' id="Pcorreo" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>           
+                            
+                           
+                        </form>
+
+                        <div class="block grid-resizable-demo" style="margin-bottom: 70px; margin-top: 50px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a href="#" onclick="guardarDatosGVentasVIC();" style="background-color: #063E7F;" class="boton-equipo">Guardar Datos</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--popUP-->
+                    <footer>
+                        <div class="block grid-resizable-demo" style="margin-bottom: 0px; padding-bottom: 26px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a class="col button button-raised button-fill button-round sheet-open" style="background-color: #00A7B5;right: -28px;" href="#" data-sheet=".my-sheet">+</a>
+
+                                    <a class="col button button-raised button-fill button-round sheet-open" style="background-color: #063e7f;right: -122px;" href="#" data-sheet=".my-sheet2"><i class="material-icons md-light" style="color: #ffffff;">book</i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                        <div class="sheet-modal my-sheet" id="sheet-modal" name="sheet">
+                            <div class="toolbar">
+                                <div class="toolbar-inner">
+                                    <div class="left"></div>
+                                    <div class="right"><a class="link sheet-close" href="#">Cerrar</a></div>
+                                </div>
+                            </div>
+                            <div class="sheet-modal-inner">
+                                <div class="block">
+                                    <h3 class="FWN-titulo-2">Agregar Proyecto</h3>
+                                    <div class="list FWM-fixing-form"> 
+                                        <span class="span FWM-span-form" name="">Nombre del nuevo proyecto: *</span>
+                                            <input class="FWM-input" type="text" style="font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: 100;" id="nombre_proyecto" placeholder="Escribe el nombre del proyecto"/>
+                                            <span class="span FWM-span-form" name="">Soluciones: </span>
+                                            <div  id="Estrategias"  name="Estrategias" ></div>
+                                            <span class="span FWM-span-form" name="">Segmento: </span>
+                                            <div  id="segmentos"  name="segmentos" ></div>
+                                            <span class="span FWM-span-form" name="">Grupo al que pertenece: </span>
+                                            <input class="FWM-input" type="text" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" id="grupo" placeholder="Escribe el grupo al que pertenece"/>
+                                            <span class="span FWM-span-form" name="">Potencial teórico: </span>
+                                            <input class="FWM-input" type="text" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" id="potencial" placeholder="Potencial teórico"/>                          
+                                            <span class="span FWM-span-form" name="">Metodo de distribucion: </span>
+                                            <input class="FWM-input" type="text" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" id="metodo" placeholder="Escribe el metodo de distribucion"/>
+                                            <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                                                <div class="row align-items-stretch" style="text-align: center;">
+                                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                                        <span class="resize-handler"></span>
+                                                        <a href="#" onclick="guardarProyecto();" style="background-color: #063E7F;" class="boton-equipo">Guardar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-modal my-sheet2" id="sheet-modal" name="sheet">
+                            <div class="toolbar">
+                                <div class="toolbar-inner">
+                                    <div class="left"></div>
+                                    <div class="right"><a class="link sheet-close" href="#">Cerrar</a></div>
+                                </div>
+                            </div>
+                            <div class="sheet-modal-inner">
+                                <div class="block">
+                                    <h3 class="FWN-titulo-2">Agregar Contacto</h3>
+                                    <div class="list FWM-fixing-form"> 
+                                        <span class="span FWM-span-form">Nombre Contacto:</span>
+                                        <input type='text' id="Patiende2" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                                        <span class="span FWM-span-form">Puesto Contacto:</span>
+                                        <input type='text' id="Ppuesto2" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                                        <span class="span FWM-span-form">Teléfono:</span>
+                                        <input type='text' id="Ptelefono2" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                                        <span class="span FWM-span-form">Correo:</span>
+                                        <input type='text' id="Pcorreo2" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>           
+                                            <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                                                <div class="row align-items-stretch" style="text-align: center;">
+                                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                                        <span class="resize-handler"></span>
+                                                        <a href="#" onclick="guardarDcliente();" style="background-color: #063E7F;" class="boton-equipo">Guardar Contacto</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--popUp-->
+
+                    </div>
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+</template>
+<script>
+return {
+        on: {      
+            pageInit: function () {
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");
+                var id_proyecto= localStorage.getItem("IdProyecto");
+                console.log(id_proyecto);
+                var Nom = 'Gestion-SE-VIC';
+                app.request.get(cordova.file.dataDirectory + "jsons/"+Nom+".json", function (data) {
+                    //console.log('DATA',data);
+                     
+                    var content = JSON.parse(data);    
+                    var SEG = content[0];
+                    var EST = content[1];
+                    var html ="";
+                    html += `<select class='FWM-input' id='segmento' aria-label='Default select example'><option value='' selected>Selecciona un segmento...</option>`;
+                
+                    for(let i = 0; i < SEG.length ;i++){
+                        if(id_usuario == SEG[i].usuario ){
+                        html +=  `<option value="${SEG[i].id_segmento}">${SEG[i].nombre_segmento}</option>`;
+                        }
+                    }
+                    html += `</select>`;
+                    // console.log(html);
+                    $('#segmentos').append(html);
+                    var html1 ="";
+                    html1 += `<select class='FWM-input' id='estrategia' aria-label='Default select example' multiple><option value='' selected>Selecciona un Soluciones...</option>`;
+                
+                    for(let i = 0; i < EST.length ;i++){
+                        if(EST[i].usuario == id_usuario){
+                        html1 +=  ` <option value="${EST[i].id_estrategia}">${EST[i].estrategia}</option>`;
+                    }
+                    }
+                    html1 += `</select>`;
+                    // console.log(html);
+                    $('#Estrategias').append(html1);
+                });
+                
+                databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql(
+                        "Select * from proyectos_vic WHERE id_usuario = ?",
+                            [id_usuario],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    var item = results.rows.item(0);
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                    $("#proyectos").append("<option value="+item.id_proyecto+">"+item.nombre_proyecto+"</option>");
+                                    }
+                                        databaseHandler.db.transaction(
+                                            function(tx){
+                                                tx.executeSql(
+                                                    "Select * from ventas_bennetts",
+                                                        [],
+                                                            function(tx, results){
+                                                                let length = results.rows.length;
+                                                                console.log(length);
+                                                                
+                                                                for(var i = 0; i< length; i++){
+                                                                var item = results.rows.item(i);
+                                                                console.log(item)
+                                                                }
+                                                               
+                                                                    $('#Patiende').val(item.nombre_cliente);
+                                                                    $('#Ppuesto').val(item.puesto_cliente);
+                                                                    $('#Ptelefono').val(item.telefono);
+                                                                    $('#Pcorreo').val(item.correo);
+                                                                    $('#proyectos').val(item.id_proyecto);
+                                                                    var proyecto = item.id_proyecto;
+                                                                    if (proyecto == 0 || proyecto == undefined || proyecto == ''){
+                                                                    }else{
+                                                                        app.request.get(cordova.file.dataDirectory + "jsons/"+NomJson+".json", function (data) {
+                                                                            var content2 = JSON.parse(data);
+                                                                            for(var x = 0; x < content2.length; x++) {
+                                                                                if(content2[x].id_proyecto == proyecto){
+                                                                                    $("#autocomplete-dropdown-ajax").val(content2[x].nombre_proyecto);
+                                                                                    $("#proyectos").val(content2[x].id_proyecto);
+                                                                                    ProyectoVIC(content2[x].id_proyecto);
+                                                                                }         
+                                                                            }
+                                                                        });
+                                                                    }
+                                                            },
+                                                                function(tx, error){
+                                                                    console.log("Error: " + error.message);
+                                                                    app.preloader.hide();  
+                                                                }
+                                                );  
+                                            },
+                                                function(error){},
+                                                function(){}
+                                        );
+                                },
+                                    function(tx, error){
+                                        console.log("Error: " + error.message);
+                                        app.preloader.hide();  
+                                    }
+                    );  
+                },
+                    function(error){},
+                    function(){}
+            );
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from cedulas_general WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $("#nombreCliente").val(item.nombre_cliente);
+                                    }
+                                    },
+                                        function(tx, error){
+                                            console.log("Error: " + error.message);
+                                            app.preloader.hide();  
+                                        }
+                        );  
+                    },
+                        function(error){},
+                        function(){}
+                );
+            }
+        }
+    }
+</script>

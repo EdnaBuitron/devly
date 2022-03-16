@@ -1,0 +1,281 @@
+<template>
+    <div class="view view-main view-init safe-areas">
+        <div class="page" id="FWM-1">
+            <!-- Navbar Inicio -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarRecorridoServInd1();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Navbar Fin -->
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <!-- Inicio Contenido Formulario -->                                
+                    <h2 class="FWN-titulo-2">Entrega de servicio</h2>
+
+                    <div style="text-align: left;">
+                        <form class="list FWM-fixing-form">
+                            <div class="block-title FWM-subtitulo">Evidencias:</div>  
+                        </form>
+                        
+                            <div class="card data-table">
+                                <div class="infinite-scroll-content">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white; padding-left: 0px; padding-right: 0px;">Accion</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Pregunta</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Observación</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Apartado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla_evidencias"></tbody>
+                                    </table>
+                                    <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                    <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                        <p>Sin registros</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form class="list FWM-fixing-form">
+                                <span class="span FWM-span-form" >¿Qué trabajo se realizó?</span>
+                                <textarea class ="FWM-input" name="" id="trabajo" cols="30" rows="10" onchange="inputLleno(this.id,this.value)" style="margin-bottom: 10px;"></textarea>
+    
+                                <span class="span FWM-span-form">Cómo se entrego el equipo:</span>
+                                <select id="entrega_equipo" name="2-5-select" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;">
+                                    <option value="0">Selecciona un opción</option>
+                                    <option value="1">En funcionamiento</option>
+                                    <option value="2">Sin funcionar</option>
+                                    <option value="3">Otras condiciones</option>                                
+                                </select>
+    
+                                <span class="span FWM-span-form" >Comentarios Generales</span>
+                                <textarea class ="FWM-input" name="" id="comentarios" cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>
+                                
+                                <!--<span class="span FWM-span-form" style="line-height: 1.3;margin-top: 30px;">¿El diágnotico es correcto?</span>
+                                <div style="display: flex;justify-content: space-around;margin-bottom: 30px;margin-top: -17px;">
+                                    <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="diagnostico-1" onclick="checkAndSave(this.id,this.value,'3'), Sidiagnostico()" value="1" >Si</label>
+                                    <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="diagnostico-2" onclick="checkAndSave(this.id,this.value,'3'), Nodiagnostico()" value="2" >No</label>
+                                </div>-->
+    
+                            </form>
+                    </div>
+
+                    <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 80px; margin-bottom: 20px;">
+                        <button class="btn-next" onclick="app.views.main.router.back('/formServ17/', {force: true, ignoreCache: true, reload: true});">Anterior</button>
+                        <a href="#" class="buble-float link popover-open" data-popover=".popover-links" style="background:cadetblue; width: 20%;">
+                            <i class="material-icons md-light" style="color: #ffffff;font-size: 35px;">book</i>
+                        </a>
+                        <button class="btn-next" onclick="guardarEntregaServicio();">Siguiente</button>
+                        <!--<button class="btn-next" onclick="app.views.main.router.back('/formServ19/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>-->
+                    </div>
+    
+                    <div class="popover popover-links">
+                        <div class="popover-inner">
+                            <div class="list">
+                            <ul>
+                                <li><a class="list-button item-link popover-close" onclick="showTPM()">TPM</a></li>
+                                <li><a class="list-button item-link popover-close" onclick="showManual()">Manual</a></li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin Contenido Formulario -->
+                </div>
+                <fwm></fwm>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                var id_cedula = localStorage.getItem("IdCedula");
+                var fase;
+                var fases;
+                var tipoVisita = localStorage.getItem("TipoVisita");
+                var id_equipo = localStorage.getItem("insertId");
+
+                if(tipoVisita == 'PMP2'){
+                    console.log('PMP2');
+                    //tabla_evidencias
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from fotos_check where id_equipo = ? ORDER BY CAST (fase AS INTEGER), id_foto ASC",
+                        [id_equipo],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                if (length ==0){
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                }else{
+                                    $("#message-nr").css("display", "none");
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $("#smallImage").attr("src","img/blank.png");
+                                        $("#photoIcon").attr("src","img/camera.svg");
+                                            if (item.fase==7){
+                                                fases="Revisión de suministros mecánicos";
+                                            }else if (item.fase==8){
+                                                fases="Revisión de sistema de refrigeración";
+                                            }else if (item.fase == 9){
+                                                fases="Revisión de sistemas de control eléctrico";
+                                            }else if (item.fase == 10){
+                                                fases="Revisión y funcionamiento de partes eléctricas";
+                                            }else if (item.fase == 11){
+                                                fases="Revisión de gabinete en general";
+                                            }
+                                            $("#tabla_evidencias").append("<tr id='fila"+ item.id_foto +
+                                            "'><td id='tdaccion' style='padding-left: 20px; padding-right: 20px;'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +
+                                                ",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
+                                                    item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center; width:140px; padding-left: 10px; padding-right: 10px;'>" + 
+                                                        item.no_pregunta + "</td><td style='text-align: center; width:140px; padding-left: 10px; padding-right: 10px;'>" + 
+                                                        item.observaciones + "</td><td style='text-align: center; width:140px; padding-left: 10px; padding-right: 10px;'>" + 
+                                                            fases + "</td></tr>");
+                                    }
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error al mostrar datos: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql(
+                                "Select * from datos_eq WHERE id_datos = ?",
+                                [id_equipo],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    var item = results.rows.item(0);
+                                    console.log(item);
+                                        $('#comentarios').val(item.comentarios_entrega);
+                                        $('#trabajo').val(item.trabajo_realizado);
+                                        $('#entrega_equipo').val(item.como_entrego);
+                                        if (item.diagnotico_corecto=='Sí'){
+                                            $("#diagnostico-1").prop("checked", true)
+                                        }else if (item.diagnotico_corecto=='No'){
+                                            $("#diagnostico-2").prop("checked", true)
+                                        }
+                                        if (item.como_entrego==undefined){
+                                            $('#entrega_equipo').val(0);
+                                        }
+                                    },
+                                function(tx, error){
+                                    console.log("Error: " + error.message);
+                                    app.preloader.hide();  
+                                }
+                            );  
+                        },
+                        function(error){
+                            console.log("Error: " + error.message);
+                        },
+                        function(){}
+                );
+                }else{
+                //tabla_evidencias
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from fotos_check where id_cedula = ? ORDER BY CAST (fase AS INTEGER), id_foto ASC",
+                        [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                if (length ==0){
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                }else{
+                                    $("#message-nr").css("display", "none");
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $("#smallImage").attr("src","img/blank.png");
+                                        $("#photoIcon").attr("src","img/camera.svg");
+                                            if (item.fase==7){
+                                                fases="Revisión de suministros mecánicos";
+                                            }else if (item.fase==8){
+                                                fases="Revisión de sistema de refrigeración";
+                                            }else if (item.fase == 9){
+                                                fases="Revisión de sistemas de control eléctrico";
+                                            }else if (item.fase == 10){
+                                                fases="Revisión y funcionamiento de partes eléctricas";
+                                            }else if (item.fase == 11){
+                                                fases="Revisión de gabinete en general";
+                                            }
+                                            $("#tabla_evidencias").append("<tr id='fila"+ item.id_foto +
+                                            "'><td id='tdaccion' style='padding-left: 20px; padding-right: 20px;'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +
+                                                ",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
+                                                    item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center; width:140px; padding-left: 10px; padding-right: 10px;'>" + 
+                                                        item.no_pregunta + "</td><td style='text-align: center; width:140px; padding-left: 10px; padding-right: 10px;'>" + 
+                                                        item.observaciones + "</td><td style='text-align: center; width:140px; padding-left: 10px; padding-right: 10px;'>" + 
+                                                            fases + "</td></tr>");
+                                    }
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error al mostrar datos: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql(
+                                "Select * from visita_servInd WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    var item = results.rows.item(0);
+                                        $('#comentarios').val(item.comentarios_entrega);
+                                        $('#trabajo').val(item.trabajo_realizado);
+                                        $('#entrega_equipo').val(item.como_entrego);
+                                        if (item.diagnotico_corecto=='Sí'){
+                                            $("#diagnostico-1").prop("checked", true)
+                                        }else if (item.diagnotico_corecto=='No'){
+                                            $("#diagnostico-2").prop("checked", true)
+                                        }
+                                        if (item.como_entrego==undefined){
+                                            $('#entrega_equipo').val(0);
+                                        }
+                                    },
+                                function(tx, error){
+                                    console.log("Error: " + error.message);
+                                    app.preloader.hide();  
+                                }
+                            );  
+                        },
+                        function(error){
+                            console.log("Error: " + error.message);
+                        },
+                        function(){}
+                );
+                }
+            }
+        }  
+    }
+</script>

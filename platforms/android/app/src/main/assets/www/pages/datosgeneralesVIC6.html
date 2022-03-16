@@ -1,0 +1,352 @@
+<style>  
+    .md .button {
+        text-decoration: none;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        font-weight: 600;
+        font-size: 25px;
+        color: #FFFFFF;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 100%;
+    }
+    .list .item-floating-label, .list .item-label {
+        width: 100%; 
+    }
+    #minuta{
+        text-align: center;
+    }
+    .sheet-modal.modal-in{
+        height: 80%;
+    }
+    .navbar .title{
+        font-weight: bold;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #fff;
+    }
+    .navbar a.link{
+        color: white;
+    }
+    .list .item-link {
+    color: inherit;
+    margin-top: 5px;
+    }
+    .button {
+    display: initial;
+    }
+    .navbar{
+        background-color: #063E7F;
+        height: 52px;
+    }
+    .navbar-inner{
+        height: 52px;
+    }
+    .list .item-title{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-inner{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-content{
+        padding-left: 0px;
+    }
+    #fecha{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    #otroA{
+    font-size: 16px;
+    font-family: 'ITC Avant Garde Gothic', sans-serif;
+    }
+    .list ul{
+        top: 10px;
+        padding-left: 16px;
+    }
+    #thaccion{
+    padding-left: 12px;
+    padding-right: 12px;
+    }
+    #thfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thcomentarios{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thtipo{
+    width: 190px;
+    }
+    #thfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 70px;
+    }
+    #tdaccion{
+    padding-left: 14px;
+    padding-right: 12px;
+    }
+    #tdfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    }
+    #tdtipo{
+    padding-left: 5px;
+    padding-right: 5px;
+    }
+    #tdcomentario{
+    width: min-content;
+    }
+    #tdfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+
+    footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    }
+
+</style>
+<template>
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarRecorridoVIC4();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Datos Generales</h2>
+                    <div style="text-align: left;">     
+                        <div class="list FWM-fixing-form"> 
+                            <span class="span FWM-span-form">Nombre del Proyecto:</span>
+                            <input type='text' id="noPro" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Nombre del Compañero:</span>
+                            <input type='text' id="noCom" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>   
+                            <span class="span FWM-span-form">Comentarios:</span>
+                            <textarea class ="FWM-input" id="comentarios" name="comentarios"  cols="30" rows="10"></textarea>
+                        </div>
+
+                        <div class="block grid-resizable-demo" style="margin-bottom: 70px; margin-top: 50px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a href="#" onclick="guardarDatosApoyoVIC();" style="background-color: #063E7F;" class="boton-equipo">Terminar Visita</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+</template>
+<script>
+return {
+        on: {      
+            pageInit: function () {
+            var id_usuario = localStorage.getItem("id_usuario");
+            var id_cedula = localStorage.getItem("IdCedula");
+            var Nom = 'Gestion-SE-VIC';
+            app.request.get(cordova.file.dataDirectory + "jsons/"+Nom+".json", function (data) {
+                //console.log('DATA',data);
+                var content = JSON.parse(data);    
+                var SEG = content[0];
+                var EST = content[1];
+                var html ="";
+                html += `<select class='FWM-input' id='segmento' aria-label='Default select example'><option value='a' selected>Selecciona un segmento...</option>`;
+               
+                for(let i = 0; i < SEG.length ;i++){
+                    html +=  ` <option value="${SEG[i].Orden}">${SEG[i].nombre_segmento}</option>`;
+                }
+                html += `</select>`;
+                // console.log(html);
+                $('#segmentos').append(html);
+                var html1 ="";
+                html1 += `<select class='FWM-input' id='estrategia' aria-label='Default select example'><option value='a' selected>Selecciona un Estrategia...</option>`;
+               
+                for(let i = 0; i < EST.length ;i++){
+                    html1 +=  ` <option value="${EST[i].id_estrategia}">${EST[i].estrategia}</option>`;
+                }
+                html1 += `</select>`;
+                // console.log(html);
+                $('#Estrategias').append(html1);
+            });
+           
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql(
+                        "Select * from proyectos_vic WHERE id_usuario = ?",
+                            [id_usuario],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    var item = results.rows.item(0);
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $("#proyectos").append("<option value="+item.id_proyecto+">"+item.nombre_proyecto+"</option>");
+                                    }
+                                        databaseHandler.db.transaction(
+                                            function(tx){
+                                                tx.executeSql(
+                                                    "Select * from ventas_bennetts WHERE id_cedula = ?",
+                                                        [id_cedula],
+                                                            function(tx, results){
+                                                                let length = results.rows.length;
+                                                                var item = results.rows.item(0);
+                                                                /*
+                                                                    console.log("idVentas: "+item.id_ventas);
+                                                                    console.log(item.id_cedula);
+                                                                    console.log(item.foto_inicio);
+                                                                    console.log(item.firma_cliente);
+                                                                    console.log(item.foto_salida);*/
+                                                                    $('#Patiende').val(item.nombre_cliente);
+                                                                    $('#Ppuesto').val(item.puesto_cliente);
+                                                                    $('#Ptelefono').val(item.telefono);
+                                                                    $('#Pcorreo').val(item.correo);
+                                                                    $('#proyectos').val(item.id_proyecto);
+                                                                    /*console.log(item.tipo_visita);
+                                                                    console.log(item.foto_visita);
+                                                                    console.log(item.nivel);
+                                                                    console.log(item.pendiente_vendedor);*/
+                                                            },
+                                                                function(tx, error){
+                                                                    console.log("Error: " + error.message);
+                                                                    app.preloader.hide();  
+                                                                }
+                                                );  
+                                            },
+                                                function(error){},
+                                                function(){}
+                                        );
+                                },
+                                    function(tx, error){
+                                        console.log("Error: " + error.message);
+                                        app.preloader.hide();  
+                                    }
+                    );  
+                },
+                    function(error){},
+                    function(){}
+            );
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from cedulas_general WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        // console.log("idCedula: "+item.id_cedula);
+                                        // console.log(item.tipo_cedula);
+                                        // console.log(item.id_usuario);
+                                        // console.log(item.nombre_usuario);
+                                        // console.log(item.fecha_entrada);
+                                        // console.log(item.geolocalizacion_entrada);
+                                        // console.log(item.id_cliente);
+                                        // console.log(item.nombre_cliente);
+                                        $("#nombreCliente").val(item.nombre_cliente);
+                                        // console.log(item.horario_programado);
+                                        // console.log(item.calificacion);
+                                        // console.log(item.fecha_salida);
+                                        // console.log(item.geolocalizacion_salida);
+                                        // console.log(item.estatus);
+                                        // console.log(item.comentario_cliente);
+                                        // console.log(item.nombre_evalua);
+                                    }
+                                    },
+                                        function(tx, error){
+                                            console.log("Error: " + error.message);
+                                            app.preloader.hide();  
+                                        }
+                        );  
+                    },
+                        function(error){},
+                        function(){}
+                );
+/*
+                databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql(
+                                "Select * from minuta WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        console.log("idMinuta: "+item.id_minuta);
+                                        console.log(item.id_cedula);
+                                        console.log(item.tema);
+                                        console.log(item.compromiso);
+                                        console.log(item.fecha);
+                                        console.log(item.foto);
+                                        console.log(item.fecha_foto);
+                                    }
+                                },
+                                function(tx, error){
+                                    console.log("Error: " + error.message);
+                                    app.preloader.hide();  
+                                }
+                            );  
+                        },
+                    function(error){},
+                    function(){}
+                );*/
+                
+                
+                databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql(
+                                "Select * from proyectos_vic WHERE id_usuario = ?",
+                                [id_usuario],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        // console.log("idproyecto: "+item.id_proyecto);
+                                        // console.log(item.id_usuario);
+                                        // console.log(item.nombre_proyecto);
+                                        // console.log(item.potencial);
+                                        // console.log(item.segmento);
+                                        // console.log(item.division);
+                                        // console.log(item.fecha_creacion);
+                                        // console.log(item.estatus);
+                                        // console.log(item.enviado);
+                                    }
+                                },
+                                function(tx, error){
+                                    console.log("Error: " + error.message);
+                                    app.preloader.hide();  
+                                }
+                            );  
+                        },
+                    function(error){},
+                    function(){}
+                );
+            }
+        }
+    }
+
+</script>

@@ -1,0 +1,343 @@
+<template>
+  <div class="page" style="background-color: rgb(245, 245, 245);">
+    <div class="navbar" style="background-color: #063E7F;height: 53px;">
+      <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+      <div class="navbar-inner sliding" style="height: 53px;">
+        <div class="left">
+          <a href="#"  onclick="regresarVIC();" >
+            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <style type="text/css">
+      input[type=text]{
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      }
+      input[type=number]{
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      }
+      input[type=date]{
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      }
+      input[type=time]{
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      }
+      textarea{
+      margin: 8px 15px !important;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 315px !important;
+      padding-right: 10px;
+      height: 100px;
+      }
+      #boton-f{
+      text-decoration: none;
+      font-family: 'ITC Avant Garde Gothic', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: #FFFFFF;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-left: 50px;
+      padding-right: 50px;
+      background-color: #04a02b;
+      border-radius: 15px;
+      }
+      td {
+      padding: 5px;
+      }
+
+
+      #cajaB h1 {
+      color: rgb(3, 3, 3);
+      font-size: 12px;
+      text-transform: uppercase;
+      text-align: justify;
+      line-height: 15px;
+      margin: 8px 15px;
+      margin-top: 25px;
+      word-wrap: break-word;
+      }
+
+      #pregunta {
+      position: relative ;
+      display: flex;
+      margin: 5px 15px;
+      border:  0.5px solid #aaaeb3;
+      box-sizing: border-box;
+      background: #FAFAFA;
+      }
+
+      #pregunta input[type=radio] {
+      margin: 8px 0;
+      display: none;
+      }
+
+      #pregunta label {
+      display: block;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.5s;
+      background: #FFF;  
+      }
+
+      #preguntasi label:hover {
+      background: #679ceb;
+      }
+      #preguntano label:hover {
+      background: #eb9167;
+      }
+
+      #preguntasi {
+      width: 100%;
+      }
+      #preguntano {
+        width: 100%;
+      }
+
+      #preguntasi input[type=radio]:checked + label {
+      background: #04a02b;
+      color: #FAFAFA;
+      }
+      #preguntano input[type=radio]:checked + label {
+      background: #db1405;
+      color: #FAFAFA;
+      }
+      #Cali{
+      box-sizing: border-box;
+      background: #063E7F;
+      color: #FAFAFA;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      width: 150px;              
+      float: right;
+      margin-right: 5px;
+      }
+      #Cali label{
+        font-weight: bold;
+      }
+
+    </style>
+    <div class="page-content">   
+      <h2 style="color:#063E7F;font-size: 20px;font-family: 'ITC Avant Garde Gothic', sans-serif;margin-left: 140px;margin-bottom: 5px;margin-right: 100px;">AUDITORIA</h2>
+      <div id="Preguntas-VIC"></div>
+      <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+        <div class="row align-items-stretch" style="text-align: center;">
+          <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+            <span class="resize-handler"></span>
+            <a href="#" onclick="terminarAuditoriaVIC();" id = "boton-f">Terminar Auditoria</a>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>    
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+        var id_cedula = localStorage.getItem("IdCedula");     
+        // var nombre_cliente= localStorage.getItem("nombre_cliente");
+        // nombre_cliente=nombre_cliente.toUpperCase();
+        // if (nombre_cliente.includes('DOMINOS')){
+        //     var  emp = 1;
+        // }else if (nombre_cliente.includes('VIPS')){
+        //     var  emp = 2;
+        // }else if (nombre_cliente.includes('ITALIANNIS')){
+        //     var  emp = 3;
+        // }
+       // var emp = localStorage.getItem("tipoEmpresa"); 
+        // console.log('emp',emp) 
+
+        databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("Select * from datosVIC where id_cedula = ?",
+                    [id_cedula],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            var emp = item.tipo_empresa; 
+                            var Nom = 'Preguntas-VIC-1';
+                        app.request.get(cordova.file.dataDirectory + "jsons/"+Nom+".json", function (data) {
+                            var content = JSON.parse(data);            
+                            var VIC ;
+                            if(emp == 1){
+                             var VIC =content[0];
+                            }else if(emp == 2){
+                             var  VIC =content[1];
+                            }else if(emp == 3){
+                             var  VIC =content[2];
+                            }
+            var html = "";
+            var validar;
+            for(let i = 0; i < VIC.length ;i++){
+              if(VIC[i].OB == 1){
+                validar = '**';
+              }else if(VIC[i].OB == 0){
+                validar = '';
+              }
+              html +=  `<br><div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+              <form class="list" style="margin-top: 0;">
+            <div style="width: 90%;border-radius: 15px; margin-right:auto; margin-left:auto; border: 0.5px solid #ECECEC; background-color: white;">  
+              <div id="Cali">Nivel de Riesgo: <label>${VIC[i].Nivel}</label></div>            
+              <div id="cajaB">
+                <h1 id="nombrePregunta">${(i+1) + '.-'}${VIC[i].Pregunta}${validar}</h1>
+                <div id="pregunta">
+                  <div id="preguntano">
+                  <input type="radio" name="pregunta${VIC[i].Orden}" value="0" id="Res1-${VIC[i].Orden}"  onchange="RespuestaVIC(this.value,${VIC[i].Orden},${VIC[i].id_pregunta},'${VIC[i].Nivel}')">
+                  <label for="Res1-${VIC[i].Orden}">NO CUMPLE </label>
+                  </div>
+                  <div id="preguntasi">
+                  <input type="radio" name="pregunta${VIC[i].Orden}"  value="1" id="Res2-${VIC[i].Orden}"  onchange="RespuestaVIC(this.value,${VIC[i].Orden},${VIC[i].id_pregunta},'${VIC[i].Nivel}')">
+                  <label for="Res2-${VIC[i].Orden}">SI CUMPLE</label>
+                  </div>
+                </div>
+                <span class="span FWM-span-form" style="width: 90%;">Recomendación:</span>
+                <textarea class ="FWM-input"  id="RE${VIC[i].Orden}" name="RE${VIC[i].Orden}" onchange="RecomendacionVIC(this.value,${VIC[i].Orden},${VIC[i].id_pregunta},'${VIC[i].Nivel}')" ></textarea>
+                  <div>
+                   <span class="span FWM-span-form" style="margin: 8px 15px;" >Toma de fotografia</span>
+                    <div class="FWM-photo-container">
+                        <a id="${VIC[i].Orden}" onclick="captureMultiplePhoto(this.id);">
+                            <div class="border-capture">
+                                <img class="FWM-photo" src="img/camera.svg" id="photoIcon${VIC[i].Orden}" width="45px"/>
+                            </div>
+                        </a>
+                        <img class="FWM-photo-hide" id="smallImage${VIC[i].Orden}" name="smallImage${VIC[i].Orden}"  src=""/>
+                        <input type="hidden" id="imagenC${VIC[i].Orden}" name="imagenC${VIC[i].Orden}"/>
+                    </div>
+                  </div>
+                </div>  
+                <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                  <div class="row align-items-stretch" style="text-align: center;">
+                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                      <span class="resize-handler"></span>
+                      <a href="#" onclick="guardarFotoVIC(${VIC[i].Orden},${VIC[i].FotosN},${VIC[i].id_pregunta});" class="boton-equipo">Guardar Foto</a>
+                    </div>
+                  </div>
+                <div class="block-title FWM-subtitulo">Evidencias (MAX- ${VIC[i].FotosN} )</div>  
+
+                <div class="card data-table">
+                  <div class="infinite-scroll-content">
+                      <table id="tabla_fotos${VIC[i].Orden}">
+                          <thead>
+                              <tr>
+                                  <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                  <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                  <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                              </tr>
+                          </thead>
+                          <div id="tabla_fotos_content${VIC[i].Orden}">
+                              <tbody id="fotos_content${VIC[i].Orden}"></tbody>
+                          </div>
+                      </table>
+                      <div id="message-nr${VIC[i].Orden}" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                          <p>Sin registros</p>
+                      </div>
+                  </div>
+              </div>
+              </div>
+              </div>
+            </from>
+            </div>
+            <br>`
+          }
+          $('#Preguntas-VIC').append(html);
+
+        });
+                        },
+                        function(tx, error){
+                            console.log("Error al guardar: " + error.message);
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+        
+        databaseHandler.db.transaction(
+        function (tx) {
+          tx.executeSql(
+              "Select * from VIC_Fotos where id_cedula = ? ",
+              [id_cedula],
+              function (tx, results) {
+                  let length = results.rows.length;
+                  if (length > 0) {
+                      for (var i = 0; i < length; i++) {
+                          var item = results.rows.item(i);
+                          var proceso = item.orden;
+                          var tabla2 = '#tabla_fotos' + proceso + ' tbody';              
+                          var mesg = '#message-nr' + proceso;
+                          var smallImage = '#smallImage' + proceso;
+                          var photoIcon = '#photoIcon' + proceso;                          
+                          $(tabla2).append("<tr id='fila" + item.ID_Fotos + "'><td><a href='#' onclick='eliminarFila(" + item.ID_Fotos + ",5);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a><td><img src='" + item.Foto + "' width='60px'/></td><td style='text-align: center;'>" + item.FechaHora + "</td></tr>");
+                          $(mesg).hide();
+                          $(smallImage).attr('src', 'img/blank.png');
+                          $(photoIcon).attr("src", "img/camera.svg");   
+                         
+                      }
+                  } else {
+                  }
+                  app.preloader.hide();
+              },
+              function (tx, error) {
+                  console.log("Error al consultar: " + error.message);
+                  app.preloader.hide();
+              }
+          );
+      },
+      function (error) { },
+      function () { }
+  );
+ 
+              databaseHandler.db.transaction(
+                  function(tx){
+                      tx.executeSql(
+                          "Select*from VIC_Respuesta  WHERE id_cedula = ? ",
+                          [id_cedula],
+                          function(tx, results){
+                              let length = results.rows.length;
+                              for(var i = 0; i<= length; i++){
+                                  var item = results.rows.item(i);                  
+                                  var proceso = item.orden;                                  
+                                  var SI = '#Res2-'+proceso;                                  
+                                  var NO = '#Res1-'+proceso;                                                                  
+                                  var resp = item.respuesta;                                                          
+                                    if(resp == 0){                                                                     
+                                    $(NO).prop("checked", true);                                     
+                                  }else if(resp == 1){
+                                    $(SI).prop("checked", true);
+                                  }
+                                  var recomendacion = item.recomendacion;
+                                  var RE = '#RE'+proceso;
+                                  $(RE).val(recomendacion);
+
+                                }
+                              
+      
+                          },
+                          function(tx, error){
+                              console.log("Error al guardar cedula: " + error.message);
+                              app.preloader.hide();  
+                          }
+                      );  
+                  },
+                  function(error){},
+                  function(){}
+              );
+
+
+      }
+    }
+  }
+</script>

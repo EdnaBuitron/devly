@@ -1,0 +1,292 @@
+<style>  
+    .md .button {
+        text-decoration: none;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        font-weight: 600;
+        font-size: 25px;
+        color: #FFFFFF;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 100%;
+    }
+    .list .item-floating-label, .list .item-label {
+        width: 100%; 
+    }
+    #minuta{
+        text-align: center;
+    }
+    .sheet-modal.modal-in{
+        height: 80%;
+    }
+    .navbar .title{
+        font-weight: bold;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #fff;
+    }
+    .navbar a.link{
+        color: white;
+    }
+    .list .item-link {
+    color: inherit;
+    margin-top: 5px;
+    }
+    .button {
+    display: initial;
+    }
+    .navbar{
+        background-color: #063E7F;
+        height: 52px;
+    }
+    .navbar-inner{
+        height: 52px;
+    }
+    .list .item-title{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-inner{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-content{
+        padding-left: 0px;
+    }
+    #fecha{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    #otroA{
+    font-size: 16px;
+    font-family: 'ITC Avant Garde Gothic', sans-serif;
+    }
+    .list ul{
+        top: 10px;
+        padding-left: 16px;
+    }
+    #thaccion{
+    padding-left: 12px;
+    padding-right: 12px;
+    }
+    #thfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thcomentarios{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thtipo{
+    width: 190px;
+    }
+    #thfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 70px;
+    }
+    #tdaccion{
+    padding-left: 14px;
+    padding-right: 12px;
+    }
+    #tdfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    }
+    #tdtipo{
+    padding-left: 5px;
+    padding-right: 5px;
+    }
+    #tdcomentario{
+    width: min-content;
+    }
+    #tdfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+
+    footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    }
+
+</style>
+<template>
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarRecorridoCI2();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Datos Generales</h2>
+                    <div style="text-align: left;">     
+                        <form class="list FWM-fixing-form"> 
+                             <!--Seleccionar opcion --> 
+                             <span class="span FWM-span-form">Proyecto:</span>
+                                <select class="FWM-input" name="proyectos" id="proyectos" >
+                                    <option value="0" selected>Selecciona una opción</option>
+                                </select>
+                            <!--Seleccionar opcion -->
+                            <span class="span FWM-span-form">Persona que atiende:</span>
+                                <input type='text' id="Patiende" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Puesto de la persona que atiende:</span>
+                                <input type='text' id="Ppuesto" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Teléfono:</span>
+                                <input type='text' id="Ptelefono" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Correo:</span>
+                                <input type='text' id="Pcorreo" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                           
+                        </form>
+
+                        <div class="block grid-resizable-demo" style="margin-bottom: 70px; margin-top: 70px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a href="#" onclick="guardarDatosVentaCI();" style="background-color: #063E7F;" class="boton-equipo">Guardar Datos</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--popUP-->
+                    <footer>
+                        <div class="block grid-resizable-demo" style="margin-bottom: 50px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a class="col button button-raised button-fill button-round sheet-open" style="background-color: #00A7B5;" href="#" data-sheet=".my-sheet">+</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                    <div class="sheet-modal my-sheet" id="sheet-modal" name="sheet">
+                        <div class="toolbar">
+                            <div class="toolbar-inner">
+                            <div class="left"></div>
+                            <div class="right"><a class="link sheet-close" href="#">Cerrar</a></div>
+                            </div>
+                        </div>
+                        <div class="sheet-modal-inner">
+                            <div class="block">
+                            <h3 class="FWN-titulo-2">Agregar Proyecto</h3>
+                            <form class="list FWM-fixing-form"> 
+                                <span class="span FWM-span-form" name="">Nombre del nuevo proyecto: </span>
+                                    <input class="FWM-input" type="text" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" id="nombre_proyecto" placeholder="Escribe el nombre del proyecto"/>
+                                <span class="span FWM-span-form" name="">Potencial: </span>
+                                    <input class="FWM-input" type="text" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" id="potencial" placeholder="Potencial del proyecto"/>
+                                <span class="span FWM-span-form" name="">Segmentos: </span>
+                                    <select class="FWM-input" id="segmento" aria-label="Default select example">
+                                        <option value="0" selected>Selecciona un segmento...</option>
+                                        <option value="Escuelas">Escuelas</option>
+                                        <option value="Clínicas y Spas">Clínicas y Spas</option>
+                                        <option value="Hoteles y Moteles">Hoteles y Moteles</option>
+                                        <option value="Industria">Industria</option>
+                                        <option value="Oficinas Corporativas">Oficinas Corporativas</option>
+                                        <option value="Bares y Restaurantes">Bares y Restaurantes</option>
+                                        <option value="Clubes Deportivos">Clubes Deportivos</option>
+                                        <option value="Escuelas y Universidades">Escuelas y Universidades</option>
+                                        <option value="Centros Comerciales">Centros Comerciales</option>
+                                        <option value="Centros de Entretenimiento">Centros de Entretenimiento</option>
+                                        <option value="Hospitales">Hospitales</option>
+                                        <option value="Tiendas Departamentales">Tiendas Departamentales</option>
+                                        <option value="Áreas Comnunes de Edificios">Áreas Comnunes de Edificios</option>
+                                        <option value="Centros de Distribución">Centros de Distribución</option>
+                                        <option value="Gimnasio">Gimnasio</option>
+                                    </select>
+
+                                <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="guardarProyectoCI();" style="background-color: #063E7F;" class="boton-equipo">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--popUp-->
+
+                    </div>
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+</template>
+<script>
+return {
+        on: {      
+            pageInit: function () {
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from proyectos WHERE id_usuario = ?",
+                            [id_usuario],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#proyectos").append("<option value="+item.id_proyecto+">"+item.nombre_proyecto+"</option>");
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){},
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from datos_ventas WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    var item = results.rows.item(0);
+                                        $('#Patiende').val(item.nombre_cliente);
+                                        $('#Ppuesto').val(item.puesto_cliente);
+                                        $('#Ptelefono').val(item.telefono);
+                                        $('#Pcorreo').val(item.correo);
+                                        $('#proyectos').val(item.id_proyecto);
+                                },
+                                function(tx, error){
+                                    console.log("Error: " + error.message);
+                                    app.preloader.hide();  
+                                }
+                        );  
+                    },
+                        function(error){},
+                        function(){}
+                );
+            }
+        }
+    }
+
+</script>

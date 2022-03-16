@@ -1,0 +1,148 @@
+<template>
+  <div class="view view-main view-init safe-areas">
+      <div class="page" id="FWM-1">
+          <!-- Navbar -->
+          <div class="navbar" style="background-color: #063E7F;height: 52px;">
+              <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+              <div class="navbar-inner sliding" style="height: 52px;">
+                  <div class="left">
+                      <a href="#" onclick="regresarRecorridoCI1();">
+                          <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                      </a>
+                  </div>
+              </div>
+          </div>
+          <!-- Contenido Formulario -->                                
+          <div class="page-content">
+              <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                  <h2 class="FWN-titulo-2">Temperatura y Evidencia de Entrega</h2>
+
+              <div style="text-align: left;">     
+                  <div class="list FWM-fixing-form">
+                            <span class="span FWM-span-form">Temperatura:</span>
+                            <div style="display: flex;">
+                                <input type="number" class="FWM-input" id="temperatura" name="temperatura" onchange="temperaturaLlena(this.id,this.value)"/>
+                                <select id="unidad" name="unidad" class="select-check" style="width: 50px!important;padding-left: 13px;">
+                                    <option value="0">C°</option>
+                                    <option value="1">F°</option>
+                                </select>
+                            </div>
+
+                          <span class="span FWM-span-form">Foto de temperatura o evidencia:</span>                          
+                          <div class="FWM-photo-container">
+                              <div class="border-capture">
+                                  <a onclick="capturePhoto();">
+                                      <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px" style="margin-left: 50px;"/>
+                                  </a>
+                              </div>
+                              <img class="FWM-photo-hide" id="smallImage" src=""/>
+                              <input type="hidden" id="imagenC" name="imagenC"/>
+                          </div>
+
+                          <span class="span FWM-span-form">Comentarios de temperatura o evidencia:</span>
+                          <textarea id="comentario" cols="30" rows="10" class="FWM-input" onchange="inputLleno(this.id,this.value)"></textarea>
+
+                          
+                          <div class="block grid-resizable-demo" style="margin-bottom: 20px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a href="#" onclick="guardarTemperaturaCI();" class="boton-equipo">Guardar comprobante</a>
+                                </div>
+                            </div>
+                        </div>
+
+                          <div class="block-title FWM-subtitulo">Entregas:</div>  
+                          <div class="card data-table">
+                              <div class="infinite-scroll-content">
+                                  <table id="temperatura">
+                                      <thead>
+                                          <tr>
+                                              <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                              <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                              <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Observacion</th>
+                                              <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody></tbody>
+                                  </table>
+                                  <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                  <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                      <p>Sin registros</p>
+                                  </div>
+                              </div>
+                          </div>
+                  </div>
+              <!-- Fin contenido formulario -->
+              <fwm></fwm>
+          </div>
+      </div>
+  </div>
+</template>
+<script>
+  return {
+      on: {
+          pageInit: function (e, page) {
+            var id_cedula = localStorage.getItem("IdCedula");
+            databaseHandler.db.transaction(
+                function(tx){
+                tx.executeSql(
+                    "Select * from datos_entrega WHERE id_cedula = ? ",
+                    [id_cedula],
+                    function(tx, results){
+                        let length = results.rows.length;
+                        if(length>0){
+                            for (var i = 0; i< length; i++){
+                                var item = results.rows.item(i);
+                                $("#unidad > option[value="+item.unidad+"]").attr("selected",true);
+                                $("#temperatura").val(item.temperatura);
+                                if(item.temperatura > 4){
+                                    $("#temperatura").css("background-color","#fb2c2c");
+                                    $("#temperatura").css("color","white");
+                                }
+                            }
+                        }
+                    },
+                    function(tx, error){
+                        console.log("Error al guardar registroPL: " + error.message);
+                        app.preloader.hide();
+                    }
+                );
+                },
+                function(error){},
+                function(){}
+            );
+            databaseHandler.db.transaction(
+                function(tx1){
+                    tx1.executeSql(
+                        "Select * from fotos_entrega where id_cedula= ?",
+                        [id_cedula],
+                        function(tx, results){
+                            var length = results.rows.length;
+                            if(length == 0){
+                                $("#message-nr").css("display", "block");
+                            } else {
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#temperatura tbody").append("<tr id='fila"+ item.id_evidencia +"'><td><a href='#' onclick='eliminarFilaCI("+ item.id_evidencia +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + unescape(item.comentarios) + "</td><td style='text-align: center;'>" + item.fecha_evidencia + "</td></tr>");
+                                    $("#message-nr").css("display", "none");
+                                }
+                            }
+                            $('.preloader').remove();
+                            $('.infinite-scroll-preloader').remove();
+                        },
+                        function(tx, error){
+                            console.log("Error al consultar: " + error.message);
+                        }
+                    );
+                    console.log("Consulta correcta");
+                },
+                function(error){},
+                function(){}
+            );
+            $('.preloader').remove();
+            $('.infinite-scroll-preloader').remove();
+          }
+      }  
+  }
+</script>

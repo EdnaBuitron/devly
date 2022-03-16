@@ -1,0 +1,148 @@
+<template>
+    <div class="view view-main view-init safe-areas">
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarProteus();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Datos del equipo</h2>
+
+                    <div style="text-align: left;">     
+                        <div class="list FWM-fixing-form">
+                            <span class="span FWM-span-form">Modelo:</span>
+                            <span id="text2">
+                                <select id="modelo" name="modelo" style="height: 50px;padding-left: 10px;font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white;border: 1px solid gray;border-radius: 8px;" onchange="selectProteus();">
+                                    <option value="0">Seleccione una opción</option>
+                                </select>
+                            </span>
+
+                            <span class="span FWM-span-form">Contenedor:</span>
+                            <span id="text2">
+                                <input type="text" class="FWM-input" id="contenedor" style="height: 50px;padding-left: 10px;font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white;border: 1px solid gray;border-radius: 8px;" name="contenedor" onchange="inputLleno(this.id,this.value)" value="Selecciona un modelo primero" disabled/>
+                            </span>
+                            
+                            <span class="span FWM-span-form">Ubicación:</span>
+                            <input type="text" class="FWM-input" id="ubicacion" name="observaciones" onchange="inputLleno(this.id,this.value)"/>
+                        </div>
+                        
+                    </div>
+
+                    <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                        <div class="row align-items-stretch" style="text-align: center;">
+                            <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                <span class="resize-handler"></span>
+                                <a href="#" onclick="guardarEquipoProteus();" class="boton-equipo">Guardar Datos</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="block-title FWM-subtitulo" style="text-align: left;">Equipos:</div>  
+                        <div class="card data-table">
+                            <div class="infinite-scroll-content">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Modelo</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Contenedor</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Ubicación</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody id="tabla_equipos"></tbody>
+                                </table>
+                                <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                    <p>Sin registros</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                $('.preloader').remove();
+                $('.infinite-scroll-preloader').remove();
+                var id_cedula = localStorage.getItem("IdCedula");
+
+                databaseHandler.db.transaction(
+                    function(tx1){
+                        tx1.executeSql(
+                            "Select * from datos_equipos_proteus where id_cedula= ? AND ubicacion == ''",
+                            [id_cedula],
+                            function(tx, results){
+                                var length = results.rows.length;
+                                if(length == 0){
+                                    $("#message-nr").css("display", "block");
+                                } else {
+                                    var cont=0;
+                                    for(var i = 0; i< length; i++){
+                                        cont++;
+                                        var item = results.rows.item(i);
+                                        $("#modelo").append("<option value='"+item.id_equipo+"'>"+item.modelo+"</option>");
+                                        $("#message-nr").css("display", "none");
+                                    }
+                                }
+                                $('.preloader').remove();
+                                $('.infinite-scroll-preloader').remove();
+                            },
+                            function(tx, error){
+                                console.log("Error al consultar: " + error.message);
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                    function(tx1){
+                        tx1.executeSql(
+                            "Select * from datos_equipos_proteus where id_cedula= ? AND ubicacion <> ''",
+                            [id_cedula],
+                            function(tx, results){
+                                var length = results.rows.length;
+                                if(length == 0){
+                                    $("#message-nr").css("display", "block");
+                                } else {
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $("#tabla_equipos").append("<tr id='fila"+ item.id_equipo +"'><td><a href='#' onclick='eliminarFilaProteus("+item.id_equipo +",4);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td style='text-align: center;'>" + 
+                                            item.modelo + "</td><td style='text-align: center;'>" + 
+                                                item.marca + "</td><td style='text-align: center;'>" + 
+                                                    item.ubicacion + "</td></tr>");
+                                        $("#message-nr").css("display", "none");
+                                    }
+                                }
+                                $('.preloader').remove();
+                                $('.infinite-scroll-preloader').remove();
+                            },
+                            function(tx, error){
+                                console.log("Error al consultar: " + error.message);
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+            }
+        }  
+    }
+</script>

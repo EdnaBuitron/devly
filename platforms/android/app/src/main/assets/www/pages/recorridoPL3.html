@@ -1,0 +1,305 @@
+<template>
+    <div class="page">
+        <div class="navbar" style="background-color: #063E7F;height: 52px;">
+            <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+            <div class="navbar-inner" style="height: 52px;">
+                <div class="left">
+                    <a href="javascript:location.reload()" class="link back" style="margin-left: 5px;">
+                        <span class="nav-text-regresar-recorrido">Regresar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-content" style="background-color: #f6f7f9; ">
+            <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+                <input type="hidden" id="resp1" name="resp1" />
+                <div style="text-align: left;">
+                    <div class="item-inner">
+                        <div class="block-title" style="text-align: center; font-size: 20px;">
+                            <h2 style="color:#505759;font-size: 22px;font-family: 'ITC Avant Garde Gothic', sans-serif;">Recorrido de Sanitización</h2>
+                        </div>
+                    </div>
+                </div>
+                    <div class="buttons-container" style="display: flex;">
+                        <a href="/datosgeneralesPL/" class="fwm-button-recorrido">
+                            <img src="img/iconsMenu/persona2.svg" width="90px" height="90px" id="img15"/>
+                            <span class="fwm-text-recorrido">Datos Generales</span>
+                        </a>
+                        <a href="/formPL4/"  class="fwm-button-recorrido">
+                            <img src="img/recursos/platolimpio/informacion_equipo.svg" width="90px" height="90px" id="img25"/>
+                            <span class="fwm-text-recorrido">Informacion del Equipo</span>
+                        </a>
+                    </div>
+                    <div class="buttons-container" style="display: flex;margin-top: 5%;">
+                        <a href="/formPL5/" 
+                            class="fwm-button-recorrido">
+                            <img src="img/recursos/platolimpio/capacidad.svg" width="90px" height="90px" id="img35"/>
+                            <span class="fwm-text-recorrido">Capacidad de Equipo</span>
+                        </a>
+                        <a href="/formPL6/"  class="fwm-button-recorrido">
+                            <img src="img/recursos/platolimpio/tipos_sanitizacion.svg" width="90px" height="90px" id="img45"/>
+                            <span class="fwm-text-recorrido">Tipos de sistema de Sanitización</span>
+                        </a>
+                    </div>
+                    <div class="buttons-container" style="display: flex;margin-top: 5%;">
+                        <a href="/formPL7/" class="fwm-button-recorrido">
+                            <img src="img/recursos/platolimpio/insumos.svg" width="90px" height="90px" id="img55"/>
+                            <span class="fwm-text-recorrido">Determinacion de Insumos</span>
+                        </a>
+                        <a href="/formPL8/" class="fwm-button-recorrido">
+                            <img src="img/recursos/platolimpio/rango_estres.svg" width="90px" height="90px" id="img65"/>
+                            <span class="fwm-text-recorrido">Parámetros En Rango De Estres</span>
+                        </a>
+                    </div>
+                    <div class="buttons-container" style="display: flex;margin-top: 5%;">
+                        <a href="/formPL9/" class="fwm-button-recorrido">
+                            <img src="img/recursos/platolimpio/prueba_agua.svg" width="90px" height="90px" id="img75"/>
+                            <span class="fwm-text-recorrido">Prueba De Calidad Del Agua</span>
+                        </a>
+                        <a href="/formPL10/" class="fwm-button-recorrido">
+                            <img src="img/recursos/platolimpio/prueba_lavado.svg" width="90px" height="90px" id="img85"/>
+                            <span class="fwm-text-recorrido">Prueba De Resultado De Lavado</span>
+                        </a>
+                    </div>
+                    <div class="buttons-container" style="display: flex;margin-top: 5%;margin-bottom: 50px;">
+                        <a href="/cierrePL3/" class="fwm-button-recorrido">
+                            <img src="img/iconsMenu/estrellas.svg" width="90px" height="90px" id="img95"/>
+                            <span class="fwm-text-recorrido">Evaluación y cierre</span>
+                        </a>
+                    </div>
+                    <div id="FWM-Menu" class="container-items" style="width: 100%;"></div>
+                <fwm></fwm>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    return {
+        on: {
+            pageInit: function () {
+                var id_cedula = localStorage.getItem("IdCedula");
+                databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from DG_PlatoL WHERE DG_ID_Cedula = ? AND (DG_Empresa IS NOT NULL AND DG_CEmpleados IS NOT NULL AND DG_FechaA IS NOT NULL AND DG_HoraA IS NOT NULL AND DG_Contacto IS NOT NULL AND DG_Puesto IS NOT NULL AND DG_Correo IS NOT NULL AND DG_Movil IS NOT NULL )",
+                        [id_cedula],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            let length = results.rows.length;
+                            if(length > 0){                               
+                                document.getElementById("img15").src="img/iconsMenu/persona.svg";
+                            }
+                        },
+                        function(tx, error){
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            ); 
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from Info_Equipo WHERE IE_ID_Cedula = ? AND (IE_Modelo IS NOT NULL AND IE_NS IS NOT NULL AND IE_Ubicacion IS NOT NULL AND IE_Fecha IS NOT NULL AND IE_Uso IS NOT NULL AND IE_Consumo IS NOT NULL AND IE_Agua IS NOT NULL AND IE_Suministro IS NOT NULL)",
+                        [id_cedula],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            let length = results.rows.length;
+                            if(length > 0){                               
+                                document.getElementById("img25").src="img/recursos/platolimpio/informacion_equipo2.svg";
+                            }
+                        },
+                        function(tx, error){
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            ); 
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from Capa_Equipo_A WHERE CE_ID_Cedula = ? AND (CE_Turno IS NOT NULL AND CE_Horario IS NOT NULL AND CE_Cantidad IS NOT NULL)",
+                        [id_cedula],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            let length = results.rows.length;
+                            if(length == 8){
+                                databaseHandler.db.transaction(
+                                function(tx){
+                                    tx.executeSql("SELECT * from Capa_Equipo_B WHERE CE_ID_Cedula = ? AND (CE_Utencilio IS NOT NULL AND CE_Cantidad IS NOT NULL AND CE_Tipo IS NOT NULL AND CE_Material IS NOT NULL)",
+                                        [id_cedula],
+                                        function(tx, results){
+                                            var item = results.rows.item(0);
+                                            let length = results.rows.length;
+                                            if(length > 0){                                              
+                                            
+                                                document.getElementById("img35").src="img/recursos/platolimpio/capacidad2.svg";
+                                            }
+                                        },
+                                        function(tx, error){
+                                        }
+                                    );
+                                },
+                                function(error){},
+                                function(){}
+                            ); 
+                            }
+                        },
+                        function(tx, error){
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            ); 
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from Tipo_Sistema WHERE TS_ID_Cedula = ? AND (TS_Equipo IS NOT NULL AND TS_Boiler IS NOT NULL AND TS_Booster IS NOT NULL AND TS_Maquina IS NOT NULL AND TS_Observacion IS NOT NULL)",
+                        [id_cedula],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            if(item.TS_ID_Cedula > 0){                             
+                                document.getElementById("img45").src="img/recursos/platolimpio/tipos_sanitizacion2.svg";
+                            }
+                        },
+                        function(tx, error){
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from Insumos_A WHERE ID_Cedula = ? AND (Equipo IS NOT NULL AND Marca IS NOT NULL AND Modelo IS NOT NULL AND Dosificador IS NOT NULL)",
+                        [id_cedula],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            let length = results.rows.length;
+                            if(length == 2){
+                             
+                                databaseHandler.db.transaction(
+                                function(tx){
+                                    tx.executeSql("SELECT * from Insumos_B WHERE ID_Cedula = ? ",
+                                        [id_cedula],
+                                        function(tx, results){
+                                            var item = results.rows.item(0);
+                                                let length = results.rows.length;
+                                                if(item.ID_Cedula > 0){
+                                            
+                                                databaseHandler.db.transaction(
+                                                function(tx){
+                                                    tx.executeSql("SELECT * from Insumos_C WHERE ID_Cedula = ? AND (Horas IS NOT NULL AND Cantidad IS NOT NULL )",
+                                                        [id_cedula],
+                                                        function(tx, results){
+                                                            var item = results.rows.item(0);
+                                                            if(item.ID_Cedula > 0){
+                                                            
+                                                                document.getElementById("img55").src="img/recursos/platolimpio/insumos2.svg";
+                                                            }
+                                                        },
+                                                        function(tx, error){
+                                                        }
+                                                    );
+                                                },
+                                                function(error){},
+                                                function(){}
+                                            );
+                                            }
+                                        },
+                                        function(tx, error){
+                                        }
+                                    );
+                                },
+                                function(error){console.log('ERROR',error)},
+                                function(){}
+                            );
+                            }
+                        },
+                        function(tx, error){
+                        }
+                    );
+                },
+                function(error){console.log('ERROR',error)},
+                function(){}
+            );
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from Stress WHERE ID_Cedula = ? AND (Tomas IS NOT NULL AND Equipo IS NOT NULL AND Hora IS NOT NULL AND TempeE IS NOT NULL AND PreE IS NOT NULL AND TempeS IS NOT NULL AND PreS IS NOT NULL AND Bitacora IS NOT NULL)",
+                        [id_cedula],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            if(item.ID_Cedula > 0){
+                             
+                                document.getElementById("img65").src="img/recursos/platolimpio/rango_estres2.svg";
+                            }
+                        },
+                        function(tx, error){
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from Prueba_Calidad_Agua WHERE PCA_ID_Cedula = ? AND (PCA_Tipo IS NOT NULL AND PCA_Dureza IS NOT NULL AND PCA_Partes IS NOT NULL AND PCA_Sitema IS NOT NULL)",
+                        [id_cedula],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            if(item.PCA_ID_Cedula > 0){
+                             
+                                document.getElementById("img75").src="img/recursos/platolimpio/prueba_agua2.svg";
+                            }
+                        },
+                        function(tx, error){
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from Resultado WHERE ID_Cedula = ? AND (Tipo IS NOT NULL AND Suciedad IS NOT NULL AND Detergente IS NOT NULL)",
+                        [id_cedula],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            if(item.ID_Cedula > 0){
+                             
+                                document.getElementById("img85").src="img/recursos/platolimpio/prueba_lavado2.svg";
+                            }
+                        },
+                        function(tx, error){
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+            // databaseHandler.db.transaction(
+            //     function(tx){
+            //         tx.executeSql("SELECT * from DG_PlatoL WHERE DG_ID_Cedula = ? AND SN = 1",
+            //             [id_cedula],
+            //             function(tx, results){
+            //                 var item = results.rows.item(0);
+            //                 console.log(item)
+            //                 let length = results.rows.length;                            
+            //                 if(item.DG_ID_Cedula > 0){
+                                
+            //                     //document.getElementById("img95").src="img/iconsMenu/estrella.svg";
+            //                 }
+            //             },
+            //             function(tx, error){
+            //             }
+            //         );
+            //     },
+            //     function(error){},
+            //     function(){}
+            // );   
+                
+            }
+            
+        }
+    }
+</script>

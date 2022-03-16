@@ -1,0 +1,272 @@
+<template>
+    <div class="page" style="background-color: rgb(245, 245, 245);">
+        <div class="navbar" style="background-color: #063E7F;height: 52px;">
+            <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+            <div class="navbar-inner sliding" style="height: 52px;">
+                <div class="left">
+                    <a href="#" onclick="regresarRecorridoSURO4();">
+                        <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+            <!-- Contenido Formulario --> 
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Gestión Administrativa</h2>
+                    <div style="text-align: left;">
+                        <form class="list FWM-fixing-form">
+                            <style type="text/css">
+                                input[type=text]{
+                                    margin: 3px 0;
+                                    border: 1px solid #ccc;
+                                    border-radius: 2px;
+                                    font-size: 2vw;
+                                    padding-left: 10px !important;
+                                    background-color: white;
+                                    font-size: 16px !important;
+                                    font-family: 'ITC Avant Garde Gothic', sans-serif;
+                                    border: 1px solid gray !important;
+                                    border-radius: 8px !important;
+                                }
+                                select{
+                                    margin: 3px 0;
+                                    border: 1px solid #ccc;
+                                    border-radius: 2px;
+                                    font-size: 2vw;
+                                }                      
+                                .border-capture-item{
+                                  margin-top: 33px;
+                                  margin-left: 0px;
+                                  margin-right: 33px;
+                                  position: relative;
+                                  
+                                }
+                                #pregunta {
+                  position: relative ;
+                  display: flex;
+                  margin-top: 5px;
+                  border: transparent;
+                  box-sizing: border-box;
+                  background: #FAFAFA;
+                }
+    
+                #pregunta input[type=radio] {
+                  display: none;
+                }
+    
+                #pregunta label {
+                  display: block;
+                  width: 150px;
+                  height: 40px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  transition: 0.5s;
+                  background: #FFF;  
+                  
+                }
+    
+                #pregunta label:hover {
+                  background: #679ceb;
+                }
+    
+                #pregunta input[type=radio]:checked + label {
+                  background: #063E7F;
+                  color: #FAFAFA;
+                }
+                            </style>                           
+
+                            <span class="span FWM-span-form" style="font-weight: bold; line-height: 105%; margin-bottom: 3px;">Programa de vacaciones</span>
+                            <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                <input type="radio" name="p1"  value="1" id="Res1-11">
+                                <label for="Res1-11">SI</label>
+                                <input type="radio" name="p1"  value="2" id="Res2-11">
+                                <label for="Res2-11">NO</label>
+                                <input type="radio" name="p1"  value="3" id="Res3-11">
+                                <label for="Res3-11">N/A</label>
+                              </div>
+                              <br>                            
+                            <span class="span FWM-span-form" style="font-weight: bold; line-height: 105%; margin-bottom: 3px;">Control de incapacidades</span>
+                            <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                <input type="radio" name="p2"  value="1" id="Res4-11">
+                                <label for="Res4-11">SI</label>
+                                <input type="radio" name="p2"  value="2" id="Res5-11">
+                                <label for="Res5-11">NO</label>
+                                <input type="radio" name="p2"  value="3" id="Res6-11">
+                                <label for="Res6-11">N/A</label>
+                              </div>
+                              <br> 
+                            <span class="span FWM-span-form" style="font-weight: bold; line-height: 105%; margin-bottom: 3px;">Uniformes del Personal en buen estado</span>
+                            
+                            <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                <input type="radio" name="p3"  value="1" id="Res7-11">
+                                <label for="Res7-11">SI</label>
+                                <input type="radio" name="p3"  value="2" id="Res8-11">
+                                <label for="Res8-11">NO</label>
+                                <input type="radio" name="p3"  value="3" id="Res9-11">
+                                <label for="Res9-11">N/A</label>
+                              </div>
+                              <br> 
+                            <span class="span FWM-span-form" style="font-weight: bold; line-height: 105%; margin-bottom: 3px;">Credenciales vigentes</span>
+                            
+                            <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                <input type="radio" name="p4"  value="1" id="Res10-11">
+                                <label for="Res10-11">SI</label>
+                                <input type="radio" name="p4"  value="2" id="Res11-11">
+                                <label for="Res11-11">NO</label>
+                                <input type="radio" name="p4"  value="3" id="Res12-11">
+                                <label for="Res12-11">N/A</label>
+                              </div>
+                              <br> 
+                            <span class="span FWM-span-form" style="font-weight: bold; line-height: 105%; margin-bottom: 3px;">Aplicar cartas compromiso</span>
+                            
+                            <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                <input type="radio" name="p5"  value="1" id="Res13-11">
+                                <label for="Res13-11">SI</label>
+                                <input type="radio" name="p5"  value="2" id="Res14-11">
+                                <label for="Res14-11">NO</label>
+                                <input type="radio" name="p5"  value="3" id="Res15-11">
+                                <label for="Res15-11">N/A</label>
+                              </div>
+                              <br> 
+                            <span class="span FWM-span-form" style="font-weight: bold; line-height: 105%; margin-bottom: 3px;">Entrega de cartas patronales en tiempo</span>
+                           
+                            <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                <input type="radio" name="p6"  value="1" id="Res16-11">
+                                <label for="Res16-11">SI</label>
+                                <input type="radio" name="p6"  value="2" id="Res17-11">
+                                <label for="Res17-11">NO</label>
+                                <input type="radio" name="p6"  value="3" id="Res18-11">
+                                <label for="Res18-11">N/A</label>
+                              </div>
+                              <br> 
+                            <span class="span FWM-span-form" style="font-weight: bold; line-height: 105%; margin-bottom: 3px;">Pagos en tiempo y forma</span>
+                            
+                            <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                <input type="radio" name="p7"  value="1" id="Res19-11">
+                                <label for="Res19-11">SI</label>
+                                <input type="radio" name="p7"  value="2" id="Res20-11">
+                                <label for="Res20-11">NO</label>
+                                <input type="radio" name="p7"  value="3" id="Res21-11">
+                                <label for="Res21-11">N/A</label>
+                              </div>
+                              <br> 
+                            <span class="span FWM-span-form" style="font-weight: bold; line-height: 105%; margin-bottom: 3px;">Entrega de recibos de Nómina</span>
+                            
+                            <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                <input type="radio" name="p8"  value="1" id="Res22-11">
+                                <label for="Res22-11">SI</label>
+                                <input type="radio" name="p8"  value="2" id="Res23-11">
+                                <label for="Res23-11">NO</label>
+                                <input type="radio" name="p8"  value="3" id="Res24-11">
+                                <label for="Res24-11">N/A</label>
+                              </div>
+                              <br> 
+                            <span class="span FWM-span-form" style="font-weight: bold; line-height: 105%; margin-bottom: 3px;">Hallazgo</span>
+                            <textarea class ="FWM-input" style="background-color: white;" id="p9" name="p9" cols="42" rows="7"></textarea>
+                            <br>
+                            <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="GuardarSUROF4();" class="boton-equipo">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>              
+        </div>   
+    </div>
+</template>
+<script>
+    return {
+        on: {
+          pageInit: function () {
+            $('.preloader').remove();
+            $('.infinite-scroll-preloader').remove();
+            var id_cedula = localStorage.getItem("IdCedula");
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("Select * from VisitaB_SURO where id_cedula = ? ",
+                [id_cedula],
+                    function(tx, results){
+                        
+                        var item = results.rows.item(0);
+                        console.log("item",item);
+                        if(item.gestion1 == 1){                                                                        
+                        $("#Res1-11").prop("checked", true);                                     
+                        }else if(item.gestion1 == 2){
+                        $("#Res2-11").prop("checked", true);
+                        }else if(item.gestion1 == 3){
+                        $("#Res3-11").prop("checked", true);
+                        }
+                        if(item.gestion2 == 1){                                                                        
+                        $("#Res4-11").prop("checked", true);                                     
+                        }else if(item.gestion2 == 2){
+                        $("#Res5-11").prop("checked", true);
+                        }else if(item.gestion2 == 3){
+                        $("#Res6-11").prop("checked", true);
+                        }
+                        if(item.gestion3 == 1){                                                                        
+                        $("#Res7-11").prop("checked", true);                                     
+                        }else if(item.gestion3 == 2){
+                        $("#Res8-11").prop("checked", true);
+                        }else if(item.gestion3 == 3){
+                        $("#Res9-11").prop("checked", true);
+                        }
+                        if(item.gestion4 == 1){                                                                        
+                        $("#Res10-11").prop("checked", true);                                     
+                        }else if(item.gestion4 == 2){
+                        $("#Res11-11").prop("checked", true);
+                        }else if(item.gestion4 == 3){
+                        $("#Res12-11").prop("checked", true);
+                        }
+                        if(item.gestion5 == 1){                                                                        
+                        $("#Res13-11").prop("checked", true);                                     
+                        }else if(item.gestion5 == 2){
+                        $("#Res14-11").prop("checked", true);
+                        }else if(item.gestion5 == 3){
+                        $("#Res15-11").prop("checked", true);
+                        }
+                        if(item.gestion6 == 1){                                                                        
+                        $("#Res16-11").prop("checked", true);                                     
+                        }else if(item.gestion6 == 2){
+                        $("#Res17-11").prop("checked", true);
+                        }else if(item.gestion6 == 3){
+                        $("#Res18-11").prop("checked", true);
+                        }
+                        if(item.gestion7 == 1){                                                                        
+                        $("#Res19-11").prop("checked", true);                                     
+                        }else if(item.gestion7 == 2){
+                        $("#Res20-11").prop("checked", true);
+                        }else if(item.gestion7 == 3){
+                        $("#Res21-11").prop("checked", true);
+                        }
+                        if(item.gestion8 == 1){                                                                        
+                        $("#Res22-11").prop("checked", true);                                     
+                        }else if(item.gestion8 == 2){
+                        $("#Res23-11").prop("checked", true);
+                        }else if(item.gestion8 == 3){
+                        $("#Res24-11").prop("checked", true);
+                        }
+                        $('#p9').val(item.gestion9);  
+                        app.preloader.hide();
+                    },
+                    function(tx, error){
+                        console.log("Error al guardar cedula: " + error.message);
+                        app.preloader.hide();
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+
+
+            }
+          }
+    }
+</script>

@@ -1,0 +1,432 @@
+<template>
+    <div class="page" style="background-color: rgb(245, 245, 245);">
+        <div class="navbar" style="background-color: #063E7F;height: 52px;">
+            <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+            <div class="navbar-inner sliding" style="height: 52px;">
+                <div class="left">
+                    <a href="#" onclick="regresarRecorridoServInd1();">
+                        <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+                <h2 style="color:#063E7F;font-size: 20px;font-family: 'ITC Avant Garde Gothic', sans-serif;margin-top: 35px;">Datos Generales</h2>
+
+                <div class="list" style="margin-top: 0;">                    
+                    <style type="text/css">
+                        input[type=text]{
+                            margin: 8px 0;
+                            border: 1px solid #ccc;
+                            border-radius: 6px;
+                            font-family: 'ITC Avant Garde Gothic', sans-serif;
+                        }
+                    </style>
+                    <div style="width: 90%;border-radius: 15px;margin-left: 5%;border: 0.5px solid #ECECEC;background-color: white;">
+                        <span class="span" style="font-weight: bold;width: 90%;">Orden de servicio:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="orden" id="orden" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" />
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Fecha:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="fecha" id="fecha" class="FWM-textBox" value="10/12/2021" disabled/>
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Cliente:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="cliente" id="cliente" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" />
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Sucursal cliente:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="suc_cliente" id="suc_cliente" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" />
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Dirección:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="direccion" id="direccion" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Ciudad:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="ciudad" id="ciudad" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Teléfono:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="telefono" id="telefono" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Correo:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="correo" id="correo" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        <br>
+                        <span class="span" style="font-weight: bold;width: 90%;">Equipo:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="equipo" id="equipo" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Marca:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="marca" id="marca" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Modelo:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="modelo" id="modelo" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Serie:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="serie" id="serie" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">ML:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="ml" id="ml" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Tipo de Servicio:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;margin-bottom: 30px;">
+                            <input type='text' name="tipo_servicio" id="tipo_servicio" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" readonly/>
+                        </span>
+                    </div>
+                    <!---CAMBIOS--->    
+                    <style type="text/css">
+                        .boton-personalizado-4 {
+                            text-decoration: none;
+                            font-family: 'ITC Avant Garde Gothic', sans-serif;
+                            font-weight: 600;
+                            font-size: 16px;
+                            color: #FFFFFF;
+                            padding-top: 15px;
+                            padding-bottom: 13px;
+                            padding-left: 30px;
+                            padding-right: 30px;
+                            background-color: #063E7F;
+                            border-radius: 15px;
+                        }
+                    </style>
+                    <div class="block grid-resizable-demo">
+                        <div class="row align-items-stretch" style="text-align: center;">
+                            <div class="col-100 medium-50" style="min-width: 50px; border-style: none; margin-bottom: 60px;">
+                                <span class="resize-handler"></span>
+                                <a href="#" onclick="guardarDatoscheckServind2();" class="boton-personalizado-4">Guardar datos</a>   
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+
+            <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 50px; margin-bottom: 20px;">
+                <button class="btn-next">Anterior</button>
+                        
+                <button class="btn-next" onclick="app.views.main.router.back('/formServ11/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {      
+            pageInit: function () {//frio
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from datos_generales_serv WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('datos_generales_serv');
+                                console.log(item);
+                                    $('#orden').val(item.no_orden);
+                                    $('#fecha').val(item.fecha);
+                                    $('#cliente').val(item.cliente);
+                                    $('#suc_cliente').val(item.sucursal_cliente);
+                                    $('#direccion').val(item.direccion);
+                                    $('#ciudad').val(item.ciudad);
+                                    $('#telefono').val(item.telefono);
+                                    $('#correo').val(item.correo);
+                                    $('#equipo').val(item.equipo);
+                                    $('#marca').val(item.marca);
+                                    $('#modelo').val(item.modelo);
+                                    $('#serie').val(item.serie);
+                                    $('#ml').val(item.ml);
+                                    $('#tipo_servicio').val(item.tipo_servicio);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from visita_servInd WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log("visita_servInd");
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from cedulas_general WHERE id_usuario = ?",
+                            [id_usuario],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('cedulas_general');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from encuesta_serv WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log("encuesta");
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from checklist_servind WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('checklist_servind');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from fotos_check WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('fotos_check');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from papeleta WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('papeleta');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from refacciones WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('refacciones');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from diagnostico_servInd WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('diagnostico_servInd');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from diagnosticos_PMP WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('diagnosticos_PMP');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from datos_eq WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('datos_eq');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from diagnostico_servIndHBE WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('diagnostico_servIndHBE');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from fotos_diagnostico WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('fotos_diagnostico');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+            }
+        }
+    }
+</script>

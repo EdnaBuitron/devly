@@ -1,0 +1,108 @@
+<template>
+    <div class="page">
+        <div class="navbar" style="background-color: #063E7F;height: 52px;">
+            <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+            <div class="navbar-inner" style="height: 52px;">
+                <div class="left">
+                    <a href="javascript:location.reload()" class="link back" style="margin-left: 5px;">
+                        <span class="nav-text-regresar-recorrido">Regresar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-content" style="background-color: #f6f7f9; ">
+            <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+                <input type="hidden" id="resp1" name="resp1" />
+                <div style="text-align: left;">        
+                    <div class="item-inner">
+                        <div class="block-title" style="text-align: center; font-size: 20px;"><h2 style="color:#505759;font-size: 22px;font-family: 'ITC Avant Garde Gothic', sans-serif;">Recorrido de Apoyo</h2></div>
+                    </div>
+                </div>
+                    <div class="buttons-container" style="display: flex;">
+                        <a href="/datosgeneralesVIC1/" class="fwm-button-recorrido">
+                            <img src="img/iconsMenu/persona2.svg" width="90px" height="90px" id="img1"/>
+                            <span class="fwm-text-recorrido">Datos Generales</span>
+                        </a>
+                        <a href="/apoyoCampoVIC/" class="fwm-button-recorrido">
+                            <img src="img/iconsMenu/apoyo.svg" width="90px" height="90px" id="img4"/>
+                            <span class="fwm-text-recorrido">Apoyo</span>
+                        </a>
+                    </div>
+                    <div class="buttons-container" style="display: flex;margin-top: 5%; ">
+                        <a href="/cierreVIC1/" class="fwm-button-recorrido">
+                            <img src="img/iconsMenu/estrellas.svg" width="90px" height="90px" id="img5"/>
+                            <span class="fwm-text-recorrido">Evaluación y cierre</span>
+                        </a>
+                    </div>
+                <!-- Inicio FWM Recorrido -->
+                    <div id="FWM-Menu" class="container-items" style="width: 100%;"></div>
+                <!-- Fin FWM Recorrido -->
+                <fwm></fwm>
+            </div> 
+        </div>
+    </div>
+</template>
+           
+<script>
+    return {
+        on: {      
+            pageInit: function () {
+                //Para cambiar los iconos de color
+                var id_cedula = localStorage.getItem("IdCedula");
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from apoyo_bennetts WHERE id_cedula = ?",
+                            [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                if(length == 0){
+                                } else {
+                                }
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        if(item.nombre_contacto=='' || item.telefono == '' || item.correo==''){
+                                            }else{
+                                                document.getElementById("img1").src="img/iconsMenu/persona.svg";
+                                        }
+                                    }
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                    function(tx1){
+                        tx1.executeSql(
+                            "Select * from fotos_apoyo where id_cedula= ?",
+                            [id_cedula],
+                            function(tx, results){
+                                var length = results.rows.length;
+                                if(length == 0){
+                                } else {
+                                    document.getElementById("img4").src="img/iconsMenu/apoyo2.svg";
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error al consultar: " + error.message);
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+
+            }
+        }
+    }
+</script>

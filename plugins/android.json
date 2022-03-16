@@ -1,0 +1,124 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "com.virtuoworks.cordova-plugin-canvascamera": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-androidx-adapter": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-background-mode": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-battery-status": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-camera": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-console": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-contacts": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-device-motion": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-device-orientation": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-downloader": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-enable-cleartext-traffic": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-fcm-with-dependecy-updated": {
+      "ANDROID_DEFAULT_NOTIFICATION_ICON": "@mipmap/ic_launcher",
+      "ANDROID_FCM_VERSION": "21.0.0",
+      "ANDROID_FIREBASE_BOM_VERSION": "26.0.0",
+      "ANDROID_GOOGLE_SERVICES_VERSION": "4.3.4",
+      "ANDROID_GRADLE_TOOLS_VERSION": "4.1.0",
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-file-downloader": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-file-md5": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-flashlight": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-globalization": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-media-capture": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-vibration": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-zip": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova.plugins.diagnostic": {
+      "ANDROID_SUPPORT_VERSION": "28.+",
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.field.field"
+    },
+    "cordova-plugin-file-opener2": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.field.field"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.field.field"
+    }
+  }
+}

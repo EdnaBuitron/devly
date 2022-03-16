@@ -1,0 +1,139 @@
+<template>
+    <div class="page" style="background-color: rgb(245, 245, 245);">
+        <div class="navbar" style="background-color: #063E7F;height: 52px;">
+            <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+            <div class="navbar-inner sliding" style="height: 52px;">
+                <div class="left">
+                    <a href="#" onclick="regresarProteus();">
+                        <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+                <h2 style="color:#063E7F;font-size: 20px;font-family: 'ITC Avant Garde Gothic', sans-serif;margin-top: 35px;">Datos Generales</h2>
+
+                <form class="list" style="margin-top: 0;">                    
+                    <style type="text/css">
+                        input[type=text]{
+                            margin: 8px 0;
+                            border: 1px solid #ccc;
+                            border-radius: 6px;
+                        }
+                    </style>
+                    <div style="width: 90%;border-radius: 15px;margin-left: 5%;border: 0.5px solid #ECECEC;background-color: white;">
+                        <span class="span" style="font-weight: bold;width: 90%;">Local:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0px;border-bottom: 0;">
+                            <input type='text' name="correoContacto" id="local" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+
+                        <span class="span" style="font-weight: bold;width: 90%;">Razon Social:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="nombreContacto" id="razon_social" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" readonly/>
+                        </span>
+
+                        <span class="span" style="font-weight: bold;width: 90%;">Orden de Servicio:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="nombreCliente" id="orden_servicio" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" readonly/>
+                        </span>
+
+                        <span class="span" style="font-weight: bold;width: 90%;">RUC:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' name="telefonoContacto" id="ruc" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" readonly/>
+                        </span>
+
+                        <span class="span" style="font-weight: bold;width: 90%;">Dirección:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0px;border-bottom: 0;">
+                            <input type='text' name="correoContacto" id="direccion" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+
+                        <span class="span" style="font-weight: bold;width: 90%;">Nombre Contacto:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0px;border-bottom: 0;">
+                            <input type='text' name="correoContacto" id="nombre_contacto" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+
+                        <span class="span" style="font-weight: bold;width: 90%;">Telefono 1:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0px;border-bottom: 0;">
+                            <input type='text' name="correoContacto" id="telefono1" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+
+                        <span class="span" style="font-weight: bold;width: 90%;">Telefono 2:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0px;border-bottom: 0;">
+                            <input type='text' name="correoContacto" id="telefono2" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+
+                        <span class="span" style="font-weight: bold;width: 90%;">E-mail:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 30px;border-bottom: 0;">
+                            <input type='text' name="correoContacto" id="email" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>
+                        
+                    </div>
+                    <!---CAMBIOS--->    
+                    <style type="text/css">
+                        .boton-personalizado-4 {
+                            text-decoration: none;
+                            font-family: 'ITC Avant Garde Gothic', sans-serif;
+                            font-weight: 600;
+                            font-size: 16px;
+                            color: #FFFFFF;
+                            padding-top: 15px;
+                            padding-bottom: 13px;
+                            padding-left: 30px;
+                            padding-right: 30px;
+                            background-color: #063E7F;
+                            border-radius: 15px;
+                        }
+                    </style>
+                    <div class="block grid-resizable-demo">
+                        <div class="row align-items-stretch" style="text-align: center;">
+                            <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                <span class="resize-handler"></span>
+                                <a href="#" onclick="guardarDatosGeneralesProteus();" class="boton-personalizado-4">Guardar datos</a>   
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {      
+            pageInit: function () {
+                var id_cedula = localStorage.getItem("IdCedula");
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from datos_generales_proteus WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#orden_servicio").val(item.orden_servicio);
+                                    $("#razon_social").val(item.razon_social);
+                                    $("#ruc").val(item.ruc);
+                                    $("#local").val(item.local);
+                                    $("#direccion").val(item.direccion);
+                                    $("#nombre_contacto").val(item.nombre_contacto);
+                                    $("#telefono1").val(item.telefono1);
+                                    $("#telefono2").val(item.telefono2);
+                                    $("#email").val(item.email);
+                                } 
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){},
+                    function(){}
+                );
+            }
+        }
+    }
+</script>

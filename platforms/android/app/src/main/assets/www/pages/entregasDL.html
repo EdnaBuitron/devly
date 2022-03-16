@@ -1,0 +1,238 @@
+<style>  
+    .md .button {
+        text-decoration: none;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        font-weight: 600;
+        font-size: 25px;
+        color: #FFFFFF;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 100%;
+    }
+    .list .item-floating-label, .list .item-label {
+        width: 100%; 
+    }
+    #minuta{
+        text-align: center;
+    }
+    .sheet-modal.modal-in{
+        height: 80%;
+    }
+    .navbar .title{
+        font-weight: bold;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #fff;
+    }
+    .navbar a.link{
+        color: white;
+    }
+    .list .item-link {
+    color: inherit;
+    margin-top: 5px;
+    }
+    .button {
+    display: initial;
+    }
+    .navbar{
+        background-color: #063E7F;
+        height: 52px;
+    }
+    .navbar-inner{
+        height: 52px;
+    }
+    .list .item-title{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-inner{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-content{
+        padding-left: 0px;
+    }
+    #fecha{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    #otroA{
+    font-size: 16px;
+    font-family: 'ITC Avant Garde Gothic', sans-serif;
+    }
+    .list ul{
+        top: 10px;
+        padding-left: 16px;
+    }
+    #thaccion{
+    padding-left: 12px;
+    padding-right: 12px;
+    }
+    #thfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thcomentarios{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thtipo{
+    width: 190px;
+    }
+    #thfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 70px;
+    }
+    #tdaccion{
+    padding-left: 14px;
+    padding-right: 12px;
+    }
+    #tdfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    }
+    #tdtipo{
+    padding-left: 5px;
+    padding-right: 5px;
+    }
+    #tdcomentario{
+    width: min-content;
+    }
+    #tdfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+
+    footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    }
+
+</style>
+<template>
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarDilimpio2();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <!-- Contenido Formulario -->
+            <div class="page-content">
+
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Entregas</h2>
+                    <div style="text-align: left;">     
+                        <form class="list FWM-fixing-form"> 
+                             <!--Seleccionar opcion --> 
+                            <span class="span FWM-span-form">Comentarios:</span>
+                                <textarea class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" name="" id="comentarios" cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>
+                            <span class="span FWM-span-form">Foto:</span>
+                            <div class="FWM-photo-container">
+                                <div class="border-capture">
+                                    <a onclick="capturePhoto();">
+                                        <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px" style="margin-left: 50px;"/>
+                                    </a>
+                                </div>
+                                <img class="FWM-photo-hide" id="smallImage" src=""/>
+                                <input type="hidden" id="imagenC" name="imagenC"/>
+                            </div>
+                        </form>
+
+                        <div class="block grid-resizable-demo" style="margin-top: 50px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a href="#" onclick="guardarEntregasDL();" style="background-color: #063E7F;" class="boton-equipo">Guardar Datos</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="block-title FWM-subtitulo" style="margin-top: 80px;">Registros Guardados:</div>  
+                        
+                            <div class="card data-table" style="margin-bottom: 140px;">
+                                <div class="infinite-scroll-content">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Comentarios</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla_entregas"></tbody>
+                                    </table>
+                                    <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                    <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                        <p>Sin registros</p>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+</template>
+<script>
+return {
+        on: {      
+            pageInit: function () {
+                $('.preloader').remove();
+                $('.infinite-scroll-preloader').remove();
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from entregasDL where id_cedula = ? ORDER BY id_entrega DESC",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#tabla_entregas").append("<tr id='fila"+ item.id_entrega +"'><td><a href='#' onclick='eliminarFilaDL("+ item.id_entrega +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
+                                        item.foto_entrega+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.comentarios + "</td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
+                                        $("#message-nr").css("display", "none");
+                                        $('.preloader').remove();
+                                        $('.infinite-scroll-preloader').remove();
+                                    }
+                                },
+                                    function(tx, error){
+                                        console.log("Error: " + error.message);
+                                        app.preloader.hide();  
+                                        $('.preloader').remove();
+                                        $('.infinite-scroll-preloader').remove();
+                                    }
+                        );  
+                    },
+                        function(error){},
+                        function(){}
+                ); 
+
+                    $('.preloader').remove();
+                    $('.infinite-scroll-preloader').remove();
+            }
+        }
+    }
+
+</script>

@@ -1,0 +1,214 @@
+<style>
+    button{
+        width: 33.33%;
+    }
+    .FWM-textBox{
+        width: 100%; 
+        padding-left: 3px; 
+        font-size: 15px; 
+        height: 37px; 
+        font-family: 'ITC Avant Garde Gothic', sans-serif; 
+        background-color: white; 
+        border-radius: 8px; 
+        border: 1px solid gray;
+    }
+    .swal-button {
+        width: 100%;
+    }
+    input[type=text]{
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+    }
+    </style>
+    <template>
+        <div class="view view-main view-init safe-areas">
+            <div class="page" id="FWM-1">
+                <!-- Navbar -->
+                <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                    <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                    <div class="navbar-inner sliding" style="height: 52px;">
+                        <div class="left">
+                            <a href="#" onclick="regresarRecorridoServInd3();">
+                                <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido Formulario -->                                
+                <div class="page-content">
+
+                    <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                        <h2 class="FWN-titulo-2">Diágnostico</h2>
+    
+                    <div style="text-align: left;">     
+                        <div class="list FWM-fixing-form">
+                            <span class="span FWM-span-form">Que reporto (falla reportada):</span>
+                            <textarea class ="FWM-input" id="falla" name="falla"  cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>
+    
+                            <span class="span FWM-span-form">Cómo encontró el equipo (Diagnostico):</span>
+                            <select id="Como-select"name="Como-select" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;">
+                                <option value="0">Selecciona un opción</option>
+                                <option value="1">En funcionamiento</option>
+                                <option value="2">Sin funcionar</option>
+                                <option value="3">Otras condiciones</option>                                
+                            </select>
+    
+                            <span class="span FWM-span-form">Software Instalado:</span>
+                            <input type="text" name="sw" id="sw" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form" style="line-height: 1.3;margin-top: 20px;margin-bottom: 20px;">Descarga de Datos vía USB:</span>
+                            <div style="display: flex;justify-content: space-around;margin-bottom: 30px;margin-top: -17px;" name = 'box'>
+                                <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;">
+                                    <input type="checkbox" id="viaticos-1" name = 'pregunta1'  value="1" >Info Service</label>
+                                <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;">
+                                    <input type="checkbox" id="viaticos-2"  name = 'pregunta1' value="2" >HACCP</label>
+                            </div>
+
+                            <span class="span FWM-span-form">Foto:</span>
+                            <div class="FWM-photo-container">
+                                <div class="border-capture">
+                                    <a onclick="capturePhoto();">
+                                        <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px" style="margin-left: 50px;"/>
+                                    </a>
+                                </div>
+                                <img class="FWM-photo-hide" id="smallImage" src=""/>
+                                <input type="hidden" id="imagenC" name="imagenC"/>
+                            </div>
+                            <div class="block grid-resizable-demo" style="margin-bottom: 90px; margin-top: 50px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="guardarFotoDiagnostico('Rational');" class="boton-equipo">Guardar Foto </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block-title FWM-subtitulo">Evidencia diagnostico</div>  
+                            <div class="card data-table" style="margin-left: 0px; margin-right: 0px;">
+                                <div class="infinite-scroll-content">
+                                    <table id="tabla_diagnostico">
+                                        <thead>
+                                            <tr>                                                
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                    <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                        <p>Sin Equipos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="block grid-resizable-demo" style="margin-bottom: 120px; margin-top: 50px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="guardarDiagnosticoServRe();" class="boton-equipo">Guardar Diágnostico</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 50px; margin-bottom: 20px;">
+                        <button class="btn-next" onclick="app.views.main.router.back('/datosgeneralesServ3/', {force: true, ignoreCache: true, reload: true});">Anterior</button>
+
+                        <button class="btn-next" onclick="app.views.main.router.back('/formServ21/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>
+                    </div>
+    
+                    <div class="popover popover-links">
+                        <div class="popover-inner">
+                            <div class="list">
+                            <ul>
+                                <li><a class="list-button item-link popover-close" onclick="showTPM()">TPM</a></li>
+                                <li><a class="list-button item-link popover-close" onclick="showManual()">Manual</a></li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </template>
+    <script>
+        return {
+            on: {
+                pageInit: function (e, page) {
+                    var id_usuario = localStorage.getItem("id_usuario");
+                    var id_cedula = localStorage.getItem("IdCedula");
+                    var tipo = 'correctivo';
+                    databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from fotos_diagnostico where id_cedula = ? AND tipo = ? ORDER BY id_foto DESC",
+                        [id_cedula,tipo],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                console.log(length);
+                                if (length ==0){
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                }else{
+                                    $("#message-nr").css("display", "none");
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        console.log(item);
+                                        //console.log('item',item)
+                                        $("#tabla_diagnostico").append("<tr id='fila"+ item.id_foto +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
+
+                                                    
+                                    }
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error al mostrar datos: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                    databaseHandler.db.transaction(
+                        function (tx) {
+                            tx.executeSql("select * from diagnostico_servInd WHERE id_cedula = ?",
+                                [id_cedula],
+                                function (tx, results) {
+                                    var item = results.rows.item(0);
+                                    console.log(item);
+                                    $('#falla').val(item.falla_en);
+                                    $('#sw').val(item.sw);                            
+                                    $("#Como-select option[value='"+item.diagnostico+"']").attr("selected", true);
+                                    if(item.usbInfo == 1){
+                                        $('#viaticos-1').prop("checked",true);
+                                    }else{
+                                        $('#viaticos-1').prop("checked",false);
+                                    }  
+                                    if(item.usbHa == 1){
+                                        $('#viaticos-2').prop("checked",true);
+                                    }else{
+                                        $('#viaticos-2').prop("checked",false);
+                                    }
+                                    app.preloader.hide();
+                                },
+                                function (tx, error) {
+                                    swal("Error al guardar", error.message, "error");
+                                    app.preloader.hide();
+                                }
+                            );
+                        },
+                        function (error) { },
+                        function () { }
+                    );
+
+                }
+            }  
+        }
+    </script>

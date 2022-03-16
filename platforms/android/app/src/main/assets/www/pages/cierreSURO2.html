@@ -1,0 +1,400 @@
+<template>
+    <div class="view view-main view-init safe-areas">
+        <div class="page">
+            <div class="navbar" style="background-color: #063E7F;height: 52px;height: 52px;">
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <style>
+                            .nav-text-regresar {
+                                color: #ffffff;
+                                border: 2px solid white;
+                                padding: 0 10px;
+                                border-radius: 7px;
+                                font-size: 14px;
+                            }
+
+                            .rating:not([disabled]) .star:hover::after,
+                            .rating .star.active::after {
+                                height: 1.3em;
+                            }
+                        </style>
+                        <a href="#" class="link back" style="margin-left: 5px;">
+                            <span class="nav-text-regresar">Regresar</span>
+                        </a>
+                    </div>
+                    <div class="title" style="color: white;text-align:center;padding-left: 40px;">
+                        Cierre con Cliente
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar toolbar-bottom tabbar">
+                <style>
+                    .tab-link-active {
+                        color: white;
+                        background-color: #00A7B5;
+                    }
+                </style>
+                <font size="1">
+                    <div class="toolbar-inner">
+                        <a href="#tab-1" class="tab-link tab-link-active" style="font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif;color: 505759;">Cliente</a>
+                        <a href="#tab-2" class="tab-link" style="font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif;color: #505759;">Recorrido</a>
+                        <a href="#tab-3" class="tab-link" style="font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif;color: #505759;">Cierre</a>
+                    </div>
+                </font>
+            </div>
+            <div class="tabs-animated-wrap">
+                <div class="tabs">
+                    <div id="tab-1" class="page-content tab tab-active bg-color-white" style="margin-top: 20px;background-color: rgb(245, 245, 245);">
+                        <div class="block" style="padding-left: 0;padding-top: 0;">
+                            <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+                                <h2 style="color:#00A7B5;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;">
+                                    Datos Generales
+                                </h2>
+                            </div>
+                            <div style="text-align: left; justify-content:left; margin-right:auto; margin-left:auto; width: 95%;background-color: white;padding: 10px;border-radius: 15px;margin-left: 2%;">
+                                <table id="table-general" cellpadding="10" style="width: 100%;margin: 0;padding: 0;">
+                                    <tbody id="table-general-conten">
+                                        <tr>
+                                            <th style="color: #505759;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;">Remitente:</th>
+                                            <td><span id="remitente" style="color: #063E7F;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: #505759;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;">Fecha:</th>
+                                            <td><span id="Fecha" style="color: #063E7F;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: #505759;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;">Sitio:</th>
+                                            <td><span id="sitio" style="color: #063E7F;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="color: #505759;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;">Motivo de la visita:</th>
+                                            <td><span id="motivo" style="color: #063E7F;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="page-content tab bg-color-white" style="background-color: rgb(245, 245, 245);">
+                        <div class="block">
+                            <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+                                <h2 style="color:#00A7B5;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 22px;">
+                                   Evaluación
+                                </h2>  
+                                <span style="text-align: justify; font-size: 10px;">Como parte de nuestra Mejora Continua, le solicitamos nos califique nuestro servicio: (Ponderación de 0 a 10)</span>
+                                <br><br>                              
+                                
+                                    <label style="font-size: 18px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;">
+                                        <strong>Calificación de Limpieza:</strong>
+                                    </label>
+                                    <div class="nring">
+                                        <input type="radio" name="rating0" id="rat100" value="10"><label for="rat100">10</label>
+                                        <input type="radio" name="rating0" id="rat90" value="9"><label for="rat90">9</label>
+                                        <input type="radio" name="rating0" id="rat80" value="8"><label for="rat80">8</label>
+                                        <input type="radio" name="rating0" id="rat70" value="7"><label for="rat70">7</label>
+                                        <input type="radio" name="rating0" id="rat60" value="6"><label for="rat60">6</label>
+                                        <input type="radio" name="rating0" id="rat50" value="5"><label for="rat50">5</label>
+                                        <input type="radio" name="rating0" id="rat40" value="4"><label for="rat40">4</label>
+                                        <input type="radio" name="rating0" id="rat30" value="3"><label for="rat30">3</label>
+                                        <input type="radio" name="rating0" id="rat20" value="2"><label for="rat20">2</label>
+                                        <input type="radio" name="rating0" id="rat10" value="1"><label for="rat10">1</label>
+                                    </div>
+                                    <br>
+                               
+                                    <label style="font-size: 18px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;">
+                                        <strong>Calificación Impacto de la visita del Ejecutivo de Operaciones:</strong>
+                                    </label>
+                                    <div class="nring">
+                                        <input type="radio" name="rating1" id="rat101" value="10"><label for="rat101">10</label>
+                                        <input type="radio" name="rating1" id="rat91" value="9"><label for="rat91">9</label>
+                                        <input type="radio" name="rating1" id="rat81" value="8"><label for="rat81">8</label>
+                                        <input type="radio" name="rating1" id="rat71" value="7"><label for="rat71">7</label>
+                                        <input type="radio" name="rating1" id="rat61" value="6"><label for="rat61">6</label>
+                                        <input type="radio" name="rating1" id="rat51" value="5"><label for="rat51">5</label>
+                                        <input type="radio" name="rating1" id="rat41" value="4"><label for="rat41">4</label>
+                                        <input type="radio" name="rating1" id="rat31" value="3"><label for="rat31">3</label>
+                                        <input type="radio" name="rating1" id="rat21" value="2"><label for="rat21">2</label>
+                                        <input type="radio" name="rating1" id="rat11" value="1"><label for="rat11">1</label>
+                                    </div>
+                                    <br>
+                               
+                                    <label style="font-size: 18px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;">
+                                        <strong>Califique la atención del Gerente de Operaciones:</strong>
+                                    </label>
+                                    <div class="nring">
+                                        <input type="radio" name="rating2" id="rat102" value="10"><label for="rat102">10</label>
+                                        <input type="radio" name="rating2" id="rat92" value="9"><label for="rat92">9</label>
+                                        <input type="radio" name="rating2" id="rat82" value="8"><label for="rat82">8</label>
+                                        <input type="radio" name="rating2" id="rat72" value="7"><label for="rat72">7</label>
+                                        <input type="radio" name="rating2" id="rat62" value="6"><label for="rat62">6</label>
+                                        <input type="radio" name="rating2" id="rat52" value="5"><label for="rat52">5</label>
+                                        <input type="radio" name="rating2" id="rat42" value="4"><label for="rat42">4</label>
+                                        <input type="radio" name="rating2" id="rat32" value="3"><label for="rat32">3</label>
+                                        <input type="radio" name="rating2" id="rat22" value="2"><label for="rat22">2</label>
+                                        <input type="radio" name="rating2" id="rat12" value="1"><label for="rat12">1</label>
+                                    </div>
+                                    <br>
+                              
+                                    <label style="font-size: 18px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;">
+                                        <strong>Comentarios Generales:</strong>
+                                    </label>
+                                    <textarea class ="FWM-input" style="background-color: white;width: 100%;" id="comentarios" name="comentarios" cols="42" rows="7"></textarea>
+                                    <br>
+                                    <label style="font-size: 18px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;">
+                                        <strong>Comentarios o compromisos con el Cliente:</strong>
+                                    </label>
+                                    <textarea class ="FWM-input" style="background-color: white;width: 100%;" id="compromisos" name="compromisos" cols="42" rows="7"></textarea>
+                                
+                                <div class="block grid-resizable-demo">
+                                    <div class="row align-items-stretch" style="text-align: center;">
+                                        <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                            <span class="resize-handler"></span>
+                                            <a href="#" onclick="CierreVisitaEvaSURO()" class="boton-personalizado-4 link"> Guardar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                    <!--------------------------------FIN TAB 3-->
+                    <div id="tab-3" class="page-content tab bg-color-white" style="margin-top: 20px;background-color: rgb(245, 245, 245);">
+                        <div class="block">
+                            <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+                                <p>
+                                    <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;">
+                                        <strong>Nombre y firma del Cliente :</strong>
+                                    </label>
+                                </p>
+                                <center>
+                                    <input style="display: block;margin: 0 auto;width: 100%;border: 0;border-bottom: 1px solid rgba(0,0,0,.2);height: 35px;line-height: 45px;  margin-bottom: 10px;font-size: 1em;" class="spanBlanco" type="text" name="NombreFirma" id="NombreFirma" placeholder="Nombre de quién recibió el servicio:">
+                                </center>
+
+                                <!-- Contenedor de botones -->
+                                <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
+                                    <a
+                                        class="link popup-open"
+                                        href="#"
+                                        onclick="vertical();"
+                                        data-popup=".popup-photo"
+                                    >
+                                        <img src="img/iconsMenu/firmardigital.svg" width="80px">
+                                    </a>
+                                    <input
+                                        type="hidden"
+                                        name="signate"
+                                        id="signate"
+                                        placeholder="sfirmc"
+                                    >
+                                    <center>
+                                        <img id="ImagenFirmaView" src="" width="70%">
+                                        <br>
+                                        <span id="VolverFirmar"></span>
+                                        <input type="button" value="Volver a Firmar" style="position:absolute;display:none;margin:0 !important;color:white;background-color: #019cdc;top:40px;margin-left:160px !important">
+                                    </center>
+                                    <a
+                                        class="link popup-open"
+                                        href="#"
+                                        onclick="createFirma()"
+                                        data-popup=".popup-services"
+                                    >
+                                        <img src="img/iconsMenu/firmar.svg" width="80px">
+                                    </a>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="popup popup-photo" style="text-align: center;">
+                                    <br>
+                                    <div class="headerPopupPhoto" style="width: 90%;display: flex;justify-content: space-between;padding-left: 20px;margin-bottom: 50px;">
+                                        <a class="link popup-close" onclick="gFotoFirma();" href="#">
+                                            Guardar
+                                            Fotografia
+                                        </a>
+                                        <a class="link popup-close" href="#">Cerrar</a>
+                                    </div>
+                                    <style>
+                                        .border-capture {
+                                            background-color: white;
+                                            border-radius: 20px;
+                                            width: 147.76px;
+                                            height: 147.76px;
+                                            border: solid 3px #00A7B5;
+                                        }
+                                    </style>
+                                    <div class="photoContainer" style="display: block;">
+                                        <center>
+                                            <div class="border-capture">
+                                                <a href="#" onclick="capturaFirma();">
+                                                    <img
+                                                        src="img/camera.svg"
+                                                        id="photoIcon"
+                                                        width="45px"
+                                                        style="position: absolute;position: fixed;z-index: 100;margin-top: 50px; position: relative;"
+                                                    >
+                                                </a>
+                                                <div hidden="true" id="ImaCe" hidden="true"></div>
+                                            </div>
+                                        </center>
+                                        <input
+                                            type="image"
+                                            name="smallImage"
+                                            style="margin: 0px auto; width: 147.76px; height: 147.76px; border-radius: 17px; display: none; margin-top: -150.65px;"
+                                            id="smallImage"
+                                            src=""
+                                        >
+                                        <br>
+                                        <input type="hidden" name="imgSigPhoto" id="imgSigPhoto">
+                                    </div>
+                                </div>
+                                <div class="popup popup-services">
+                                    <br>
+                                    <div class="popup-container" style="height: 300px;">
+                                        <div class="headerPopupPhoto" style="width: 90%;display: flex;justify-content: space-between;padding-left: 20px;margin-bottom: 30px;">
+                                            <a class="link popup-close" onclick="gfirma()" href="#">Guardar Firma</a>
+                                            <a class="link" onclick="cleanFirma()" href="#">Limpiar</a>
+                                            <a class="link popup-close" onclick="gClose()" href="#">Cerrar</a>
+                                        </div>
+                                        <div style="display: flex;flex-direction: column;justify-content: center;align-content: center;align-items: center;">
+                                            <p style="margin: 0;">Área para Firmar</p>
+                                        </div>
+                                        <div style="display: flex;flex-direction: column;justify-content: center;align-content: center;align-items: center;">
+                                            <canvas
+                                                id="signature-pad"
+                                                class="signature-pad"
+                                                width="400"
+                                                height="200"
+                                                style="background-color: #e4fff1"
+                                            ></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input
+                                    type="hidden"
+                                    name="geolocation"
+                                    id="geolocation"
+                                    placeholder="Geolocalización..."
+                                    disabled="disabled"
+                                >
+                                <style type="text/css">
+                                    .boton-personalizado-4 {
+                                        text-decoration: none;
+                                        font-size: 16px;
+                                        color: #FFFFFF;
+                                        padding-top: 13px;
+                                        padding-bottom: 10px;
+                                        padding-left: 40px;
+                                        padding-right: 40px;
+                                        background-color: #063E7F;
+                                        border-radius: 15px;
+                                    }
+                                </style>
+                                <div class="block grid-resizable-demo">
+                                    <div class="row align-items-stretch" style="text-align: center;">
+                                        <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                            <span class="resize-handler"></span>
+                                            <a href="#" onclick="guardarCierreSURO2();" class="boton-personalizado-4 link"> Terminar servicio</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                var id_cedula = localStorage.getItem("IdCedula");
+            databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("Select * from Visita_SURO where id_cedula = ? ",
+                [id_cedula],
+                    function(tx, results){
+                        
+                        var item = results.rows.item(0);
+                        $('#remitente').text(item.Nombre_remitente);
+                        $('#Fecha').text(item.fecha_envio);
+                         $('#sitio').text(item.Nombre_sitio);
+                         $('#motivo').text(item.motivo_vista);
+                         $("#comentarios").val(item.Comentarios);
+                         $("#compromisos").val(item.compromiso);
+                         var limpieza = item.cali_limpieza;
+                         var ejecutivo = item.cali_ejecutivo;
+                         var gerente = item.cali_gerente;
+                         var calLimpieza = limpieza * 10;
+                         $("#rat"+calLimpieza).prop("checked", true);
+                         var calijecutivo = ejecutivo * 10;
+                         calijecutivo=calijecutivo+1;
+                         $("#rat"+calijecutivo).prop("checked", true);
+                         var caligerente= gerente * 10;
+                         caligerente=caligerente+2;
+                         $("#rat"+caligerente).prop("checked", true);
+                        app.preloader.hide();
+                    },
+                    function(tx, error){
+                        console.log("Error al guardar cedula: " + error.message);
+                        app.preloader.hide();
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+                databaseHandler.db.transaction(
+                    function (tx1) {
+                        tx1.executeSql(
+                            "Select * from evidencia where id_cedula= ? AND fases = 'fomites'",
+                            [id_cedula],
+                            function (tx, results) {
+                                var length = results.rows.length;
+                                if (length == 0) {
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                } else {
+                                    $("#message-nr2").css("display", "none");
+                                    for (var i = 0; i < length; i++) {
+                                        var item = results.rows.item(i);
+                                        $("#evidenciaFomites").append("<div class='card demo-facebook-card'><div class='card-header'><div class='demo-facebook-name' style='text-align: center; font-weight: bold;font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;'>Nombre Área: " + unescape(item.nombre_grupo) + "</div><div class='demo-facebook-date'></div>  </div> <div class='card-content card-content-padding' style='text-align: center;'><div class='card-content card-content-padding' align='center'> <img src='" + item.foto_evidencia + "' width= '85%'/></div></div> <div class='card-footer'><a href='#' style='font-size: 13px;font-family: 'ITC Avant Garde Gothic', sans-serif;'>Fecha: " + item.fecha_foto + "</a></div></div>");
+                                        $('.preloader').remove();
+                                        $('.infinite-scroll-preloader').remove();
+                                    }
+                                }
+                            },
+                            function (tx, error) {
+                                console.log("Error al consultar: " + error.message);
+                            }
+                        );
+                    },
+                    function (error) { },
+                    function () { }
+                );
+                var ratings = document.getElementsByClassName('rating');
+                for (var i = 0; i < ratings.length; i++) {
+                    var r = new SimpleStarRating(ratings[i]);
+                    ratings[i].addEventListener('rate', function (e) {
+                        $("#eval").val(e.detail);
+                    });
+                }
+
+                document.addEventListener("deviceready", onDeviceReady, false);
+                function onDeviceReady() {
+                    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+                }
+                function onSuccess(position) {
+                    var element = document.getElementById('geolocation');
+                    $('#geolocation').val(position.coords.latitude + ',' + position.coords.longitude);
+                }
+                function onError(error) {
+                    alert('Error en la Localización');
+                }
+            }
+        }
+    }
+</script>

@@ -1,0 +1,466 @@
+<style>
+   .text-divided-check{
+    margin-top: 0px;
+    font-size: 14px;
+    }
+    .sheet-modal.modal-in{
+        height: 80%;
+        z-index: 9999;
+    }
+    .text-check{
+        font-size: 15px;
+        line-height: 22px;
+    }
+    .select-check {
+        font-size: 14px !important;
+        line-height: 40px;
+    }
+    .multiple-input-divided-check {
+        font-size: 14px !important;
+        line-height: 40px;
+    }
+</style>
+<template>
+    <div class="view view-main view-init safe-areas">
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarRecorridoServInd2();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+ 
+                <div style="text-align: center; justify-content:center;width: 100%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Sistema de control eléctricos y/o electrónicos</h2>
+
+                    <div style="text-align: left;">
+                        <form class="list FWM-fixing-form" style="width: 96%;margin-left: 2%;"> 
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check">17.- Revisión eléctrica por elementos de control</span>
+                                <select id="3-1-select" name="Punto-17" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check" style="margin-bottom: 0px;">
+                                <span class="span FWM-span-form text-check">18.- Verificar arranque y paro por termostato</span>
+                                <select id="3-2-select" name="Punto-18" class="select-check" style="margin-bottom: 0px;" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div style="display: flex;justify-content: space-around;margin-bottom: 16px;">
+                                <label class="text-divided-check" style="width: 30%; margin-left: 10px;"> Arranque <input type="text" id="3-3-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%; padding-top: 28px;">  °C</label>
+                                <label class="text-divided-check" style="width: 30%;"> Paro <input type="text" id="3-4-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%; padding-top: 28px;"> °C</label>
+                            </div>
+
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check">19.- Verificar secuencia de operación (encendido-control, protección apagado)</span>
+                                <select id="3-5-select" name="Punto-19" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check">20.- Verificar funcionamiento de timers y/o retardadores del sistema</span>
+                                <select id="3-6-select" name="Punto-20" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check">21.- Revisar integridad de válvula principal e individual de alimentación de gas</span>
+                                <select id="3-7-select" name="Punto-21" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check" style="margin-top: 10px;">22.- Verificar termostato de alto límite</span>
+                                <select id="3-8-select" name="Punto-22" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check">23.- Revisión y limpieza de contactores y/o relevadores</span>
+                                <select id="3-9-select" name="Punto-23" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check">24.- Revisión y funcionamiento de interruptores de seguridad (puertas, levante y arrastre, etc.)</span>
+                                <select id="3-10-select" name="Punto-24" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check" style="margin-top: 5px;">25.- Funcionamiento y operaciones controles de ignición</span>
+                                <select id="3-11-select" name="Punto-25" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check" style="margin-top: 5px;">26.- Revisión de control de presión</span>
+                                <select id="3-12-select" name="Punto-26" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check">27.- Revisión y limpieza de controles de nivel</span>
+                                <select id="3-13-select" name="Punto-27" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check">28.- Funcionamiento válvulas de control de gas automáticas</span>
+                                <select id="3-14-select" name="Punto-28" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check">29.- Revisión de solenoides de procesos</span>
+                                <select id="3-15-select" name="Punto-29" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check" style="margin-top: 10px;">30.- Motores eléctricos principales operación voltaje</span>
+                                <select id="3-16-select" name="Punto-30" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div style="display: flex;justify-content: space-around;margin-bottom: 15px;">
+                                <label class="text-divided-check" style="width: 20%;"> Voltaje <input type="text" id="3-17-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%;"> Amp1 <input type="text" id="3-18-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%;"> Amp2 <input type="text" id="3-19-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%;"> Amp3 <input type="text" id="3-20-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%;"> Amp4 <input type="text" id="3-21-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                            </div>
+                            
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check" style="margin-top: 10px;">31.- Revisión de resistencias de calentamiento voltaje</span>
+                                <select id="3-22-select" name="Punto-31" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div style="display: flex;justify-content: space-around;margin-bottom: 15px;">
+                                <label class="text-divided-check" style="width: 20%;"> Voltaje <input type="text" id="3-23-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%;"> Amp1 <input type="text" id="3-24-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%;"> Amp2 <input type="text" id="3-25-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%;"> Amp3 <input type="text" id="3-26-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                <label class="text-divided-check" style="width: 20%;"> Amp4 <input type="text" id="3-27-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                            </div>
+                            
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check" style="margin-top: 8px;">32.- Revisión de transformadores</span>
+                                <select id="3-28-select" name="Punto-32" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                            <div class="container-check">
+                                <span class="span FWM-span-form text-check" style="margin-top: 8px;">33.- Revisión de driver velocidad</span>
+                                <select id="3-29-select" name="Punto-33" class="select-check" onchange="checkSelect(this.value,this.id); guardarSelectServ(this.id);">
+                                    <option value="0"></option>
+                                    <option value="1">Bueno</option>
+                                    <option value="2">Regular</option>
+                                    <option value="3">Malo</option>
+                                    <option value="4">Observación</option>
+                                    <option value="5">N/A</option>
+                                </select>
+                            </div>
+                        </form>
+
+                        <div class="block-title FWM-subtitulo">Evidencias:</div>  
+                        
+                            <div class="card data-table">
+                                <div class="infinite-scroll-content">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Pregunta</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Titulo</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla_electricos"></tbody>
+                                    </table>
+                                    <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                    <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                        <p>Sin registros</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+
+                    <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 80px; margin-bottom: 20px;">
+                        <button class="btn-next" onclick="app.views.main.router.back('/formServ3/', {force: true, ignoreCache: true, reload: true});">Anterior</button>
+                        <a href="#" class="buble-float link popover-open" data-popover=".popover-links" style="background:cadetblue; width: 20%;">
+                            <i class="material-icons md-light" style="color: #ffffff;font-size: 35px;">book</i>
+                        </a>
+                        <button class="btn-next" onclick="guardarSuministrosServind(29,3);">Siguiente</button>
+                        <!--<button class="btn-next" onclick="app.views.main.router.back('/formServ5/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>-->
+                    </div>
+    
+                    <div class="popover popover-links">
+                        <div class="popover-inner">
+                            <div class="list">
+                            <ul>
+                                <li><a class="list-button item-link popover-close" onclick="showTPM()">TPM</a></li>
+                                <li><a class="list-button item-link popover-close" onclick="showManual()">Manual</a></li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                $('.preloader').remove();
+                $('.infinite-scroll-preloader').remove();
+
+                var id_cedula = localStorage.getItem("IdCedula");
+                var id;
+                var tipoVisita = localStorage.getItem("TipoVisita");
+                var id_equipo = localStorage.getItem("insertId");
+
+                if(tipoVisita == 'PMP2'){
+                    databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select pregunta,valor,tipo from checklist_servind WHERE id_equipo = ? AND fase = '3'",
+                            [id_equipo],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#3-"+item.pregunta+"-"+item.tipo).val(item.valor);
+                                    id="3-"+item.pregunta+"-"+item.tipo;
+                                    //console.log(id);
+                                    if (item.tipo=='select'){
+                                        if(item.valor==1){
+                                            document.getElementById(id).style.setProperty('background-color', '#2BEB00', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==2){
+                                            document.getElementById(id).style.setProperty('background-color', 'yellow', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==3){
+                                            document.getElementById(id).style.setProperty('background-color', 'red', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==4){
+                                            document.getElementById(id).style.setProperty('background-color', 'gray', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==5){
+                                            document.getElementById(id).style.setProperty('background-color', '#EAEAEA', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }
+                                    }else{}
+                                } 
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error al guardar cedula: " + error.message);
+                    },
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from fotos_check where id_equipo = ? AND fase = 3 ORDER BY id_foto ASC",
+                        [id_equipo],
+                            function(tx, results){
+                                let length = results.rows.length;
+                            for(var i = 0; i< length; i++){
+                                var item = results.rows.item(i);
+                                //console.log(item.id_cedula);
+                                $("#tabla_electricos").append("<tr id='fila"+ item.id_foto +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.no_pregunta+ "</td><td style='text-align: center;'>" + item.observaciones+ "</td><td style='text-align: center;'>" + item.fecha_foto + "</td></tr>");
+                                $("#message-nr").css("display", "none");
+                                $('.preloader').remove();
+                                $('.infinite-scroll-preloader').remove();
+                                app.preloader.hide();
+                            }
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){console.log("Error al guardar cedula: " + error.message);},
+                    function(){}
+                );
+                }else{
+                    databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select pregunta,valor,tipo from checklist_servind WHERE id_cedula = ? AND fase = '3'",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#3-"+item.pregunta+"-"+item.tipo).val(item.valor);
+                                    id="3-"+item.pregunta+"-"+item.tipo;
+                                    //console.log(id);
+                                    if (item.tipo=='select'){
+                                        if(item.valor==1){
+                                            document.getElementById(id).style.setProperty('background-color', '#2BEB00', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==2){
+                                            document.getElementById(id).style.setProperty('background-color', 'yellow', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==3){
+                                            document.getElementById(id).style.setProperty('background-color', 'red', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==4){
+                                            document.getElementById(id).style.setProperty('background-color', 'gray', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==5){
+                                            document.getElementById(id).style.setProperty('background-color', '#EAEAEA', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }
+                                    }else{}
+                                } 
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error al guardar cedula: " + error.message);
+                    },
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from fotos_check where id_cedula = ? AND fase = 3 ORDER BY id_foto ASC",
+                        [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                            for(var i = 0; i< length; i++){
+                                var item = results.rows.item(i);
+                                //console.log(item.id_cedula);
+                                $("#tabla_electricos").append("<tr id='fila"+ item.id_foto +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.no_pregunta+ "</td><td style='text-align: center;'>" + item.observaciones+ "</td><td style='text-align: center;'>" + item.fecha_foto + "</td></tr>");
+                                $("#message-nr").css("display", "none");
+                                $('.preloader').remove();
+                                $('.infinite-scroll-preloader').remove();
+                                app.preloader.hide();
+                            }
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){console.log("Error al guardar cedula: " + error.message);},
+                    function(){}
+                );
+                }
+            }
+        }  
+    }
+</script>

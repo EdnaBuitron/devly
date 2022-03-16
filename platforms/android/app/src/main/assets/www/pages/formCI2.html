@@ -1,0 +1,189 @@
+<style>  
+    .FWM-span-form {
+        color: #717D7E;
+    }
+        .list ul{
+            top: 10px;
+            padding-left: 16px;
+        }
+    .button {
+        display: initial;
+    }
+    
+    .md .button {
+        text-decoration: none;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        font-weight: 600;
+        font-size: 25px;
+        color: #FFFFFF;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 100%;
+    }
+        .navbar .title{
+            font-weight: bold;
+            font-family: 'ITC Avant Garde Gothic', sans-serif;
+            color: #fff;
+        }
+        .navbar a.link{
+            color: white;
+        }
+        .navbar{
+            background-color: #063E7F;
+            height: 52px;
+        }
+    
+        .navbar-inner{
+            height: 52px;
+        }
+        .list .item-title{
+            font-weight: bold;
+            font-size: 16px;
+            font-family: 'ITC Avant Garde Gothic', sans-serif;
+            color: #717D7E;
+        }
+        .list .item-inner{
+            font-weight: bold;
+            font-size: 16px;
+            font-family: 'ITC Avant Garde Gothic', sans-serif;
+            color: #717D7E;
+        }
+        .list .item-content{
+            padding-left: 0px;
+        }
+    
+        .sheet-modal.modal-in{
+            height: 80%;
+        }
+    
+    </style>
+    <template>
+            <div class="page" id="FWM-1">
+                <!-- Navbar -->
+                <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                    <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                    <div class="navbar-inner sliding" style="height: 52px;">
+                        <div class="left">
+                            <a href="#" onclick="regresarRecorridoCI2();">
+                                <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido Formulario -->                                
+                <div class="page-content">
+                    <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                        <h2 class="FWN-titulo-2">Actividad Comercial</h2>
+                        <div style="text-align: left;">     
+                            <form class="list FWM-fixing-form"> 
+                                <span class="span FWM-span-form">Tipo de visita:</span>
+                                <div class="form-check form-check-inline" style="margin-top: 25px;">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="V1" value="Visita presencial">
+                                    <label class="FWM-span-form" for="inlineRadio1">Visita presencial</label>
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="V2" value="Llamada virtual">
+                                    <label class="FWM-span-form" for="inlineRadio2">Llamada virtual</label>
+                                </div>
+                                <br>
+                            <span class="span FWM-span-form">Foto de evidencia:</span>
+                                <div class="FWM-photo-container" style="margin-top: 15px;">
+                                    <div class="border-capture">
+                                        <a onclick="capturePhoto();">
+                                            <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px" style="margin-left: 50px;"/>
+                                        </a>
+                                    </div>
+                                    <img class="FWM-photo-hide" id="smallImage" src=""/>
+                                    <input type="hidden" id="imagenC" name="imagenC"/>
+                                </div>
+                                <br>
+                                <span class="span FWM-span-form">Actividad realizada: </span>
+                                    <select class="FWM-input" name="niveles" id="niveles">
+                                        <option value="0" selected>Selecciona un nivel</option>
+                                        <option value="Nivel 0 - Proyecto sin ningún avace">Nivel 0 - Proyecto sin ningún avace</option>
+                                        <option value="Nivel 1 - Se cuenta con datos como contacto, puesto, y tel/mail">Nivel 1 - Se cuenta con datos como contacto, puesto, y tel/mail</option>
+                                        <option value="Nivel 2 - Ya hubo contacto">Nivel 2 - Ya hubo contacto</option>
+                                        <option value="Nivel 3 - En presentación y/o LIP">Nivel 3 - En presentación y/o LIP</option>
+                                        <option value="Nivel 4 - Propuesta/Negociación/Pruebas">Nivel 4 - Propuesta/Negociación/Pruebas</option>
+                                        <option value="Nivel 5 - Cierre y alta de datos">Nivel 5 - Cierre y alta de datos</option>
+                                    </select>
+                                <br>
+                                <span class="span FWM-span-form">Pendiente del vendedor en el nivel: </span>
+                                <textarea class ="FWM-input" id="pendiente_vendor" name="pendiente_vendor"  cols="30" rows="10" style="margin-top: 15px;"></textarea>
+                                <br>
+                                <span class="span FWM-span-form">¿Subir de nivel?</span>
+                                <div style="display: flex;justify-content: space-around;">
+                                    <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="reparadoSi" onclick="singleCheck1(this)" value="Si" >Si</label>
+                                    <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="reparadoNo" onclick="singleCheck2(this)" value="No" >No</label>
+                                </div>
+                            </form>
+    
+                            <div class="block grid-resizable-demo" style="margin-bottom: 70px; margin-top: 60px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="guardarActividadComercialCI();" style="background-color: #063E7F;" class="boton-equipo">Guardar</a>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <!-- Fin contenido formulario -->
+                </div>
+            </div>
+    </template>
+    <script>
+    return {
+            on: {   
+                pageInit: function () {   
+                    
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");
+                var smartSelect = app.smartSelect.get('.smart-select');
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from datos_ventas WHERE id_cedula = ?",
+                                [id_cedula],
+                                    function(tx, results){
+                                        let length = results.rows.length;
+                                        var item = results.rows.item(0);
+                                            var tipo_visitac=item.tipo_visita;
+                                            if (item.foto_visita==null){
+                                            }
+                                                else{
+                                                var smallImage = document.getElementById('smallImage');
+                                                smallImage.style.display = 'flex';
+                                                smallImage.src = item.foto_visita;
+                                                $('#imagenC').val(item.foto_visita);    
+                                            }
+                                            if (item.nivel == null){
+                                                $('#niveles').val(0);
+                                            }else{
+                                                $('#niveles').val(item.nivel);
+                                            }
+                                            $('#pendiente_vendor').val(item.pendiente_vendedor);
+                                            if(tipo_visitac=='Visita presencial'){
+                                                $("#V1").prop("checked", true);
+                                            }else if (tipo_visitac=='Llamada virtual'){
+                                                $("#V2").prop("checked", true);
+                                            }
+                                            if(item.nivel_sube == '1'){
+                                                $("#reparadoSi").prop("checked", true);
+                                            }else if (item.nivel_sube == '2'){
+                                                $("#reparadoNo").prop("checked", true);
+                                            }
+                                    },
+                                        function(tx, error){
+                                            console.log("Error: " + error.message);
+                                            app.preloader.hide();  
+                                        }
+                        );  
+                    },
+                        function(error){},
+                        function(){}
+                );                
+            }
+        }
+    }
+    </script>

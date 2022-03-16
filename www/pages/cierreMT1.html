@@ -1,0 +1,198 @@
+<template>
+    <div class="view view-main view-init safe-areas">
+        <div class="page">
+            <div class="navbar" style="background-color: #063E7F;height: 52px;height: 52px;">
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <style>            
+                            .nav-text-regresar{
+                                color: #ffffff;
+                                border: 2px solid white;
+                                padding: 0 10px;
+                                border-radius: 7px;
+                                font-size: 14px;
+                            }
+                            .rating:not([disabled]) .star:hover::after, .rating .star.active::after {
+                                height: 1.3em;
+                            }
+                          </style>
+                        <a href="#" class="link back" style="margin-left: 5px;">
+                            <span class="nav-text-regresar">Regresar</span>
+                        </a>
+                    </div>
+                    <div class="title" style="color: white;text-align:center;padding-left: 40px;">Cierre con Cliente</div>
+                </div>
+            </div>
+            <div class="toolbar toolbar-bottom tabbar">
+                <style>
+                    .tab-link-active{
+                        color: white;
+                        background-color: #00A7B5;
+                    }
+                </style>
+                <font size="1">
+                    <div class="toolbar-inner">
+                        <a href="#tab-3" class="tab-link" style="font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif;color: #505759;">Cierre</a>
+                    </div>
+                </font>
+            </div>
+            <div class="tabs-animated-wrap">
+                <div class="tabs">
+                    <!--------------------------------FIN TAB 3-->
+                    <div id="tab-3" class="page-content tab bg-color-white" style="margin-top: 20px;background-color: rgb(245, 245, 245);">
+                        <div class="block">
+                            <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+                                <input type='hidden' name="geolocation" id="geolocation" placeholder='Geolocalización...' disabled="disabled"/>
+                                <style type="text/css">
+                                    .boton-personalizado-4 {
+                                        text-decoration: none;
+                                        font-size: 16px;
+                                        color: #FFFFFF;
+                                        padding-top: 13px;
+                                        padding-bottom: 10px;
+                                        padding-left: 40px;
+                                        padding-right: 40px;
+                                        background-color: #063E7F;
+                                        border-radius: 15px;
+                                    }
+                                </style>
+                                <div class="block grid-resizable-demo">
+                                    <div class="row align-items-stretch" style="text-align: center;">
+                                        <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                            <span class="resize-handler"></span>
+                                            <a href="#" onclick="terminarVisitaMT();" style="margin-top: 50%;text-decoration: none;font-size: 27px;color: #FFFFFF;padding-top: 21px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;background-color: #d41111;border-radius: 15px;">Salida</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                var id_cedula = localStorage.getItem("IdCedula");
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from levantamiento_Field WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                if(length == 0){
+
+                                } else {
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $("#nombreCliente").html(item.nombre_cliente);
+                                        $("#nombreContacto").html(item.nombre_contacto);
+                                        $("#telefonoContacto").html(item.telefono_contacto);
+                                        $("#correoContacto").html(item.correo_contacto);
+                                    }
+                                    var item2 = results.rows.item(0);                       
+                                    if(item2.firma_cliente == null){
+                                    } else {
+                                        $("#signate").val(item2.firma_cliente);
+                                        $("#ImagenFirmaView").attr("src",item2.firma_cliente);
+                                    }
+                                }
+                                 
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){},
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx5){
+                        tx5.executeSql(
+                            "SELECT calificacion,nombre_evalua,comentario_cliente FROM cedulas_general WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx5, results){
+                                var length = results.rows.length;
+                                for(var i = 0; i< length; i++){
+                                    var item2 = results.rows.item(i);
+                                    $("#eval").val(item2.calificacion);
+                                    if(item2.nombre_evalua == null){
+                                    } else {
+                                        $("#NombreFirma").val(item2.nombre_evalua);
+                                    }
+                                    if(item2.comentario_cliente == null){
+                                    } else {
+                                        $("#comentario_cliente").val(item2.comentario_cliente);
+                                    }
+                                }
+                                $('.preloader').remove();
+                                $('.infinite-scroll-preloader').remove();
+                            },
+                            function(tx5, error){
+                                console.log("Error al guardar registro: " + error.message);
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx1){
+                        tx1.executeSql(
+                            "Select * from evidencia_levantamiento_Field where id_cedula= ?",
+                            [id_cedula],
+                            function(tx, results){
+                                var length = results.rows.length;
+                                if(length == 0){
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                } else {
+                                    $("#message-nr1").css("display", "none");
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $("#revisionEquipo").append("<div class='card demo-facebook-card'><div class='card-header'><div class='demo-facebook-name' style='text-align: center; font-weight: bold;font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;'>Nombre Área: " + unescape(item.observacion) +"</div><div class='demo-facebook-date'></div>  </div> <div class='card-content card-content-padding' style='text-align: center;'><div class='card-content card-content-padding' align='center'> <img src='"+ item.foto_observacion +"' width= '85%'/></div></div> <div class='card-footer'><a href='#' style='font-size: 13px;font-family: 'ITC Avant Garde Gothic', sans-serif;'>Fecha: "+item.fecha_regristro+"</a></div></div>");
+                                        $('.preloader').remove();
+                                        $('.infinite-scroll-preloader').remove();
+                                    }
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error al consultar: " + error.message);
+                            }
+                        );
+                        console.log("Consulta correcta");
+                    },
+                    function(error){},
+                    function(){}
+                );
+
+                var ratings = document.getElementsByClassName('rating');
+                for (var i = 0; i < ratings.length; i++) {
+                    var r = new SimpleStarRating(ratings[i]);
+                    ratings[i].addEventListener('rate', function(e) {
+                        $("#eval").val(e.detail);
+                    });
+                }
+    
+                document.addEventListener("deviceready", onDeviceReady, false);
+                function onDeviceReady() {
+                    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+                }
+                function onSuccess(position) {
+                    var element = document.getElementById('geolocation');
+                    $('#geolocation').val(position.coords.latitude+','+position.coords.longitude);
+                }
+                function onError(error) {
+                    alert('Error en la Localización');
+                }
+            }
+        }
+    }
+</script>

@@ -1,0 +1,216 @@
+<style>  
+.list .item-floating-label, .list .item-label {
+     width: 100%; 
+}
+#minuta{
+    text-align: center;
+}
+
+    .navbar .title{
+        font-weight: bold;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #fff;
+    }
+    .navbar a.link{
+        color: white;
+    }
+    .list .item-link {
+    color: inherit;
+    margin-top: 5px;
+    }
+    .navbar{
+        background-color: #063E7F;
+        height: 52px;
+    }
+    .navbar-inner{
+        height: 52px;
+    }
+    .list .item-title{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-inner{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    .list .item-content{
+        padding-left: 0px;
+    }
+    #fecha,#hora_inicio,#hora_fin{
+        font-weight: bold;
+        font-size: 16px;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        color: #717D7E;
+    }
+    #otroA{
+    font-size: 16px;
+    font-family: 'ITC Avant Garde Gothic', sans-serif;
+    }
+    .list ul{
+        top: 10px;
+        padding-left: 16px;
+    }
+    #thaccion{
+    padding-left: 12px;
+    padding-right: 12px;
+    }
+    #thfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thcomentarios{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    #thtipo{
+    width: 190px;
+    }
+    #thfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 70px;
+    }
+    #tdfoto{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    }
+    #tdtipo{
+    padding-left: 5px;
+    padding-right: 5px;
+    }
+    #tdcomentario{
+    width: min-content;
+    }
+    #tdfecha{
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+
+</style>
+<template>
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarRecorridoVIC2();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Minuta</h2>
+                    <div style="text-align: left;">     
+                        <form class="list FWM-fixing-form"> 
+                            <span class="span FWM-span-form" name="">Tema: </span>
+                                <input class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif;" type="text" id="tema" name="" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Compromiso:</span>
+                            <textarea class ="FWM-input" id="compromiso" cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>
+                            <span class="span FWM-span-form">Fecha compromiso:</span>
+                            <span>
+                                  <input class ="FWM-input" id="fecha" type="date" value="" placeholder="Selecciona una fecha..." onchange="inputLleno(this.id,this.value)"/>
+                            </span>
+                            <span class="span FWM-span-form">Hora inicio:</span>
+                            <span>
+                                  <input class ="FWM-input" id="hora_inicio" type="time" value="" placeholder="Selecciona una fecha..." onchange="inputLleno(this.id,this.value)"/>
+                            </span>
+                            <span class="span FWM-span-form">Hora Fin:</span>
+                            <span>
+                                  <input class ="FWM-input" id="hora_fin" type="time" value="" placeholder="Selecciona una fecha..." onchange="inputLleno(this.id,this.value)"/>
+                            </span>
+                        </form>
+
+                            <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="guardarVentasVIC();" style="background-color: #063E7F;" class="boton-equipo">Guardar Datos</a>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        <form class="list FWM-fixing-form"> 
+                            <div class="block-title FWM-subtitulo">Minuta :</div>  
+                            <div class="card data-table">
+                                <div class="infinite-scroll-content">
+                                    <table id="VentasBennetts_content">
+                                        <thead>
+                                            <tr>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Titulo</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Compromiso</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Hora inicio</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Hora fin</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <!-- <div class="sentencia preloader color-grey infinite-scroll-preloader"></div> -->
+                                    <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                        <p>Sin registros</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+</template>
+<script>
+return {
+        on: {      
+            pageInit: function () {
+            var id_usuario = localStorage.getItem("id_usuario");
+            var id_cedula = localStorage.getItem("IdCedula");
+
+            databaseHandler.db.transaction(
+                    function(tx1){
+                        tx1.executeSql(
+                            "Select * from minuta where id_cedula= ? ORDER BY id_minuta ASC",
+                            [id_cedula],
+                            function(tx, results){
+                                var length = results.rows.length;
+                                if(length == 0){
+                                    $("#message-nr").css("display", "block");
+                                } else {
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $("#VentasBennetts_content").append("<tr id='fila"+ 
+                                            item.id_minuta +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaVIC("+ 
+                                            item.id_minuta +",2);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td id='tdtema' style='text-align: center;'>" + 
+                                            item.tema + "</td><td id='tdcompromiso' style='text-align: center;'>" + 
+                                            item.compromiso + "</td><td id='tdfecha' style='text-align: center;'>" + 
+                                            item.fecha + "</td><td id='tdfecha' style='text-align: center;'>" + 
+                                            item.h_inicio + "</td><td id='tdfecha' style='text-align: center;'>" + 
+                                            item.h_fin + "</td></tr>");
+                                        $("#message-nr").css("display", "none");
+                                    }
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error al consultar: " + error.message);
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+            }
+        }
+    }
+
+</script>

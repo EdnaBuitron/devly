@@ -1,0 +1,402 @@
+<style>
+    input[type=checkbox]{
+        transform: scale(1.5);
+        margin-right: 10px;
+    }
+    .text-check{
+        padding-top: 4px;
+        margin: 0;
+        padding-right: 16px;
+        height: auto;
+        margin-top: 8px;
+        font-size: 15px;
+        line-height: 22px;
+    }
+    .text-divided-check{
+    margin-top: 0px;
+    font-size: 14px;
+    }
+    .sheet-modal.modal-in{
+        height: 80%;
+        z-index: 9999;
+    }
+    .select-check {
+        font-size: 14px !important;
+        line-height: 40px;
+    }
+    .multiple-input-divided-check {
+        font-size: 14px !important;
+        line-height: 40px;
+    }
+    </style>
+    <template>
+        <div class="view view-main view-init safe-areas">
+            <div class="page" id="FWM-1">
+                <!-- Navbar -->
+                <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                    <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                    <div class="navbar-inner sliding" style="height: 52px;">
+                        <div class="left">
+                            <a href="#" onclick="regresarRecorridoServInd3();">
+                                <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido Formulario -->                                
+                <div class="page-content">
+     
+                    <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                        <h2 class="FWN-titulo-2">Revisión de Tarjetas Electrónicas</h2>
+                        <div style="text-align: left;">    
+                            <form class="list FWM-fixing-form">
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-1-check"  onchange= "guardarSelectServ(this.id);">75.-Tarjeta PCB</span>
+                                    <select id="14-1-select" name="Punto-75" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-2-check"  onchange= "guardarSelectServ(this.id);">76.-Tarjeta I/O</span>
+                                    <select id="14-2-select" name="Punto-76" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-3-check"  onchange= "guardarSelectServ(this.id);">77.-Tarjeta MMI</span>
+                                    <select id="14-3-select" name="Punto-77" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-4-check"  onchange= "guardarSelectServ(this.id);">78.-Tarjeta A10</span>
+                                    <select id="14-4-select" name="Punto-78" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-5-check"  onchange= "guardarSelectServ(this.id);">79.-Tarjeta A11</span>
+                                    <select id="14-5-select" name="Punto-79" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-6-check"  onchange= "guardarSelectServ(this.id);">80.-Tarjeta A12</span>
+                                    <select id="14-6-select" name="Punto-80" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-7-check"  onchange= "guardarSelectServ(this.id);">81.-Tarjeta A13</span>
+                                    <select id="14-7-select" name="Punto-81" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-8-check"  onchange= "guardarSelectServ(this.id);">82.-Tarjeta A14</span>
+                                    <select id="14-8-select" name="Punto-82" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-9-check"  onchange= "guardarSelectServ(this.id);">83.-Tarjeta A17</span>
+                                    <select id="14-9-select" name="Punto-83" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-10-check"  onchange= "guardarSelectServ(this.id);">84.-Tarjeta A18</span>
+                                    <select id="14-10-select" name="Punto-84" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-11-check"  onchange= "guardarSelectServ(this.id);">85.-Tarjeta A19</span>
+                                    <select id="14-11-select" name="Punto-85" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-12-check"  onchange= "guardarSelectServ(this.id);">86.-Tarjeta A20</span>
+                                    <select id="14-12-select" name="Punto-86" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-13-check"  onchange= "guardarSelectServ(this.id);">87.-Tarjeta A21</span>
+                                    <select id="14-13-select" name="Punto-87" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-14-check"  onchange= "guardarSelectServ(this.id);">88.-Tarjeta A22</span>
+                                    <select id="14-14-select" name="Punto-88" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-15-check"  onchange= "guardarSelectServ(this.id);">89.-Tarjeta A23</span>
+                                    <select id="14-15-select" name="Punto-89" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-16-check"  onchange= "guardarSelectServ(this.id);">90.-Tarjeta A31</span>
+                                    <select id="14-16-select" name="Punto-90" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                                <div class="container-check">
+                                    <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="14-17-check"  onchange= "guardarSelectServ(this.id);">91.-Tarjeta A32</span>
+                                    <select id="14-17-select" name="Punto-91" class="select-check"  onchange="checkSelect(this.value, this.id); guardarSelectServ(this.id);">
+                                        <option value="0"></option>
+                                        <option value="1">Bueno</option>
+                                        <option value="2">Regular</option>
+                                        <option value="3">Malo</option>
+                                        <option value="4">Observación</option>
+                                        <option value="5">N/A</option>
+                                    </select>
+                                </div>
+
+                            </form>
+    
+                            <div class="block-title FWM-subtitulo">Evidencias:</div>  
+                            
+                            <div class="card data-table">
+                                <div class="infinite-scroll-content">
+                                    <table id="tabla_diagnostico2">
+                                        <thead>
+                                            <tr>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Pregunta</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Observaciones</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th></tr>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                    <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                        <p>Sin registros</p>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+    
+                    <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 120px; margin-bottom: 20px;">
+                        <button class="btn-next" onclick="app.views.main.router.back('/formServ22/', {force: true, ignoreCache: true, reload: true});">Anterior</button>
+                        <a href="#" class="buble-float link popover-open" data-popover=".popover-links" style="background:cadetblue; width: 20%;">
+                            <i class="material-icons md-light" style="color: #ffffff;font-size: 35px;">book</i>
+                        </a>
+                        <button class="btn-next" onclick="guardarSuministrosServind(17, 14);" >Siguiente</button>
+                    </div>
+    
+                    <div class="popover popover-links">
+                        <div class="popover-inner">
+                            <div class="list">
+                            <ul>
+                                <li><a class="list-button item-link popover-close" onclick="showTPM()">TPM</a></li>
+                                <li><a class="list-button item-link popover-close" onclick="showManual()">Manual</a></li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- Fin contenido formulario -->
+                    <fwm></fwm>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        return {
+            on: {
+                pageInit: function (e, page) {
+                    $('.preloader').remove();
+                    $('.infinite-scroll-preloader').remove();
+    
+                    var id_cedula = localStorage.getItem("IdCedula");
+                    var id;
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select pregunta,valor,tipo,no_pregunta from checklist_servind WHERE id_cedula = ? AND fase = '14'",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#14-"+item.pregunta+"-"+item.tipo).val(item.valor);
+                                    id="14-"+item.pregunta+"-"+item.tipo;
+                                    //console.log(id);
+                                    if (item.tipo=='select'){
+                                        if(item.valor==1){
+                                            document.getElementById(id).style.setProperty('background-color', '#2BEB00', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==2){
+                                            document.getElementById(id).style.setProperty('background-color', 'yellow', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }else if(item.valor==3){
+                                            document.getElementById(id).style.setProperty('background-color', 'red', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==4){
+                                            document.getElementById(id).style.setProperty('background-color', 'gray', 'important');
+                                            document.getElementById(id).style.setProperty('color', 'white', 'important');
+                                        }else if(item.valor==5){
+                                            document.getElementById(id).style.setProperty('background-color', '#EAEAEA', 'important');
+                                            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+                                        }
+                                    }else if (item.tipo=='check'){
+                                         if(item.valor == 'false'){
+                                            $("#"+id).prop("checked", false);
+                                         }else if(item.valor == 'true'){
+                                            $("#"+id).prop("checked", true);
+                                         }                                        
+                                     }else{}
+                                } 
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){},
+                    function(){}
+                );
+             
+                    databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from fotos_check where id_cedula = ? AND fase = 14 ORDER BY id_foto ASC",
+                        [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                if (length==0){
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                }else{
+                                    $("#message-nr").css("display", "none");
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                }
+                            for(var i = 0; i< length; i++){
+                                var item = results.rows.item(i);
+                                $("#tabla_diagnostico2").append("<tr id='fila"+ item.id_foto +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.no_pregunta + "</td><td style='text-align: center;'>" + item.observaciones+ "</td><td style='text-align: center;'>" + item.fecha_foto + "</td></tr>");
+                            }
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){console.log("Error al guardar cedula: " + error.message);},
+                    function(){}
+                );
+
+                }
+            }  
+        }
+    </script>

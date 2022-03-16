@@ -1,0 +1,225 @@
+<style>
+    button{
+        width: 33.33%;
+    }
+    .swal-button {
+        width: 100%;
+    }
+    .FWM-textBox{
+        width: 100%; 
+        padding-left: 3px; 
+        font-size: 15px; 
+        height: 37px; 
+        font-family: 'ITC Avant Garde Gothic', sans-serif; 
+        background-color: white; 
+        border-radius: 8px; 
+        border: 1px solid gray;
+    }
+    #pregunta {
+    position: relative ;
+    display: flex;
+    margin-top: 5px;
+    border: transparent;
+    box-sizing: border-box;
+    background: #FAFAFA;
+    }
+
+    #pregunta input[type=radio] {
+    display: none;
+    }
+
+    #pregunta label {
+    display: block;
+    width: 190px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    background: #FFF;  
+    
+    }
+
+    #pregunta label:hover {
+    background: #679ceb;
+    }
+
+    #pregunta input[type=radio]:checked + label {
+    background: #063E7F;
+    color: #FAFAFA;
+    }
+    </style>
+    <template>
+        <div class="view view-main view-init safe-areas">
+            <div class="page" id="FWM-1">
+                <!-- Navbar -->
+                <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                    <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                    <div class="navbar-inner sliding" style="height: 52px;">
+                        <div class="left">
+                            <a href="#" onclick="regresarRecorridoServInd6();">
+                                <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido Formulario -->                                
+                <div class="page-content">
+
+                    <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                        <h2 class="FWN-titulo-2">Diágnostico</h2>
+    
+                    <div style="text-align: left;">     
+                        <div class="list FWM-fixing-form">
+
+                            <span class="span FWM-span-form" style="line-height: 1.3;margin-top: 20px;margin-bottom: 20px;">¿Están funcionando correctamente los equipos en PMP?</span>
+
+                             <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                <input type="radio" name="pregunta1" value="1" id="Res1-11">
+                                <label for="Res1-11">SI</label>
+                                <input type="radio" name="pregunta1" value="2" id="Res2-11">
+                                <label for="Res2-11">NO</label>
+                              </div>
+
+                            <span class="span FWM-span-form">Comentario Cliente:</span>
+                            <textarea class ="FWM-input" id="cometario_cliente" name="cometario_cliente"  cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>                           
+
+                            <span class="span FWM-span-form">Foto:</span>
+                            <div class="FWM-photo-container">
+                                <div class="border-capture">
+                                    <a onclick="capturePhoto();">
+                                        <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px" style="margin-left: 50px;"/>
+                                    </a>
+                                </div>
+                                <img class="FWM-photo-hide" id="smallImage" src=""/>
+                                <input type="hidden" id="imagenC" name="imagenC"/>
+                            </div>
+                            <div class="block grid-resizable-demo" style="margin-bottom: 90px; margin-top: 50px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="guardarFotoDiagnostico('HEB');" class="boton-equipo">Guardar Foto </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block-title FWM-subtitulo">Evidencia diagnostico</div>  
+                            <div class="card data-table" style="margin-left: 0px; margin-right: 0px;">
+                                <div class="infinite-scroll-content">
+                                    <table id="tabla_diagnostico">
+                                        <thead>
+                                            <tr>                                                
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                    <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                        <p>Sin Equipos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block grid-resizable-demo" style="margin-bottom: 120px; margin-top: 50px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="guardarDiagnosticoHEB();" class="boton-equipo" style="background-color: #063E7F; color: white;">Guardar Diágnostico</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 50px; margin-bottom: 20px;">
+                        <button class="btn-next" onclick="app.views.main.router.back('/datosgeneralesServ4/', {force: true, ignoreCache: true, reload: true});">Anterior</button>
+
+                        <button class="btn-next" onclick="app.views.main.router.back('/formServ33/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>
+                    </div>
+    
+                    <div class="popover popover-links">
+                        <div class="popover-inner">
+                            <div class="list">
+                            <ul>
+                                <li><a class="list-button item-link popover-close" onclick="showTPM()">TPM</a></li>
+                                <li><a class="list-button item-link popover-close" onclick="showManual()">Manual</a></li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </template>
+    <script>
+        return {
+            on: {
+                pageInit: function (e, page) {
+                    var id_usuario = localStorage.getItem("id_usuario");
+                    var id_cedula = localStorage.getItem("IdCedula");
+                    $('.preloader').remove();
+                    $('.infinite-scroll-preloader').remove();
+                    var tipo = 'HEB';
+                    databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from fotos_diagnostico where id_cedula = ? AND tipo = ? ORDER BY id_foto DESC",
+                        [id_cedula,tipo],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                console.log(length);
+                                if (length ==0){
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                }else{
+                                    $("#message-nr").css("display", "none");
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                    app.preloader.hide();
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        //console.log('item',item)
+                                        $("#tabla_diagnostico").append("<tr id='fila"+ item.id_foto +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
+
+                                                    
+                                    }
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error al mostrar datos: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from diagnostico_servIndHBE where id_cedula = ? ",
+                        [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                console.log(length);                                                                
+                                var item = results.rows.item(0); 
+                                $('#cometario_cliente').val(item.comentario)  ;
+                                $("input[name=pregunta1][value="+item.pregunta+"]").prop("checked",true); 
+                            },
+                            function(tx, error){
+                                console.log("Error al mostrar datos: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                }
+            }  
+        }
+    </script>
