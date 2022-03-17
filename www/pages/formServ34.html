@@ -62,10 +62,7 @@
      background: #FFF;  
      
      }
- 
-     #pregunta label:hover {
-     background: #679ceb;
-     }
+
  
      #pregunta input[type=radio]:checked + label {
      background: #063E7F;
@@ -133,10 +130,10 @@
                              <span id="text2" style="width: 95%;margin-bottom: 30px; border-bottom: 0;">
                                  <input type='text' name="capacidad" id="capacidad" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" />
                              </span>
-                            <span class="span" style="font-weight: bold;width: 95%;">ML:</span>
+                             <!-- <span class="span" style="font-weight: bold;width: 95%;">ML:</span>
                             <span id="text2" style="width: 95%;margin-bottom: 30px; border-bottom: 0;">
                                 <input type='text' name="ml" id="ml" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
-                            </span>
+                            </span> -->
                          </form>
                          <hr class="hr">
                          <div id="22" name = "Cafetera" style ="display: none;" >
@@ -589,7 +586,7 @@
                                          </select>
                                      </div>
                                      <div style="display: flex;margin-bottom: 15px; margin-left: 10px;">
-                                         <label class="text-divided-check" style="width: 20%;"><input type="text" id="2-24-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
+                                         <label class="text-divided-check" style="width: 20%;"><input type="text" id="23-12-input" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value); guardarSelectServ(this.id);"></label>
                                      </div>
                                      <div class="container-check">
                                          <span class="span FWM-span-form text-check"><input type="checkbox" name=""  id="23-11-check"  onchange= "guardarSelectServ(this.id);">11.-Revisión termostato de alto limite</span>
@@ -3763,7 +3760,7 @@
                                      </div>
                                  </div>
                              </div>
-                             <div id = "papeletadiv"></div>
+                             <div id = "papeletadiv36"></div>
                              <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
                                  <div class="row align-items-stretch" style="text-align: center;">
                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
@@ -5028,10 +5025,6 @@
                              </div>
                          </nav>
                  </div>
-                 <!-- Fin contenido formulario
-                     $("#navfrio").css("display","none");
-                     $("#navcaliente").css("display","none");
-                  -->
                  <fwm>
                      
                  </fwm>
@@ -5059,13 +5052,10 @@
                              [id_equ],
                              function(tx, results){
                                  let length = results.rows.length;
-                                 console.log(length)
                                  for(var i = 0; i< length; i++){
                                      var item = results.rows.item(i);
                                      $("#"+faseequ+"-"+item.pregunta+"-"+item.tipo).val(item.valor);
                                      id=faseequ+"-"+item.pregunta+"-"+item.tipo;
-                                     console.log(faseequ);
-                                     console.log(id);                                     
                                      if (item.tipo=='select'){
                                          if(item.valor==1){
                                              document.getElementById(id).style.setProperty('background-color', '#2BEB00', 'important');
@@ -5153,12 +5143,11 @@
                                          html =`<div style="text-align: left;">     
                                  <div class="list FWM-fixing-form">
                                      <span class="span FWM-span-form" style="line-height: 1.3;margin-top: 20px;margin-left: 20px;">Requiere refacción:</span>
-                                         <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
-                                         <input type="radio" name="pregunta1" value="1" id="cotizacion-1-`+item.fase+`" onclick="GCheckPapeleta(1);">
-                                         <label for="cotizacion-1-`+item.fase+`">SI</label>
-                                         <input type="radio" name="pregunta1" value="2" id="cotizacion-2-`+item.fase+`" onclick="GCheckPapeleta(1);">
-                                         <label for="cotizacion-2-`+item.fase+`">NO</label>
-                                       </div>                                 
+                                     <div id="pregunta" style="width: 90%;margin-left: 5%;font-size: 17px;">
+                                        <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" name="pregunta1" value="1" id="cotizacion-1-`+item.fase+`" onclick="GCheckPapeleta(1,this.id);">Sí</label>
+                                        <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" name="pregunta3" value="3" id="cotizacion-3-`+item.fase+`" onclick="GCheckPapeleta(1,this.id);">Pendiente</label>
+                                        <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" name="pregunta2" value="2" id="cotizacion-2-`+item.fase+`" onclick="GCheckPapeleta(1,this.id);">No</label>
+                                    </div>
                                      <div id="cotizacion-`+item.fase+`" style="display:none">
                                          <div style="width: 100%;text-align: center;display: flex;flex-direction: column;color: gray;">
                                              <span>Tipo de Prioridad a indicar en PR</span>
@@ -5219,11 +5208,9 @@
                                          </div>
                                      </div>        
                                      <span class="span FWM-span-form" style="line-height: 1.3;margin-top: 20px;margin-left: 20px;">Refacciones Instaladas:</span>
-                                       <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
-                                         <input type="radio" name="pregunta2" value="1" id="cotizacion-3-`+item.fase+`" onclick="GCheckPapeleta(2);">
-                                         <label for="cotizacion-3-`+item.fase+`">SI</label>
-                                         <input type="radio" name="pregunta2" value="2" id="cotizacion-4-`+item.fase+`" onclick="GCheckPapeleta(2);">
-                                         <label for="cotizacion-4-`+item.fase+`">NO</label>
+                                       <div id="pregunta" style="width: 90%;margin-left: 5%;font-size: 17px;">
+                                        <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" name="pregunta2" value="1" id="cotizacion-4-`+item.fase+`" onclick="GCheckPapeleta(2,this.id);">Sí</label>
+                                        <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" name="pregunta2" value="2" id="cotizacion-5-`+item.fase+`" onclick="GCheckPapeleta(2,this.id);">No</label>
                                        </div>          
                                      <div id="refacciones-`+item.fase+`" style="display:none">
                                          <span class="span FWM-span-form">Numero de parte:</span>
@@ -5273,33 +5260,42 @@
                                          </div>
                                      </div>        
                                      <span class="span FWM-span-form" style="line-height: 1.3;margin-top: 20px;margin-left: 20px;">Considerar viáticos:</span>
-                                       <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
-                                         <input type="radio" name="pregunta3" value="1" id="cotizacion-5-`+item.fase+`" onclick="GCheckPapeleta(3);">
-                                         <label for="cotizacion-5-`+item.fase+`">SI</label>
-                                         <input type="radio" name="pregunta3" value="2" id="cotizacion-6-`+item.fase+`" onclick="GCheckPapeleta(3);">
-                                         <label for="cotizacion-6-`+item.fase+`">NO</label>
+                                       <div id="pregunta" style="width: 90%;margin-left: 5%;font-size: 17px;">
+                                            <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" name="pregunta3" value="1" id="cotizacion-6-`+item.fase+`" onclick="GCheckPapeleta(3,this.id);">Sí</label>
+                                            <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" name="pregunta3" value="2" id="cotizacion-7-`+item.fase+`" onclick="GCheckPapeleta(3,this.id);">No</label>
                                        </div>                   
                                  </div>
                              </div>`;
                              $("#papeletadiv"+item.fase).html(html);
-                             if (item.refacciones == 1){
-                                             $("#cotizacion-3-"+item.fase).prop("checked", true)
-                                             $("#refacciones-"+item.fase).css("display","block")
-                                         }else if (item.refacciones== 2){
-                                             $("#cotizacion-4-"+item.fase).prop("checked", true)
-                                             $("#refacciones-"+item.fase).css("display","none")
-                                         }
-                                         if (item.papeleta == 1){
+                             console.log(item.papeleta);
+                             console.log(item.refacciones);
+                             console.log(item.viaticos);
+                                        if (item.papeleta == 1){
                                              $("#cotizacion-1-"+item.fase).prop("checked", true)
                                              $("#cotizacion-"+item.fase).css("display","block")
                                          }else if (item.papeleta == 2){
                                              $("#cotizacion-2-"+item.fase).prop("checked", true)
                                              $("#cotizacion-"+item.fase).css("display","none")
+                                         }else if (item.papeleta == 3){
+                                             $("#cotizacion-3-"+item.fase).prop("checked", true)
+                                             $("#cotizacion-"+item.fase).css("display","none")
+                                         }else{
+                                            $("#cotizacion-"+item.fase).css("display","none")
+                                            $("#cotizacion-1-"+item.fase).prop("checked", false)
+                                            $("#cotizacion-2-"+item.fase).prop("checked", false)
+                                            $("#cotizacion-3-"+item.fase).prop("checked", false)
                                          }
-                                         if (item.viaticos == 1){
+                                        if (item.refacciones == 1){
+                                             $("#cotizacion-4-"+item.fase).prop("checked", true)
+                                             $("#refacciones-"+item.fase).css("display","block")
+                                         }else if (item.refacciones== 2){
                                              $("#cotizacion-5-"+item.fase).prop("checked", true)
-                                         }else if (item.viaticos== 2){
+                                             $("#refacciones-"+item.fase).css("display","none")
+                                         } 
+                                         if (item.viaticos == 1){
                                              $("#cotizacion-6-"+item.fase).prop("checked", true)
+                                         }else if (item.viaticos== 2){
+                                             $("#cotizacion-7-"+item.fase).prop("checked", true)
                                          }
                                  var fases = "";
                                      if ( faseequ==22){

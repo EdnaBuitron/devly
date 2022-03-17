@@ -66,7 +66,17 @@
                     </div>
                   </div>
                 </li>
-
+                <li id="papeletas" style="display: none;">
+                  <div class="item-content">
+                    <div class="item-media">
+                      <i class="material-icons md-light" style="color: #ffffff;">assignment</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title"><a href="/continuar_papeleta/" class="panel-close panel-text">Papeletas pendientes</a></div>
+                      <div class="item-after"><span id="contpapeleta" class="badge">0</span></div>
+                    </div>
+                  </div>
+                </li>
                 <li>
                   <div class="item-content">
                     <div class="item-media">
@@ -225,6 +235,16 @@
     window.localStorage.removeItem("horario_programado");
     window.localStorage.removeItem("almacen");
     window.localStorage.removeItem("TipoVIC");
+    window.localStorage.removeItem("contact_name");
+    window.localStorage.removeItem("phone1");
+    window.localStorage.removeItem("local");
+    window.localStorage.removeItem("description");
+    window.localStorage.removeItem("ruc");
+    window.localStorage.removeItem("direction");
+    window.localStorage.removeItem("tipoServicio");
+    window.localStorage.removeItem("social_reason");
+    window.localStorage.removeItem("email");
+    window.localStorage.removeItem("id_cliente");
     function onPhotoDataSuccess1(imageData) {
       var camera = localStorage.getItem("camera");
       if(camera == 0){
@@ -804,6 +824,8 @@
         </div>
       </div>
       `);
+    } else if(id_empresa == 8){
+      $("#papeletas").css("display", "block"); 
     }
     // Scroll para actualizar
     var $ptrContent = $('.ptr-content');
@@ -855,6 +877,9 @@
       } else if(id_empresa == 15){
         jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_Proteus.json" + '?timestamp=' + Date.now());
         var directory = "jsons/jsonName_Proteus.json";
+      } else if(id_empresa == 17){
+        jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_Devlyn.json" + '?timestamp=' + Date.now());
+        var directory = "jsons/jsonName_Devlyn.json";
       } else {
         jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName.json" + '?timestamp=' + Date.now());
         var directory = "jsons/jsonName.json";
@@ -1014,6 +1039,9 @@
       } else if(id_empresa == 15){
         jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_Proteus.json");
         var directory = "jsons/jsonName_Proteus.json";
+      } else if(id_empresa == 17){
+        jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_Devlyn.json");
+        var directory = "jsons/jsonName_Devlyn.json";
       } else {
         jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName.json");
         var directory = "jsons/jsonName.json";
@@ -1272,7 +1300,7 @@
           function(tx4){
             let id_usuario = localStorage.getItem("id_usuario");
             let estatus = 0;
-            tx4.executeSql("SELECT COUNT(id_cedula) as total FROM cedulas_general WHERE id_usuario = ? AND estatus = ? AND (tipo_cedula = 'levantamiento' OR tipo_cedula = 'fumigacion' OR tipo_cedula = 'sanitizacion' OR tipo_cedula = 'mantenimiento' OR tipo_cedula = 'reporteTecnico' OR tipo_cedula = 'minutaCoordinador' OR tipo_cedula = 'baja' OR tipo_cedula = 'sanitizacionSURO' OR tipo_cedula = 'ventaSMC' OR tipo_cedula = 'servicioSMC' OR tipo_cedula = 'checklistServ' OR tipo_cedula = 'reporteGeneral' OR tipo_cedula = 'AuditoriaTecnico' OR tipo_cedula = 'AuditoriaSupervisorTecnico' OR tipo_cedula = 'AuditoriaLider' OR tipo_cedula = 'reporteFotografico' OR tipo_cedula = 'conteo' OR tipo_cedula = 'Plato Limpio' OR tipo_cedula = 'Visita' OR tipo_cedula = 'Entrega' OR tipo_cedula = 'Venta' OR tipo_cedula = 'ApoyoVIC' OR tipo_cedula = 'VentasVIC' OR tipo_cedula = 'VIC' OR tipo_cedula = 'Caliente' OR tipo_cedula = 'visitaDilimpio' OR tipo_cedula = 'Entregas' OR tipo_cedula = 'Rational' OR tipo_cedula = 'recorridoSURO' OR tipo_cedula = 'visitaSURO' OR tipo_cedula = 'encuestaSURO' OR tipo_cedula = 'visitaBSURO' OR tipo_cedula = 'seguimientoSURO' OR tipo_cedula = 'Reposicion' OR tipo_cedula = 'Preventivo' OR tipo_cedula = 'Correctivo' OR tipo_cedula = 'Instalacion')",
+            tx4.executeSql("SELECT COUNT(id_cedula) as total FROM cedulas_general WHERE id_usuario = ? AND estatus = ? AND (tipo_cedula = 'levantamiento' OR tipo_cedula = 'fumigacion' OR tipo_cedula = 'sanitizacion' OR tipo_cedula = 'mantenimiento' OR tipo_cedula = 'reporteTecnico' OR tipo_cedula = 'minutaCoordinador' OR tipo_cedula = 'baja' OR tipo_cedula = 'sanitizacionSURO' OR tipo_cedula = 'ventaSMC' OR tipo_cedula = 'servicioSMC' OR tipo_cedula = 'checklistServ' OR tipo_cedula = 'reporteGeneral' OR tipo_cedula = 'AuditoriaTecnico' OR tipo_cedula = 'AuditoriaSupervisorTecnico' OR tipo_cedula = 'AuditoriaLider' OR tipo_cedula = 'reporteFotografico' OR tipo_cedula = 'conteo' OR tipo_cedula = 'Plato Limpio' OR tipo_cedula = 'Visita' OR tipo_cedula = 'Entrega' OR tipo_cedula = 'Venta' OR tipo_cedula = 'ApoyoVIC' OR tipo_cedula = 'VentasVIC' OR tipo_cedula = 'VIC' OR tipo_cedula = 'Caliente' OR tipo_cedula = 'visitaDilimpio' OR tipo_cedula = 'Entregas' OR tipo_cedula = 'Rational' OR tipo_cedula = 'recorridoSURO' OR tipo_cedula = 'visitaSURO' OR tipo_cedula = 'encuestaSURO' OR tipo_cedula = 'visitaBSURO' OR tipo_cedula = 'seguimientoSURO' OR tipo_cedula = 'Reposicion' OR tipo_cedula = 'Preventivo' OR tipo_cedula = 'Correctivo' OR tipo_cedula = 'Instalacion'  OR tipo_cedula = 'VentasVIC_SinV' OR tipo_cedula = 'VentasVIC_ConV' OR tipo_cedula = 'VentasVIC_Acompa')",
               [id_usuario,estatus],
               function(tx4, results){
                 var item = results.rows.item(0);
@@ -1286,6 +1314,27 @@
           function(error){},
           function(){}
         );
+        //Counts de papeletas pendientes
+        var id_empresa = localStorage.getItem("id_empresa");
+        if(id_empresa == 8){
+          databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("Select count(d.id_cedula) as countpapel from datos_generales_serv d INNER JOIN cedulas_general c ON d.id_cedula = c.id_cedula where d.estatus_ced = 3 AND c.estatus = 3",
+                [],
+                    function(tx, results){
+                        var item2 = results.rows.item(0);
+                        $('#contpapeleta').html(item2.countpapel);
+                    },
+                    function(tx, error){
+                        console.log("Error al mostrar datos cedula: " + error.message);
+                    }
+                );
+            },
+            function(error){console.log("Error al mostrar datos cedula: " + error.message);},
+            function(){}
+          );
+        }
+        //FIN Counts de papeletas pendientes
         databaseHandler.db.transaction(
           function(tx4){
             let id_usuario = localStorage.getItem("id_usuario");

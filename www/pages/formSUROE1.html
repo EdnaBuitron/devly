@@ -1,0 +1,109 @@
+<style>
+    .FWM-textBox{
+        width: 100%; 
+        padding-left: 3px; 
+        font-size: 15px; 
+        height: 37px; 
+        font-family: 'ITC Avant Garde Gothic', sans-serif; 
+        background-color: white; 
+        border-radius: 8px; 
+        border: 1px solid gray;
+    }
+    input[type=text]{
+        background-color: white;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        padding-top: 5px;
+    }
+    .span{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    </style>
+    <template>
+        <div class="view view-main view-init safe-areas">
+            <div class="page" id="FWM-1">
+                <!-- Navbar -->
+                <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                    <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                    <div class="navbar-inner sliding" style="height: 52px;">
+                        <div class="left">
+                            <a href="#" onclick="">
+                                <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido Formulario -->                                
+                <div class="page-content">
+
+                    <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                        <h2 class="FWN-titulo-2">Alta de Maquinaria</h2>
+    
+                    <div style="text-align: left;">     
+                        <div class="list FWM-fixing-form">
+                            <span class="span FWM-span-form">Sitio:</span>
+                            <input type="text" name="" id="1" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+    
+                            <span class="span FWM-span-form">Nombre del Supervisor/ Ejecutivo quien recibe:</span>
+                            <input type="text" name="" id="4" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form">Nombre de la maquinaria:</span>
+                            <input type="text" name="" id="5" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form">N° de serie Maquinaria:</span>
+                            <input type="text" name="" id="6" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form">Marca de la maquinaria:</span>
+                            <input type="text" name="" id="7" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form">Modelo de la maquinaria:</span>
+                            <input type="text" name="" id="8" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form">Propietario del equipo:</span>
+                            <select id="9" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;" onchange="">
+                                <option value="0">Selecciona un opción</option>
+                                <option value="1">SURO</option>
+                                <option value="2">Cliente</option>
+                            </select>
+
+                            <span class="span FWM-span-form">Propietario del mantto:</span>
+                            <select id="10" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;" onchange="">
+                                <option value="0">Selecciona un opción</option>
+                                <option value="1">SURO</option>
+                                <option value="2">Cliente</option>
+                            </select>
+
+                            <span class="span FWM-span-form">Tipo de maquinaria:</span>
+                            <input type="text" name="" id="11" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            
+                            <span class="span FWM-span-form">Fecha de maquinaria:</span>
+                            <input type="text" name="" id="fecha" class="FWM-input" onchange="inputLleno(this.id,this.value)" readonly>
+
+                            <div class="block grid-resizable-demo" style="margin-bottom: 120px; margin-top: 50px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="" class="boton-equipo" style="background-color: #063E7F; color: white;">Guardar Alta</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        return {
+            on: {
+                pageInit: function (e, page) {
+                    var fecha = new Date();
+                    var fecha_actual = fecha.getDate()+"-"+(fecha.getMonth()+1)+"-"+fecha.getFullYear();
+                    $('#fecha').val(fecha_actual);
+                }
+            }  
+        }
+    </script>

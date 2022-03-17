@@ -5536,47 +5536,47 @@ function buscarClienteServInd(){
 
 
 function generarReporteServInd(){
-   /*
-    let id_visita = localStorage.getItem("id_visita");
-    let nombre_comercial = localStorage.getItem("nombre_comercial");
-    let ciudad = localStorage.getItem("store");
-    let direccion = localStorage.getItem("direccion");
-    let telefono = localStorage.getItem("telefono");
-    let correo = localStorage.getItem("correo");
-    let equipo = localStorage.getItem("equipo");
-    let marca = localStorage.getItem("marca");
-    let modelo = localStorage.getItem("modelo");
-    let serie = localStorage.getItem("serie");*/
-    let id_cedula = localStorage.getItem("IdCedula");
-    let nombre_cliente = localStorage.getItem("nombreCliente");
-    let foto_llegada = localStorage.getItem("foto_llegada");
-    let sucursal = localStorage.getItem("sucursal");
-    let orden_servicio = localStorage.getItem("order_number");
-    var fecha = new Date();
-    var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-    let tipoCedula = "Caliente";
-    let tipoCedulas = "correctivo";
-    databaseHandler.db.transaction(
-        function(tx){
-            tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
-                [tipoCedula,id_cedula],
-                function(tx, results){
-                    localStorage.setItem("TipoVisita", tipoCedulas);
-                    productHandler.addVisitaServ(id_cedula);
-                    productHandler.addreporteCaliente(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
-                    app.views.main.router.navigate({name: 'recorridoServ2'});
-                },
-                function(tx, error){
-                    console.error("Error al actualizar el tipo de cedula: " + error.message);
-                }
-            );
-        },
-        function(error){},
-        function(){}
-    );
-}
+    /*
+     let id_visita = localStorage.getItem("id_visita");
+     let nombre_comercial = localStorage.getItem("nombre_comercial");
+     let ciudad = localStorage.getItem("store");
+     let direccion = localStorage.getItem("direccion");
+     let telefono = localStorage.getItem("telefono");
+     let correo = localStorage.getItem("correo");
+     let equipo = localStorage.getItem("equipo");
+     let marca = localStorage.getItem("marca");
+     let modelo = localStorage.getItem("modelo");
+     let serie = localStorage.getItem("serie");*/
+     let id_cedula = localStorage.getItem("IdCedula");
+     let nombre_cliente = localStorage.getItem("nombreCliente");
+     let foto_llegada = localStorage.getItem("foto_llegada");
+     let sucursal = localStorage.getItem("sucursal");
+     let orden_servicio = localStorage.getItem("order_number");
+     var fecha = new Date();
+     var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+     let tipoCedula = "Caliente";
+     let tipoCedulas = "correctivo";
+     databaseHandler.db.transaction(
+         function(tx){
+             tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+                 [tipoCedula,id_cedula],
+                 function(tx, results){
+                     localStorage.setItem("TipoVisita", tipoCedulas);
+                     productHandler.addVisitaServ(id_cedula,tipoCedula);
+                     productHandler.addreporteCaliente(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
+                     app.views.main.router.navigate({name: 'recorridoServ2'});
+                 },
+                 function(tx, error){
+                     console.error("Error al actualizar el tipo de cedula: " + error.message);
+                 }
+             );
+         },
+         function(error){},
+         function(){}
+     );
+ }
 
-function generarReporteServIndFrio(){
+ function generarReporteServIndFrio(){
     /*
     let id_visita = localStorage.getItem("id_visita");
     let nombre_comercial = localStorage.getItem("nombre_comercial");
@@ -5603,7 +5603,7 @@ function generarReporteServIndFrio(){
                 [tipoCedula,id_cedula],
                 function(tx, results){
                     localStorage.setItem("TipoVisita", tipoCedulas);
-                    productHandler.addVisitaServ(id_cedula);
+                    productHandler.addVisitaServ(id_cedula,tipoCedula);
                     productHandler.addreporteFrio(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
                     app.views.main.router.navigate({name: 'recorridoServ1'});
                 },
@@ -5644,7 +5644,7 @@ function generarReporteServIndRational(){
                 [tipoCedula,id_cedula],
                 function(tx, results){
                     localStorage.setItem("TipoVisita", tipoCedulas);
-                    productHandler.addreporteRatinal(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
+                    productHandler.addreporteRationals(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
                     app.views.main.router.navigate({name: 'recorridoServ3'});
                 },
                 function(tx, error){
@@ -5656,6 +5656,7 @@ function generarReporteServIndRational(){
         function(){}
     );
 }
+
 function continuarPapeleta(id_cedula,tipo){
     localStorage.setItem("IdCedula",id_cedula);
     if(tipo == 1){
@@ -6061,11 +6062,10 @@ function guardarDatoscheckServind(){
    var telefono=$('#telefono').val();
    var correo=$('#correo').val();
    var tipo_servicio=$('#tipo_servicio').val();
-
     if (orden && fecha && id_cliente && cliente && suc_cliente && direccion && ciudad && telefono && correo && tipo_servicio){
         databaseHandler.db.transaction(
             function(tx){
-                tx.executeSql("UPDATE visita_servInd SET no_orden = ?, fecha = ?, id_cliente = ?, cliente = ?, sucursal_cliente = ?, direccion = ?, ciudad = ?, telefono = ?, correo = ?, tipo_servicio = ? WHERE id_cedula = ?",
+                tx.executeSql("UPDATE datos_generales_serv SET no_orden = ?, fecha = ?, id_cliente = ?, cliente = ?, sucursal_cliente = ?, direccion = ?, ciudad = ?, telefono = ?, correo = ?, tipo_servicio = ? WHERE id_cedula = ?",
                     [no_orden, fecha, id_cliente, cliente, suc_cliente, direccion, ciudad, telefono, correo, tipo_servicio ,id_cedula],
                     function(tx, results){
                         databaseHandler.db.transaction(
@@ -6435,6 +6435,17 @@ function guardarDiagnosticoServ(clave){
                 swal("", "Todos los campos son requeridos" ,"warning");
             }
         }
+    }else if (clave == 2){
+        if (como_encontro==0){
+            swal("", "Todos los campos son requeridos." ,"warning");
+        }else{
+            if (falla && como_encontro && volt && amp && wc && tierra_fisica){
+                swal("","Datos Guardados correctamente","success");
+                app.views.main.router.back('/formServ12/', {force: true, ignoreCache: true, reload: true});
+            }else{
+                swal("", "Todos los campos son requeridos" ,"warning");
+            }
+        }
     }else{}
 }
 
@@ -6443,12 +6454,15 @@ function requiereCotizacion(){
     var TipoVisita = localStorage.getItem("TipoVisita");
     var id_equipo = localStorage.getItem("insertId");
         var diag = '';
+        var estado='';
         if($("#cotizacion-1").prop("checked") == true){
             $("#cotizacion").css("display","block")
             diag= 'Sí';
+            estado="2";
         } else {
             $("#cotizacion").css("display","none")
             diag= 'No';
+            estado="1";
         }
         if(TipoVisita=='PMP2'){
             databaseHandler.db.transaction(
@@ -6456,7 +6470,7 @@ function requiereCotizacion(){
                     tx.executeSql("UPDATE datos_eq SET papeleta = ? WHERE id_datos = ?",
                         [diag,id_equipo],
                         function(tx, results){
-                            
+                            estatus_os(estado,id_cedula);
                         },
                         function(tx, error){
                             console.error("Error al guardar: " + error.message);
@@ -6474,7 +6488,7 @@ function requiereCotizacion(){
                 tx.executeSql("UPDATE visita_servInd SET papeleta = ? WHERE id_cedula = ?",
                     [diag,id_cedula],
                     function(tx, results){
-                        
+                        estatus_os(estado,id_cedula);
                     },
                     function(tx, error){
                         console.error("Error al guardar: " + error.message);
@@ -6493,13 +6507,16 @@ function norequiereCotizacion(){
     var TipoVisita = localStorage.getItem("TipoVisita");
     var id_equipo = localStorage.getItem("insertId");
     var diag = '';
+    var estado='';
     if($("#cotizacion-2").prop("checked") == true){
         $("#cotizacion").css("display","none")
-        diag= 'No';  
+        diag= 'No';
+        estado="1";
     }
     if($("#cotizacion-3").prop("checked") == true){
-        $("#cotizacion").css("display","none")
+        $("#cotizacion").css("display","block")
         diag= 'Pendiente';  
+        estado ="3";
     }
     if(TipoVisita=='PMP2'){
         databaseHandler.db.transaction(
@@ -6507,7 +6524,7 @@ function norequiereCotizacion(){
                 tx.executeSql("UPDATE datos_eq SET papeleta = ? WHERE id_datos = ?",
                     [diag,id_equipo],
                     function(tx, results){
-                        
+                        estatus_os(estado,id_cedula);    
                     },
                     function(tx, error){
                         console.error("Error al guardar: " + error.message);
@@ -6525,7 +6542,7 @@ function norequiereCotizacion(){
             tx.executeSql("UPDATE visita_servInd SET papeleta = ? WHERE id_cedula = ?",
                 [diag,id_cedula],
                 function(tx, results){
-                    
+                    estatus_os(estado,id_cedula);
                 },
                 function(tx, error){
                     console.error("Error al guardar: " + error.message);
@@ -6654,7 +6671,9 @@ function guardarReporteGeneralServ(){
     
     databaseHandler.db.transaction(
         function(tx){
-            tx.executeSql("UPDATE datos_generales_serv SET firma_cliente = ?, foto_sello = ? WHERE id_cedula = ?",
+            // tx.executeSql("UPDATE visita_servInd SET firma_cliente = ?, fecha_cliente = ?, foto_sello = ? WHERE id_cedula = ?",
+            //     [firmaCliente,fecha_firma,foto_sello,id_cedula],
+            tx.executeSql("UPDATE visita_servInd SET firma_cliente = ?, foto_sello = ? WHERE id_cedula = ?",
                 [firmaCliente,foto_sello,id_cedula],
                 function(tx, results){
                     databaseHandler.db.transaction(
@@ -7026,6 +7045,7 @@ function showPDFinApp(route){
     );
 }
 function terminarReporteServ(){
+    var id_cedula = localStorage.getItem("IdCedula");
     if($('#imagenC').val() == ""){
         swal("","La fotografia es obligatoria","warning");
         return false;
@@ -7034,20 +7054,21 @@ function terminarReporteServ(){
         swal("","La firma es obligatoria","warning");
         return false;
     }
-    var id_cedula = localStorage.getItem("IdCedula");
+    
     var foto_salida = $('#imagenC').val();
     var firma_tec = $('#signate').val();
     var fecha = new Date();
     var fecha_salida = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
     var ubicacion_salida = $('#geolocation').val();
     var estatus = 1;
+    
     databaseHandler.db.transaction(
         function(tx){
             tx.executeSql("UPDATE cedulas_general SET fecha_salida  = ?,geolocalizacion_salida = ?,estatus = ? WHERE id_cedula = ?",
                 [fecha_salida,ubicacion_salida,estatus,id_cedula],
                 function(tx, results){
                     databaseHandler.db.transaction(
-                        function(tx){//firma_tecnico
+                        function(tx){
                             tx.executeSql("UPDATE datos_generales_serv SET firma_tecnico = ?, foto_salida = ? WHERE id_cedula = ?",
                                 [firma_tec,foto_salida,id_cedula],
                                 function(tx, results){
@@ -7060,7 +7081,7 @@ function terminarReporteServ(){
                         },
                         function(error){},
                         function(){}
-                    );
+                    );    
                 },
                 function(tx, error){
                     swal("Error al guardar",error.message,"error");
@@ -7086,7 +7107,7 @@ function terminarReporteServRe(){
     var fecha = new Date();
     var fecha_salida = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
     var ubicacion_salida = $('#geolocation').val();
-    var estatus = 0;
+    var estatus = 1;
     databaseHandler.db.transaction(
         function(tx){
             tx.executeSql("UPDATE cedulas_general SET fecha_salida  = ?,geolocalizacion_salida = ?,estatus = ? WHERE id_cedula = ?",
@@ -7887,13 +7908,98 @@ function guardarPapeletaServ(){
     var motivo_pr = $("#motivo_pr").val();
     var fecha = new Date();
     var fecha_reg = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
-
-    if(noParteC && descripcionC && motivo_pr){
-        if (prioridadC == 0){
-            swal("", "Selecciona una prioridad" , "warning");
-            return false;
+    if($("#cotizacion-1").prop("checked") == true){
+        if(noParteC && descripcionC && motivo_pr){
+            if (prioridadC == 0){
+                swal("", "Todos los datos son requeridos, cuando la opción marcada de papeleta es 'Sí'" , "warning");
+                return false;
+            }else{
+                if (cantidadC){
+                    if (foto){
+                        databaseHandler.db.transaction(
+                            function(tx){//id_cedula, foto_papeleta, numero_parte, descripcion, prioridad, cantidad, fecha_registro
+                                tx.executeSql("INSERT INTO papeleta(id_cedula, foto_papeleta, numero_parte, descripcion, prioridad, cantidad, fecha_registro, motivo_pr, id_equipo) VALUES (?,?,?,?,?,?,?,?,?)",
+                                    [id_cedula, foto, noParteC, descripcionC, prioridadC, cantidadC, fecha_reg, motivo_pr, id_equ],
+                                    function(tx, results){
+                                        app.preloader.hide();
+                                        swal("","Datos guardados correctamente","success");
+                                        $("#numero_parteC").val('');
+                                        $('#numero_parteC').css("background-color", "#ffffff");
+                                        $("#descripcionC").val('');
+                                        $('#descripcionC').css("background-color", "#ffffff");
+                                        $("#prioridadC").val(0);
+                                        $("#cantidadC").val('');
+                                        $('#cantidadC').css("background-color", "#ffffff");
+                                        $("#motivo_pr").val('');
+                                        $("#motivo_pr").css("background-color", "#ffffff");
+                                        $("#imagenC").val('');
+                                        $("#smallImage").attr("src","img/blank.png");
+                                        $("#photoIcon").attr("src","img/camera.svg");
+                                        databaseHandler.db.transaction(
+                                            function(tx){
+                                                tx.executeSql("Select * from papeleta where id_cedula = ? ORDER BY id_papeleta DESC",
+                                                [id_cedula],
+                                                    function(tx, results){
+                                                        var item = results.rows.item(0);
+                                                        if (item.prioridad==1){
+                                                            prioridad='Seguridad';
+                                                        }else if (item.prioridad==2){
+                                                            prioridad='Funcionalidad';
+                                                        }else if (item.prioridad==3){
+                                                            prioridad='Programa';
+                                                        }
+                                                        $("#table_papeleta").append("<tr id='fila"+ item.id_papeleta +
+                                                            "'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ 
+                                                            item.id_papeleta +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
+                                                            item.foto_papeleta+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + 
+                                                            item.numero_parte + "</td><td style='text-align: center;'>" + 
+                                                                item.descripcion + "</td><td style='text-align: center;'>" + 
+                                                                prioridad + "</td><td style='text-align: center;'>" + 
+                                                                item.motivo_pr + "</td><td style='text-align: center;'>" + 
+                                                                item.cantidad + "</td></tr>");
+                                                        $("#message-nr").css("display", "none");
+                                                        $('.preloader').remove();
+                                                        $('.infinite-scroll-preloader').remove();
+                                                        app.preloader.hide();
+                                                    },
+                                                    function(tx, error){
+                                                        console.log("Error al guardar cedula: " + error.message);
+                                                        app.preloader.hide();
+                                                    }
+                                                );
+                                            },
+                                            function(error){},
+                                            function(){}
+                                        );
+                                    },
+                                    function(tx, error){
+                                        app.preloader.hide();
+                                        swal("Error al guardar",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    }else{
+                        swal("", "Todos los datos son requeridos, cuando la opción marcada de papeleta es 'Sí'" , "warning");
+                        return false;
+                    }
+                }else{
+                    swal("", "Todos los datos son requeridos, cuando la opción marcada de papeleta es 'Sí'" , "warning");
+                    return false;
+                }
+            }
         }else{
-            if (cantidadC){
+            swal("", "Todos los datos son requeridos, cuando la opción marcada de papeleta es 'Sí'" , "warning");
+        }
+    }
+    if($("#cotizacion-3").prop("checked") == true){
+        if(motivo_pr){
+            if (prioridadC == 0){
+                swal("", "Selecciona una prioridad" , "warning");
+                return false;
+            }else{
                 if (foto){
                     databaseHandler.db.transaction(
                         function(tx){//id_cedula, foto_papeleta, numero_parte, descripcion, prioridad, cantidad, fecha_registro
@@ -7911,7 +8017,7 @@ function guardarPapeletaServ(){
                                     $('#cantidadC').css("background-color", "#ffffff");
                                     $("#motivo_pr").val();
                                     $("#motivo_pr").css("background-color", "#ffffff");
-                                    $("imagenC").val('');
+                                    $("#imagenC").val('');
                                     $("#smallImage").attr("src","img/blank.png");
                                     $("#photoIcon").attr("src","img/camera.svg");
                                     databaseHandler.db.transaction(
@@ -7920,15 +8026,22 @@ function guardarPapeletaServ(){
                                             [id_cedula],
                                                 function(tx, results){
                                                     var item = results.rows.item(0);
+                                                    if (item.prioridad==1){
+                                                        prioridad='Seguridad';
+                                                    }else if (item.prioridad==2){
+                                                        prioridad='Funcionalidad';
+                                                    }else if (item.prioridad==3){
+                                                        prioridad='Programa';
+                                                    }
                                                     $("#table_papeleta").append("<tr id='fila"+ item.id_papeleta +
                                                     "'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ 
                                                     item.id_papeleta +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
                                                     item.foto_papeleta+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + 
                                                     item.numero_parte + "</td><td style='text-align: center;'>" + 
-                                                     item.descripcion + "</td><td style='text-align: center;'>" + 
-                                                     item.prioridad + "</td><td style='text-align: center;'>" + 
-                                                     item.motivo_pr + "</td><td style='text-align: center;'>" + 
-                                                     item.cantidad + "</td></tr>");
+                                                    item.descripcion + "</td><td style='text-align: center;'>" + 
+                                                    prioridad + "</td><td style='text-align: center;'>" + 
+                                                    item.motivo_pr + "</td><td style='text-align: center;'>" + 
+                                                    item.cantidad + "</td></tr>");
                                                     $("#message-nr").css("display", "none");
                                                     $('.preloader').remove();
                                                     $('.infinite-scroll-preloader').remove();
@@ -7957,13 +8070,10 @@ function guardarPapeletaServ(){
                     swal("", "Favor de tomar una fotografía" , "warning");
                     return false;
                 }
-            }else{
-                swal("", "Ingresa una Cantidad" , "warning");
-                return false;
             }
+        }else{
+            swal("", "Describe el motivo de la Prioridad" , "warning");
         }
-    }else{
-        swal("", "Todos los datos son requeridos" , "warning");
     }
 }
 
@@ -7993,7 +8103,7 @@ function guardarRefasServ(){
                             $('#descripcion').css("background-color", "#ffffff");
                             $("#parte").val('');
                             $('#parte').css("background-color", "#ffffff");
-                            $("imagenC1").val('');
+                            $("#imagenC1").val('');
                             $("#smallImage1").attr("src","img/blank.png");
                             $("#photoIcon1").attr("src","img/camera.svg");
                             databaseHandler.db.transaction(
@@ -8061,7 +8171,9 @@ function guardarCotiza(){
                 dangerMode: false,
             })
             .then((willGoBack) => {
-                app.views.main.router.back('/cierreServInd2/', {force: true, ignoreCache: true, reload: true});
+                if (willGoBack){
+                    app.views.main.router.back('/cierreServInd2/', {force: true, ignoreCache: true, reload: true});
+                }else{}
             });
         }else{
             //H_viaje, H_espera, H_trabajo, H_totales
@@ -8651,7 +8763,7 @@ function generarPMP1Caliente(){
             tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
                 [tipoCedula,id_cedula],
                 function(tx, results){
-                    productHandler.addVisitaServ(id_cedula);
+                    productHandler.addVisitaServ(id_cedula,tipoCedula);
                     productHandler.addreporteCaliente(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
                     localStorage.setItem("TipoVisita", tipoCedulas);
                     app.views.main.router.navigate({name: 'recorridoServ8'});
@@ -8665,48 +8777,48 @@ function generarPMP1Caliente(){
         function(){}
     );
 }
- function generarPMP1Frio(){
-     /*
-    let id_visita = localStorage.getItem("id_visita");
-    let nombre_comercial = localStorage.getItem("nombre_comercial");
-    let ciudad = localStorage.getItem("store");
-    let direccion = localStorage.getItem("direccion");
-    let telefono = localStorage.getItem("telefono");
-    let correo = localStorage.getItem("correo");
-    let equipo = localStorage.getItem("equipo");
-    let marca = localStorage.getItem("marca");
-    let modelo = localStorage.getItem("modelo");
-    let serie = localStorage.getItem("serie");*/
-    let id_cedula = localStorage.getItem("IdCedula");
-    let nombre_cliente = localStorage.getItem("nombreCliente");
-    let foto_llegada = localStorage.getItem("foto_llegada");
-    let sucursal = localStorage.getItem("sucursal");
-    let orden_servicio = localStorage.getItem("order_number");
-    var fecha = new Date();
-    var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-    let tipoCedula = "PMP_Frio";
-    let tipoCedulas = "PMP1Frio";
-    databaseHandler.db.transaction(
-        function(tx){
-            tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
-                [tipoCedula,id_cedula],
-                function(tx, results){
-                    localStorage.setItem("TipoVisita", tipoCedulas);
-                    productHandler.addVisitaServ(id_cedula);
-                    productHandler.addreporteFrio(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
-                    localStorage.setItem("TipoVisita", tipoCedulas);
-                    app.views.main.router.navigate({name: 'recorridoServ7'});
-                },
-                function(tx, error){
-                    console.error("Error al actualizar el tipo de cedula: " + error.message);
-                }
-            );
-        },
-        function(error){},
-        function(){}
-    );
+function generarPMP1Frio(){
+    /*
+   let id_visita = localStorage.getItem("id_visita");
+   let nombre_comercial = localStorage.getItem("nombre_comercial");
+   let ciudad = localStorage.getItem("store");
+   let direccion = localStorage.getItem("direccion");
+   let telefono = localStorage.getItem("telefono");
+   let correo = localStorage.getItem("correo");
+   let equipo = localStorage.getItem("equipo");
+   let marca = localStorage.getItem("marca");
+   let modelo = localStorage.getItem("modelo");
+   let serie = localStorage.getItem("serie");*/
+   let id_cedula = localStorage.getItem("IdCedula");
+   let nombre_cliente = localStorage.getItem("nombreCliente");
+   let foto_llegada = localStorage.getItem("foto_llegada");
+   let sucursal = localStorage.getItem("sucursal");
+   let orden_servicio = localStorage.getItem("order_number");
+   var fecha = new Date();
+   var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+   let tipoCedula = "PMP_Frio";
+   let tipoCedulas = "PMP1Frio";
+   databaseHandler.db.transaction(
+       function(tx){
+           tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+               [tipoCedula,id_cedula],
+               function(tx, results){
+                   localStorage.setItem("TipoVisita", tipoCedulas);
+                   productHandler.addVisitaServ(id_cedula,tipoCedula);
+                   productHandler.addreporteFrio(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
+                   localStorage.setItem("TipoVisita", tipoCedulas);
+                   app.views.main.router.navigate({name: 'recorridoServ7'});
+               },
+               function(tx, error){
+                   console.error("Error al actualizar el tipo de cedula: " + error.message);
+               }
+           );
+       },
+       function(error){},
+       function(){}
+   );
 }
- function generarPMP1Rational(){
+function generarPMP1Rational(){
     console.log('rational');/*
     let id_visita = localStorage.getItem("id_visita");
     let nombre_comercial = localStorage.getItem("nombre_comercial");
@@ -8732,7 +8844,7 @@ function generarPMP1Caliente(){
             tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
                 [tipoCedula,id_cedula],
                 function(tx, results){
-                    productHandler.addVisitaServ(id_cedula);
+                    productHandler.addVisitaServ(id_cedula,tipoCedula);
                     productHandler.addreporteRatinal(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
                     app.views.main.router.navigate({name: 'recorridoServ9'});
                     localStorage.setItem("TipoVisita", tipoCedulas);
@@ -8747,44 +8859,46 @@ function generarPMP1Caliente(){
     );
     
 }
- function generarPMP2(){
-     /*
-    let id_visita = localStorage.getItem("id_visita");
-    let nombre_comercial = localStorage.getItem("nombre_comercial");
-    let ciudad = localStorage.getItem("store");
-    let direccion = localStorage.getItem("direccion");
-    let telefono = localStorage.getItem("telefono");
-    let correo = localStorage.getItem("correo");
-    let equipo = localStorage.getItem("equipo");
-    let marca = localStorage.getItem("marca");
-    let modelo = localStorage.getItem("modelo");
-    let serie = localStorage.getItem("serie");*/
-    let id_cedula = localStorage.getItem("IdCedula");
-    let nombre_cliente = localStorage.getItem("nombreCliente");
-    let foto_llegada = localStorage.getItem("foto_llegada");
-    let sucursal = localStorage.getItem("sucursal");
-    let orden_servicio = localStorage.getItem("order_number");
-    var fecha = new Date();
-    var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-    let tipoCedula = "PMP";
-    let tipoCedulas = "PMP2";
-    databaseHandler.db.transaction(
-        function(tx){
-            tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
-                [tipoCedula,id_cedula],
-                function(tx, results){
-                    productHandler.addreporteRatinal(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
-                    localStorage.setItem("TipoVisita", tipoCedulas);
-                    app.views.main.router.navigate({name: 'menuServPMPSOEC'});
-                },
-                function(tx, error){
-                    console.error("Error al actualizar el tipo de cedula: " + error.message);
-                }
-            );
-        },
-        function(error){},
-        function(){}
-    );
+function generarPMP2(){
+    /*
+   let id_visita = localStorage.getItem("id_visita");
+   let nombre_comercial = localStorage.getItem("nombre_comercial");
+   let ciudad = localStorage.getItem("store");
+   let direccion = localStorage.getItem("direccion");
+   let telefono = localStorage.getItem("telefono");
+   let correo = localStorage.getItem("correo");
+   let equipo = localStorage.getItem("equipo");
+   let marca = localStorage.getItem("marca");
+   let modelo = localStorage.getItem("modelo");
+   let serie = localStorage.getItem("serie");*/
+   let id_cedula = localStorage.getItem("IdCedula");
+   let nombre_cliente = localStorage.getItem("nombreCliente");
+   let foto_llegada = localStorage.getItem("foto_llegada");
+   let sucursal = localStorage.getItem("sucursal");
+   //let orden_servicio = localStorage.getItem("order_number");
+   let orden_servicio = "OS321";
+   var fecha = new Date();
+   var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+   let tipoCedula = "PMP";
+   let tipoCedulas = "PMP2";
+   databaseHandler.db.transaction(
+       function(tx){
+           tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+               [tipoCedula,id_cedula],
+               function(tx, results){
+                   productHandler.addVisitaServ(id_cedula,tipoCedula);
+                   productHandler.addreporteRatinal(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
+                   localStorage.setItem("TipoVisita", tipoCedulas);
+                   app.views.main.router.navigate({name: 'menuServPMPSOEC'});
+               },
+               function(tx, error){
+                   console.error("Error al actualizar el tipo de cedula: " + error.message);
+               }
+           );
+       },
+       function(error){},
+       function(){}
+   );
 }
 function generarHEB(){
     let id_cedula = localStorage.getItem("IdCedula");
@@ -8800,6 +8914,7 @@ function generarHEB(){
             tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
                 [tipoCedula,id_cedula],
                 function(tx, results){
+                    productHandler.addVisitaServ(id_cedula,tipoCedula);
                     productHandler.addreporteRatinal(id_cedula, orden_servicio, fecha_llegada, foto_llegada, tipoCedula, nombre_cliente, sucursal);
                     app.views.main.router.navigate({name: 'recorridoServ6'});
                 },
@@ -8812,9 +8927,10 @@ function generarHEB(){
         function(){}
     );
 }
-function GCheckPapeleta(nom){
-    var pregunta = $('input:radio[name=pregunta'+nom+']:checked').val();
-    console.log('Rsp',pregunta);
+function GCheckPapeleta(nom,id){
+    if ($("#"+id).prop("checked")){
+        var pregunta = $('#'+id).val();
+    }else{pregunta==0;}
     var id_equ = localStorage.getItem("insertId");
     var fase = localStorage.getItem("Faseeq");
     if(nom == 1){
@@ -8824,9 +8940,22 @@ function GCheckPapeleta(nom){
                     [pregunta,id_equ],
                     function(tx, results){
                         if(pregunta == 1){
-                            $("#cotizacion-"+fase).css("display","block")
+                            $("#cotizacion-"+fase).css("display","block");
+                            $("#cotizacion-3-"+fase).prop("checked", false);
+                            $("#cotizacion-2-"+fase).prop("checked", false);
+                        }else if (pregunta == 2){
+                            $("#cotizacion-"+fase).css("display","none");
+                            $("#cotizacion-3-"+fase).prop("checked", false);
+                            $("#cotizacion-1-"+fase).prop("checked", false);
+                        }else if(pregunta == 3){
+                            $("#cotizacion-"+fase).css("display","block");
+                            $("#cotizacion-2-"+fase).prop("checked", false);
+                            $("#cotizacion-1-"+fase).prop("checked", false);
                         }else{
-                            $("#cotizacion-"+fase).css("display","none")
+                            $("#cotizacion-"+fase).css("display","none");
+                            $("#cotizacion-3-"+fase).prop("checked", false);
+                            $("#cotizacion-2-"+fase).prop("checked", false);
+                            $("#cotizacion-1-"+fase).prop("checked", false);
                         }
                         
                     },
@@ -8847,9 +8976,15 @@ function GCheckPapeleta(nom){
                     [pregunta,id_equ],
                     function(tx, results){
                         if(pregunta == 1){
-                            $("#refacciones-"+fase).css("display","block")
+                            $("#refacciones-"+fase).css("display","block");
+                            $("#cotizacion-5-"+fase).prop("checked", false);
+                        }else if(pregunta == 2){
+                            $("#refacciones-"+fase).css("display","none");
+                            $("#cotizacion-4-"+fase).prop("checked", false);
                         }else{
-                            $("#refacciones-"+fase).css("display","none")
+                            $("#refacciones-"+fase).css("display","none");
+                            $("#cotizacion-4-"+fase).prop("checked", false);
+                            $("#cotizacion-5-"+fase).prop("checked", false);
                         }
                     },
                     function(tx, error){
@@ -8869,6 +9004,16 @@ function GCheckPapeleta(nom){
                 tx.executeSql("UPDATE datos_eq SET viaticos = ? WHERE id_datos = ?",
                     [pregunta,id_equ],
                     function(tx, results){  
+                        if(pregunta == 1){
+                            $("#cotizacion-6-"+fase).prop("checked", true);
+                            $("#cotizacion-7-"+fase).prop("checked", false);
+                        }else if(pregunta == 2){
+                            $("#cotizacion-7-"+fase).prop("checked", true);
+                            $("#cotizacion-6-"+fase).prop("checked", false);
+                        } else{
+                            $("#cotizacion-6-"+fase).prop("checked", false);
+                            $("#cotizacion-7-"+fase).prop("checked", false);
+                        }
                     },
                     function(tx, error){
                         console.error("Error al guardar: " + error.message);
@@ -9176,7 +9321,6 @@ function guardarequipoSERV(fase,no_preguntas){
     var capacidad = $("#capacidad").val();
     var obs = $("#obs"+fase).val();
     var estatus = $( "#estatuseq"+fase ).val();
-    var ml = $("#ml").val();
     var num = 0;
     for(i = 1;i <= no_preguntas;i++){
         if($("#"+fase+"-"+i+"-select").val() == "0"){
@@ -9188,7 +9332,7 @@ function guardarequipoSERV(fase,no_preguntas){
            num++;
         }
     }
-    if(marca && modelo && serie && id && volts && amp && tierra && capacidad && obs && ml){
+    if(marca && modelo && serie && id && volts && amp && tierra && capacidad && obs){
         if(num != 0){
             swal({
                 title: "Aviso",
@@ -9201,8 +9345,8 @@ function guardarequipoSERV(fase,no_preguntas){
                 if (willGoBack){
                     databaseHandler.db.transaction(
                         function(tx){
-                            tx.executeSql("UPDATE datos_eq SET marca = ? ,modelo = ?, serie = ?, numero_id = ?, volts = ?,amp = ?, tierra = ?, breaker = ? , observaciones = ?, estatus = ? , ml = ? WHERE id_datos= ? ",
-                                [marca,modelo,serie,id,volts,amp,tierra,capacidad,obs,estatus,ml,id_equ],
+                            tx.executeSql("UPDATE datos_eq SET marca = ? ,modelo = ?, serie = ?, numero_id = ?, volts = ?,amp = ?, tierra = ?, breaker = ? , observaciones = ?, estatus = ? WHERE id_datos= ? ",
+                                [marca,modelo,serie,id,volts,amp,tierra,capacidad,obs,estatus,id_equ],
                                 function(tx, results){
                                     swal("", "Se guardo los datos corrcetamnete", "success");
                                     app.views.main.router.back('/formServ33/', {force: true, ignoreCache: true, reload: true});
@@ -9215,14 +9359,13 @@ function guardarequipoSERV(fase,no_preguntas){
                         function(error){},
                         function(){}
                     );
-                    
                 } else {}
             });
         }else{
             databaseHandler.db.transaction(
                 function(tx){
-                    tx.executeSql("UPDATE datos_eq SET marca = ? ,modelo = ?, serie = ?, numero_id = ?, volts = ?,amp = ?, tierra = ?, breaker = ? , observaciones = ?, estatus = ? , ml = ? WHERE id_datos= ? ",
-                        [marca,modelo,serie,id,volts,amp,tierra,capacidad,obs,estatus,ml,id_equ],
+                    tx.executeSql("UPDATE datos_eq SET marca = ? ,modelo = ?, serie = ?, numero_id = ?, volts = ?,amp = ?, tierra = ?, breaker = ? , observaciones = ?, estatus = ?  WHERE id_datos= ? ",
+                        [marca,modelo,serie,id,volts,amp,tierra,capacidad,obs,estatus,id_equ],
                         function(tx, results){
                             swal("", "Se guardo los datos corrcetamnete", "success");
                             app.views.main.router.back('/formServ33/', {force: true, ignoreCache: true, reload: true});
@@ -9234,11 +9377,11 @@ function guardarequipoSERV(fase,no_preguntas){
                 },
                 function(error){},
                 function(){}
-            );   
+            );
         }
     }else{
         swal("", "Faltan datos del equipo por llenar" ,"warning");
-    }        
+    }
 }
 function regresarmenuPMP(){
     app.views.main.router.navigate({name: 'formServ36'});
@@ -9278,7 +9421,7 @@ function guardarPapeletaServHEB(fase){
                                     $("#prioridadC"+fase).val(0);
                                     $("#cantidadC"+fase).val('');
                                     $('#cantidadC'+fase).css("background-color", "#ffffff");
-                                    $("imagenC"+id_equ).val('');
+                                    $("#imagenC"+id_equ).val('');
                                     $("#smallImage"+id_equ).attr("src","img/blank.png");
                                     $("#photoIcon"+id_equ).attr("src","img/camera.svg");
                                     console.log("INSERT")
@@ -9288,13 +9431,20 @@ function guardarPapeletaServHEB(fase){
                                             [id_cedula,id_equ],
                                                 function(tx, results){
                                                     var item = results.rows.item(0);
+                                                    if (item.prioridad==1){
+                                                        prioridad='Seguridad';
+                                                    }else if (item.prioridad==2){
+                                                        prioridad='Funcionalidad';
+                                                    }else if (item.prioridad==3){
+                                                        prioridad='Programa';
+                                                    }
                                                     $("#table_papeleta"+fase).append("<tr id='fila"+ item.id_papeleta +
                                                     "'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ 
                                                     item.id_papeleta +",5);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
                                                     item.foto_papeleta+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + 
                                                     item.numero_parte + "</td><td style='text-align: center;'>" + 
                                                      item.descripcion + "</td><td style='text-align: center;'>" + 
-                                                     item.prioridad + "</td><td style='text-align: center;'>" + 
+                                                     prioridad + "</td><td style='text-align: center;'>" + 
                                                      item.cantidad + "</td></tr>");
                                                     $("#message-nr").css("display", "none");
                                                     $('.preloader').remove();
@@ -9333,7 +9483,6 @@ function guardarPapeletaServHEB(fase){
         swal("", "Todos los datos son requeridos" , "warning");
     }
 }
-
 function guardarRefasServHEB(fase){
     var id_equ = localStorage.getItem("insertId");
     if(!id_equ){ id_equ = 0};
@@ -9361,7 +9510,7 @@ function guardarRefasServHEB(fase){
                             $('#descripcion').css("background-color", "#ffffff");
                             $("#parte").val('');
                             $('#parte').css("background-color", "#ffffff");
-                            $("imagenC1"+id_equ).val('');
+                            $("#imagenC1"+id_equ).val('');
                             $("#smallImage1"+id_equ).attr("src","img/blank.png");
                             $("#photoIcon1"+id_equ).attr("src","img/camera.svg");
                             databaseHandler.db.transaction(
@@ -9466,51 +9615,59 @@ function equipoHEB(){
     } 
 }
 function guardarReporteGeneralServRe(){
-    if($("#NombreFirma").val() == "" || $("#signate").val() == ""){
-        swal("","El campo de nombre y firma son obligatorios","warning");
-        return false;
+    if($("#tecnico_apoyo").prop("checked") == true){
+        var tecnico= 'Apoyo';
+        change_tecnico(tecnico);
+        app.views.main.router.back('/yamevoyserv3/', {force: true, reload: true});
+    }else{
+        var tecnico= 'Lider';
+        change_tecnico(tecnico);
+        if($("#NombreFirma").val() == "" || $("#signate").val() == ""){
+            swal("","El campo de nombre y firma son obligatorios","warning");
+            return false;
+        }
+        if($("#imagenC").val() == ""){
+            swal("","Debes tomar la fotografía del sello para poder continuar","warning");
+            return false;
+        }
+        var foto_sello = $("#imagenC").val();
+        var id_cedula = localStorage.getItem("IdCedula");
+        var nombrefirma = $("#NombreFirma").val();
+        var firmaCliente = $("#signate").val();
+        var fecha = new Date();
+        var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE visita_servInd SET firma_cliente = ?, fecha_cliente = ?, foto_sello = ? WHERE id_cedula = ?",
+                    [firmaCliente,fecha_firma,foto_sello,id_cedula],
+                    function(tx, results){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("UPDATE cedulas_general SET nombre_evalua = ? WHERE id_cedula = ?",
+                                    [nombrefirma,id_cedula],
+                                    function(tx, results){
+                                        swal("","Guardado correctamente","success");
+                                        app.views.main.router.back('/yamevoyserv3/', {force: true, reload: true});
+                                    },
+                                    function(tx, error){
+                                        console.error("Error al guardar cierre: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    },
+                    function(tx, error){
+                        console.error("Error al guardar cierre: " + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
     }
-    if($("#imagenC").val() == ""){
-        swal("","Debes tomar la fotografía del sello para poder continuar","warning");
-        return false;
-    }
-    var foto_sello = $("#imagenC").val();
-    var id_cedula = localStorage.getItem("IdCedula");
-    var nombrefirma = $("#NombreFirma").val();
-    var firmaCliente = $("#signate").val();
-    var fecha = new Date();
-    var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-    
-    databaseHandler.db.transaction(
-        function(tx){
-            tx.executeSql("UPDATE visita_servInd SET firma_cliente = ?, foto_sello = ? WHERE id_cedula = ?",
-                [firmaCliente,foto_sello,id_cedula],
-                function(tx, results){
-                    databaseHandler.db.transaction(
-                        function(tx){
-                            tx.executeSql("UPDATE cedulas_general SET nombre_evalua = ? WHERE id_cedula = ?",
-                                [nombrefirma,id_cedula],
-                                function(tx, results){
-                                    swal("","Guardado correctamente","success");
-                                    app.views.main.router.back('/yamevoyserv3/', {force: true, reload: true});
-                                },
-                                function(tx, error){
-                                    console.error("Error al guardar cierre: " + error.message);
-                                }
-                            );
-                        },
-                        function(error){},
-                        function(){}
-                    );
-                },
-                function(tx, error){
-                    console.error("Error al guardar cierre: " + error.message);
-                }
-            );
-        },
-        function(error){},
-        function(){}
-    );
 }
 function guardarCotiza3(){
     var id_cedula = localStorage.getItem("IdCedula");
@@ -9617,7 +9774,7 @@ function guardarCotiza4(){
     }
 }
 function guardarDatoscheckServind4(){
-    var id_cedula = localStorage.getItem("IdCedula");    
+    var id_cedula = localStorage.getItem("IdCedula");
     var id_equ = localStorage.getItem("insertId");    
     var equipo = $("#equipo").val();
     var marca = $("#marca").val();
@@ -9664,7 +9821,38 @@ function regresarRecorridoServInd2(){
     if (tipoVisita=='PMP1Caliente'){
         app.views.main.router.back('/recorridoServ8/', {force: true, ignoreCache: true, reload: true});
     }else if (tipoVisita=='correctivo'){
-        app.views.main.router.back('/recorridoServ2/', {force: true, ignoreCache: true, reload: true});
+        var id_cedula = localStorage.getItem("IdCedula");
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql(
+                    "Select * from datos_generales_serv WHERE id_cedula = ?",
+                    [id_cedula],
+                    function(tx, results){
+                        let length = results.rows.length;
+                        var item = results.rows.item(0);
+                        var tipo_servicio = item.tipo_servicio;
+                        if (tipo_servicio == 'Caliente'){
+                            app.views.main.router.back('/recorridoServ2/', {force: true, ignoreCache: true, reload: true});
+                        }else if (tipo_servicio == 'Frio'){
+                            app.views.main.router.back('/recorridoServ1/', {force: true, ignoreCache: true, reload: true});
+                        }else if (tipo_servicio == 'Rational'){
+                            app.views.main.router.back('/recorridoServ3/', {force: true, ignoreCache: true, reload: true});
+                        }else if (tipo_servicio == 'HEB'){
+                            app.views.main.router.back('/recorridoServ6/', {force: true, ignoreCache: true, reload: true});
+                        }else if (tipo_servicio == 'PMP'){
+                            app.views.main.router.back('/menuServPMPSOEC/', {force: true, ignoreCache: true, reload: true});
+                        }
+                    },
+                    function(tx, error){
+                        console.log("Error: " + error.message);
+                    }
+                );  
+            },
+            function(error){
+                console.log("Error: " + error.message);
+            },
+            function(){}
+        );
     }else if (tipoVisita=='PMP2'){
         app.views.main.router.back('/recorridoServ11/', {force: true, ignoreCache: true, reload: true});
     }else if (tipoVisita=='PMP1Frio'){
@@ -9717,6 +9905,816 @@ function empezarPMP(){
         app.views.main.router.back('/formServ21/', {force: true, ignoreCache: true, reload: true});
     }
 }
+function reprogramarVisitaServ(){
+    var id_cedula = localStorage.getItem("IdCedula");
+    var nombre_cliente= $('#suc_cliente').val();
+    swal({
+        title: "Aviso",
+        text: "¿Estas seguro de querer Reprogramar la visita?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+      .then((RESP) => {
+          if (RESP == true) {
+            app.dialog.prompt("Para reprogramar la visita Ingresa la Sucursal del Cliente. (Respetando mayúsculas y minúsculas)", 'FIELD',function (name) {
+                if(name == nombre_cliente){
+                    databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql("UPDATE visita_servInd SET estatus_ced = 4 WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                    swal("", "Visita reprogramada", "success");
+                                },
+                                function(tx, error){
+                                    console.error("Error al guardar cierre: " + error.message);
+                                }
+                            );
+                        },
+                        function(error){},
+                        function(){}
+                    );
+                    
+                }else{
+                    swal("Error al reprogramar la visita.","La Sucursal del Cliente no coincide.","warning");
+                }
+            });
+          } else {}
+      });
+}
+function editarFilaServ(index, opc){
+    if(opc == 1){
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql(
+                    "SELECT * FROM papeleta WHERE id_papeleta = ?",
+                    [index],
+                    function(tx, results){
+                        var item = results.rows.item(0);
+                        PopupServ.open();
+                        $("#numero_parteP").val(item.numero_parte);
+                        $("#descripcionP").val(item.descripcion);
+                        $("#prioridadP").val(item.prioridad);
+                        $("#motivo_prP").val(item.motivo_pr);
+                        $("#cantidadP").val(item.cantidad);
+                        $("#id_papeletaP").val(item.id_papeleta);
+                    },
+                    function(tx, error){
+                        swal("Error al actualizar el registro",error.message,"warning");
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+}
+var PopupServ = app.popup.create({
+    content: `
+      <div class="popup FWM-half-modal">
+        <div class="my-swipe-to-close-handler" style="padding-top:16px">
+            <div class="FWM-bubble-close"></div>
+        </div>
+        <div class="block">
+        <form class="list FWM-fixing-form" style="margin-bottom: 0;">
+            <p style="margin-bottom: 10px;margin-top: 0; font-weight: bold;" class="FWN-titulo-2">Edicion de registro:</p>
+            <span class="span FWM-span-form">Numero de parte:</span>
+            <input type="text" class="FWM-input" id="numero_parteP" name="numero_parte" onchange="inputLleno(this.id,this.value)"/>
+            <span class="span FWM-span-form">Descripcion:</span>
+            <input type="text" class="FWM-input" id="descripcionP" name="descripcion" onchange="inputLleno(this.id,this.value)"/>
+            <span class="span FWM-span-form">Prioridad:</span>
+            <select id="prioridadP" style="height:40px;padding-left: 10px;font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white;border: 1px solid gray;border-radius: 8px;margin-bottom: 10px;">
+                <option value="0">Seleccione una opcion</option>
+                <option value="1">A: Seguridad</option>
+                <option value="2">B: Funcionalidad</option>
+                <option value="3">C: Programa</option>
+            </select>
+            <span class="span FWM-span-form">Motivo de la prioridad:</span>
+            <textarea class ="FWM-input" id="motivo_prP" name="falla"  cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>
+            <span class="span FWM-span-form">Cantidad:</span>
+            <input type="number" class="FWM-input" id="cantidadP" name="cantidadP" onchange="inputLleno(this.id,this.value)"/>
+            <input type="hidden" id="id_papeletaP"/>
+        </form>
+
+            <div class="FWM-button-modal-container">
+                <div class="FWM-button-modal popup-close" onclick="FilaEditadaServ()">Actualizar Registro</div>
+            </div>
+        </div>
+      </div>
+    `,
+    swipeToClose: true,
+    swipeHandler: '.my-swipe-to-close-handler',
+    // Events
+    on: {
+      open: function (popup,text) {
+        
+      },
+      opened: function (popup) {
+        
+      },
+    }
+});
+PopupServ.on('close', function (popup) {});
+function FilaEditadaServ(){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var id_papeleta = $("#id_papeletaP").val();
+        var numero_parte = $("#numero_parteP").val();
+        var descripcion = $("#descripcionP").val();
+        var prioridad = $("#prioridadP").val();
+        var motivo_pr = $("#motivo_prP").val();
+        var cantidad = $("#cantidadP").val();
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE papeleta SET numero_parte = ?, descripcion = ?, cantidad = ?, prioridad = ?, motivo_pr = ? WHERE id_papeleta = ?",
+                    [numero_parte, descripcion, cantidad, prioridad, motivo_pr, id_papeleta],
+                    function(tx, results){//Insert into papeleta
+                        swal("","Guardado correctamente","success");
+                        $("#id_papeletaP").val('');
+                        $("#numero_parteP").val('');
+                        $('#numero_parteP').css("background-color", "#ffffff");
+                        $("#descripcionP").val('');
+                        $('#descripcionP').css("background-color", "#ffffff");
+                        $("#cantidadP").val('');
+                        $('#cantidadP').css("background-color", "#ffffff");
+                        $("#prioridadP").val(0);
+                        $("#motivo_prP").val('');
+                        $('#motivo_prP').css("background-color", "#ffffff");
+                        $("#table_papeleta").empty(""); 
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("Select * from papeleta where id_cedula = ?",
+                                [id_cedula],
+                                    function(tx, results){
+                                        let length = results.rows.length;
+                                        if (length ==0){
+                                            $('.preloader').remove();
+                                            $('.infinite-scroll-preloader').remove();
+                                        }else{
+                                            $("#message-nr").css("display", "none");
+                                            $('.preloader').remove();
+                                            $('.infinite-scroll-preloader').remove();
+                                            for(var i = 0; i< length; i++){
+                                                var item = results.rows.item(i);
+                                                if (item.prioridad==1){
+                                                    prioridad='Seguridad';
+                                                }else if (item.prioridad==2){
+                                                    prioridad='Funcionalidad';
+                                                }else if (item.prioridad==3){
+                                                    prioridad='Programa';
+                                                }
+                                                $("#table_papeleta").append("<tr id='fila"+ item.id_papeleta +
+                                                "'><td id='tdaccion' style='align-items: center;padding: 0;justify-content: center;text-align: center;'><a href='#' onclick='eliminarFilaServ("+ 
+                                                item.id_papeleta +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a><a href='#' onclick='editarFilaServ("+ 
+                                                item.id_papeleta +",1);' style='border: none; outline:none;'><img src='img/editar.svg' width='27px' style='margin-top:10%'/></a></td><td><img src='"+
+                                                item.foto_papeleta+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + 
+                                                item.numero_parte + "</td><td style='text-align: center;'>" + 
+                                                    item.descripcion + "</td><td style='text-align: center;'>" + 
+                                                    prioridad + "</td><td style='text-align: center;'>" + 
+                                                    item.motivo_pr + "</td><td style='text-align: center;'>" + 
+                                                    item.cantidad + "</td></tr>");
+                                            }
+                                        }
+                                    },
+                                    function(tx, error){
+                                        console.log("Error al mostrar: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){console.log("Error al mostrar: " + error.message);},
+                            function(){}
+                        );
+                    },
+                    function(tx, error){
+                        console.error("Error al guardar entrega: " + error.message);
+                    }
+                );
+            },
+            function(error){
+                console.error("Error al guardar entrega: " + error.message);
+            },
+            function(){}
+        );
+    }
+    function LlevarPapeletaServ(){
+        swal({
+            title: "Aviso",
+            text: "¿Estas seguro de querer Enviar tu papaleta en este momento?.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: false,
+        })
+        .then((willGoBack) => {
+            if (willGoBack){
+                swal("Enviando Papeleta!", "Este proceso no deberá tardar mucho!", "success");
+                var id_cedula = localStorage.getItem("IdCedula");
+                var id_servidor = $('#id_servidor').val();
+                var fecha = new Date();
+                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+            
+                var papeleta = new Array();
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("SELECT * from papeleta WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                var length = results.rows.length;
+                                if (length == 0){
+                                    swal({
+                                        title: "Aviso",
+                                        text: "Aún no tienes datos en la papaleta. ¿De verdad estas seguro de querer enviarla así?.",
+                                        icon: "warning",
+                                        buttons: true,
+                                        dangerMode: false,
+                                    })
+                                    .then((willGoBack) => {
+                                        if (willGoBack){
+                                            databaseHandler.db.transaction(
+                                                function(tx8){
+                                                    tx8.executeSql(
+                                                        "UPDATE visita_servInd SET estatus_ced = 6, fecha_papeleta= ? WHERE id_cedula = ?",
+                                                        [fecha_envio,id_cedula],
+                                                        function(tx8, results){
+                                                            localStorage.setItem("sendFlag", 0);
+                                                            swal("Enviado!", "Ya se envio tu papeleta!", "success");
+                                                            window.location.href = "./menu.html";
+                                                        }
+                                                    );
+                                                }
+                                            );
+                                        } else {}
+                                    });
+                                }else{
+                                    for(var i = 0; i< length; i++){
+                                        var item7 = results.rows.item(i);
+                                        papeleta[i] = {'Valor':i,
+                                        'cantidad':item7.cantidad,
+                                        'descripcion': item7.descripcion,
+                                        'fecha_registro': item7.fecha_registro,
+                                        'foto_papeleta':item7.foto_papeleta,
+                                        'id_papeleta':item7.id_papeleta,
+                                        'numero_parte':item7.numero_parte,
+                                        'prioridad':item7.prioridad,
+                                        'motivo_pr':item7.motivo_pr,
+                                        'id_cedula':id_servidor,
+                                        'fecha_envio':fecha_envio};
+                                    }
+                                    $.ajax({
+                                        type: "POST",
+                                        async : true,
+                                        url: "http://www.appbennetts.com/FWM2/app/guardarPapelServ.php",
+                                        dataType: 'html',
+                                        data: {'papeleta': JSON.stringify(papeleta)},
+                                        success: function(respuesta){
+                                            var respu1 = respuesta.split("._.");
+                                            var dat1 = respu1[0];
+                                            var dat2 = respu1[1];
+                                            if(dat1 == "CEDULA"){
+                                                if(dat2 > 0){
+                                                    databaseHandler.db.transaction(
+                                                        function(tx8){
+                                                            tx8.executeSql(
+                                                                "UPDATE visita_servInd SET estatus_ced = 5, fecha_papeleta= ? WHERE id_cedula = ?",
+                                                                [fecha_envio,id_cedula],
+                                                                function(tx8, results){
+                                                                    localStorage.setItem("sendFlag", 0);
+                                                                    swal("Enviado!", "Ya se envio tu papeleta!", "success");
+                                                                    window.location.href = "./menu.html";
+                                                                }
+                                                            );
+                                                        }
+                                                    );
+                                                }
+                                            }
+                                        },
+                                        error: function(){
+                                            console.log("Error en la comunicacion");
+                                        }
+                                    });
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error al consultar papeleta: " +error.message);
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );  
+            } else {}
+        });
+    }
+    function guardarHorasServ(){
+        var tipoVisita = localStorage.getItem("TipoVisita");
+        var id_cedula = localStorage.getItem("IdCedula");
+        var comentarioG=$('#comentarios').val();
+        var horasT = $('#cantidadTotal').val();
+        if(comentarioG){
+            if (horasT==0){
+                swal({
+                    title: "Aviso",
+                    text: "Tus horas totales estan en '0', ¿Estas seguro que deseas continuar?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: false,
+                })
+                .then((willGoBack) => {
+                    if (willGoBack){
+                        var H_viaje=0;
+                        var H_espera=0;
+                        var H_trabajo=0;
+                        var H_totales=0;
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("UPDATE visita_servInd SET H_viaje = ?, H_espera = ?, H_trabajo = ?, H_totales = ?, comentarios_entrega = ? WHERE id_cedula = ?",
+                                    [H_viaje, H_espera, H_trabajo, H_totales,comentarioG, id_cedula],
+                                    function(tx, results){
+                                        swal("","Guardado correctamente","success");
+                                        $('#cantidadViaje').css("background-color", "#ffffff");
+                                        $('#cantidadEspera').css("background-color", "#ffffff");
+                                        $('#cantidadTrabajo').css("background-color", "#ffffff");
+                                        $('#cantidadTotal').css("background-color", "#ffffff");
+                                        $('#comentarios').css("background-color", "#ffffff");
+                                        databaseHandler.db.transaction(
+                                            function(tx){
+                                                tx.executeSql(
+                                                    "Select * from datos_generales_serv WHERE id_cedula = ?",
+                                                    [id_cedula],
+                                                    function(tx, results){
+                                                        let length = results.rows.length;
+                                                        var item = results.rows.item(0);
+                                                        var tipo_servicio = item.tipo_servicio;
+                                                        if (tipo_servicio == 'Caliente'){
+                                                            app.views.main.router.back('/cierreServInd2/', {force: true, ignoreCache: true, reload: true});
+                                                        }else if (tipo_servicio == 'Frio'){
+                                                            app.views.main.router.back('/cierreServInd1/', {force: true, ignoreCache: true, reload: true});
+                                                        }else if (tipo_servicio == 'Rational'){
+                                                            app.views.main.router.back('/cierreServInd3/', {force: true, ignoreCache: true, reload: true});
+                                                        }else if (tipo_servicio == 'HEB'){
+                                                            app.views.main.router.back('/cierreServInd4/', {force: true, ignoreCache: true, reload: true});
+                                                        }else if(tipo_servicio == 'PMP_Caliente' || tipo_servicio == 'PMP_Frio'){
+                                                            app.views.main.router.back('/cierreServInd2/', {force: true, ignoreCache: true, reload: true});
+                                                        }else if(tipo_servicio == 'PMP'){
+                                                            app.views.main.router.back('/cierreServInd5/', {force: true, ignoreCache: true, reload: true});
+                                                        }
+                                                    },
+                                                    function(tx, error){
+                                                        console.log("Error: " + error.message);
+                                                    }
+                                                );  
+                                            },
+                                            function(error){
+                                                console.log("Error: " + error.message);
+                                            },
+                                            function(){}
+                                        );
+                                    },
+                                    function(tx, error){
+                                        console.error("Error al guardar entrega: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){
+                                console.error("Error al guardar entrega: " + error.message);
+                            },
+                            function(){}
+                        );
+                    }else{}
+                    });
+                
+            }else{
+                var H_viaje=$('#cantidadViaje').val()
+                var H_espera=$('#cantidadEspera').val()
+                var H_trabajo=$('#cantidadTrabajo').val()
+                var H_totales=$('#cantidadTotal').val()
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("UPDATE visita_servInd SET H_viaje = ?, H_espera = ?, H_trabajo = ?, H_totales = ?, comentarios_entrega = ? WHERE id_cedula = ?",
+                            [H_viaje, H_espera, H_trabajo, H_totales,comentarioG, id_cedula],
+                            function(tx, results){
+                                swal("","Guardado correctamente","success");
+                                $('#cantidadViaje').css("background-color", "#ffffff");
+                                $('#cantidadEspera').css("background-color", "#ffffff");
+                                $('#cantidadTrabajo').css("background-color", "#ffffff");
+                                $('#cantidadTotal').css("background-color", "#ffffff");
+                                $('#comentarios').css("background-color", "#ffffff");
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql(
+                                            "Select * from visita_servInd WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function(tx, results){
+                                                let length = results.rows.length;
+                                                var item = results.rows.item(0);
+                                                var estatus_ced=item.estatus_ced;
+                                                var tipo_servicio = item.tipo_servicio;
+                                                if (tipo_servicio == 'Caliente'){
+                                                    app.views.main.router.back('/cierreServInd2/', {force: true, ignoreCache: true, reload: true});
+                                                }else if (tipo_servicio == 'Frio'){
+                                                    app.views.main.router.back('/cierreServInd1/', {force: true, ignoreCache: true, reload: true});
+                                                }else if (tipo_servicio == 'Rational'){
+                                                    app.views.main.router.back('/cierreServInd3/', {force: true, ignoreCache: true, reload: true});
+                                                }else if (tipo_servicio == 'HEB'){
+                                                    app.views.main.router.back('/cierreServInd4/', {force: true, ignoreCache: true, reload: true});
+                                                }else if(tipo_servicio == 'PMP_Caliente' || tipo_servicio == 'PMP_Frio'){
+                                                    app.views.main.router.back('/cierreServInd2/', {force: true, ignoreCache: true, reload: true});
+                                                }else if(tipo_servicio == 'PMP'){
+                                                    app.views.main.router.back('/cierreServInd5/', {force: true, ignoreCache: true, reload: true});
+                                                }
+                                            },
+                                            function(tx, error){
+                                                console.log("Error: " + error.message);
+                                            }
+                                        );  
+                                    },
+                                    function(error){
+                                        console.log("Error: " + error.message);
+                                    },
+                                    function(){}
+                                );
+                            },
+                            function(tx, error){
+                                console.error("Error al guardar entrega: " + error.message);
+                            }
+                        );
+                    },
+                    function(error){
+                        console.error("Error al guardar entrega: " + error.message);
+                    },
+                    function(){}
+                );
+            }
+        }else{
+            swal("", "Favor de ingresar un comentario general." , "warning");
+        }
+    }
+    function moveReprogramado(){
+        var id_cedula = localStorage.getItem("IdCedula");
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql(
+                    "Select * from visita_servInd WHERE id_cedula = ?",
+                    [id_cedula],
+                    function(tx, results){
+                        let length = results.rows.length;
+                        var item = results.rows.item(0);
+                        var estatus_ced=item.estatus_ced;
+                        var tipo_servicio = item.tipo_servicio;
+                        if (tipo_servicio == 'Caliente'){
+                            if (estatus_ced == 4){
+                                app.views.main.router.back('/formServ40/', {force: true, ignoreCache: true, reload: true});
+                            }else{
+                                app.views.main.router.back('/formServ1/', {force: true, ignoreCache: true, reload: true});
+                            }
+                        }else if (tipo_servicio == 'Frio'){
+                            if (estatus_ced == 4){
+                                app.views.main.router.back('/formServ40/', {force: true, ignoreCache: true, reload: true});
+                            }else{
+                                app.views.main.router.back('/formServ11/', {force: true, ignoreCache: true, reload: true});
+                            }
+                        }else if (tipo_servicio == 'Rational'){
+                            if (estatus_ced == 4){
+                                app.views.main.router.back('/formServ40/', {force: true, ignoreCache: true, reload: true});
+                            }else{
+                                app.views.main.router.back('/formServ20/', {force: true, ignoreCache: true, reload: true});
+                            }
+                        }else if (tipo_servicio == 'HEB'){
+                            if (estatus_ced == 4){
+                                app.views.main.router.back('/formServ40/', {force: true, ignoreCache: true, reload: true});
+                            }else{
+                                app.views.main.router.back('/diagnosticoHEB/', {force: true, ignoreCache: true, reload: true});
+                            }
+                        }else if(tipo_servicio == 'PMP_Caliente' || tipo_servicio == 'PMP_Frio'){
+                            if (estatus_ced == 4){
+                                app.views.main.router.back('/formServ40/', {force: true, ignoreCache: true, reload: true});
+                            }else{
+                                app.views.main.router.back('/diagnosticoHEB3/', {force: true, ignoreCache: true, reload: true});
+                            }
+                        }else if(tipo_servicio == 'PMP_Rational'){
+                            if (estatus_ced == 4){
+                                app.views.main.router.back('/formServ40/', {force: true, ignoreCache: true, reload: true});
+                            }else{
+                                app.views.main.router.back('/diagnosticoHEB3/', {force: true, ignoreCache: true, reload: true});
+                            }
+                        }else if(tipo_servicio == 'PMP'){
+                            if (estatus_ced == 4){
+                                app.views.main.router.back('/formServ41/', {force: true, ignoreCache: true, reload: true});
+                            }else{
+                                app.views.main.router.back('/diagnosticoHEB1/', {force: true, ignoreCache: true, reload: true});
+                            }
+                        }
+                    },
+                    function(tx, error){
+                        console.log("Error: " + error.message);
+                        app.preloader.hide();  
+                    }
+                );  
+            },
+            function(error){
+                console.log("Error: " + error.message);
+            },
+            function(){}
+        );
+    }
+    function moveMenuServ(){
+        var utlimahora="23:59:59";
+        var fecha = new Date();
+        var hora_actual = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var day = fecha.getDay();
+        if (day == 6 && hora_actual > "14:00:00" || day == 0 && hora_actual < "23:59:59"){
+            console.log('sabado despues de las 2');
+            console.log('ó');
+            console.log('domingo antes de ser lunes');
+        }else{
+            console.log('día habil');
+        }
+        app.views.main.router.navigate({ name: 'yallegueServInd'});
+    }
+    function guardarPapeletaPendienteServ(){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var id_equ = localStorage.getItem("insertId");
+        if(!id_equ){ id_equ = 0};
+        var noParteC = $('#numero_parteC').val();
+        var descripcionC = $('#descripcionC').val();
+        var prioridadC = $('#prioridadC').val();
+        var cantidadC = $('#cantidadC').val();
+        var foto = $("#imagenC").val();
+        var motivo_pr = $("#motivo_pr").val();
+        var fecha = new Date();
+        var fecha_reg = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+        if(noParteC && descripcionC && motivo_pr){
+            if (prioridadC == 0){
+                swal("", "Todos los datos son requeridos." , "warning");
+                return false;
+            }else{
+                if (cantidadC){
+                    if (foto){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("INSERT INTO papeleta(id_cedula, foto_papeleta, numero_parte, descripcion, prioridad, cantidad, fecha_registro, motivo_pr, id_equipo) VALUES (?,?,?,?,?,?,?,?,?)",
+                                    [id_cedula, foto, noParteC, descripcionC, prioridadC, cantidadC, fecha_reg, motivo_pr, id_equ],
+                                    function(tx, results){
+                                        swal("","Datos guardados correctamente","success");
+                                        $("#numero_parteC").val('');
+                                        $('#numero_parteC').css("background-color", "#ffffff");
+                                        $("#descripcionC").val('');
+                                        $('#descripcionC').css("background-color", "#ffffff");
+                                        $("#prioridadC").val(0);
+                                        $("#cantidadC").val('');
+                                        $('#cantidadC').css("background-color", "#ffffff");
+                                        $("#motivo_pr").val('');
+                                        $("#motivo_pr").css("background-color", "#ffffff");
+                                        $("#imagenC").val('');
+                                        $("#smallImage").attr("src","img/blank.png");
+                                        $("#photoIcon").attr("src","img/camera.svg");
+                                        $("#table_papeleta").empty(""); 
+                                        databaseHandler.db.transaction(
+                                            function(tx){
+                                                tx.executeSql("Select * from papeleta where id_cedula = ?",
+                                                [id_cedula],
+                                                    function(tx, results){
+                                                        let length = results.rows.length;
+                                                        if (length ==0){
+                                                            $('.preloader').remove();
+                                                            $('.infinite-scroll-preloader').remove();
+                                                        }else{
+                                                            $("#message-nr").css("display", "none");
+                                                            $('.preloader').remove();
+                                                            $('.infinite-scroll-preloader').remove();
+                                                            for(var i = 0; i< length; i++){
+                                                                var item = results.rows.item(i);
+                                                                if (item.prioridad==1){
+                                                                    prioridad='Seguridad';
+                                                                }else if (item.prioridad==2){
+                                                                    prioridad='Funcionalidad';
+                                                                }else if (item.prioridad==3){
+                                                                    prioridad='Programa';
+                                                                }
+                                                                $("#table_papeleta").append("<tr id='fila"+ item.id_papeleta +
+                                                                "'><td id='tdaccion' style='align-items: center;padding: 0;justify-content: center;text-align: center;'><a href='#' onclick='eliminarFilaServ("+ 
+                                                                item.id_papeleta +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a><a href='#' onclick='editarFilaServ("+ 
+                                                                item.id_papeleta +",1);' style='border: none; outline:none;'><img src='img/editar.svg' width='27px' style='margin-top:10%'/></a></td><td><img src='"+
+                                                                item.foto_papeleta+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + 
+                                                                item.numero_parte + "</td><td style='text-align: center;'>" + 
+                                                                    item.descripcion + "</td><td style='text-align: center;'>" + 
+                                                                    prioridad + "</td><td style='text-align: center;'>" + 
+                                                                    item.motivo_pr + "</td><td style='text-align: center;'>" + 
+                                                                    item.cantidad + "</td></tr>");
+                                                            }
+                                                        }
+                                                    },
+                                                    function(tx, error){
+                                                        console.log("Error al mostrar: " + error.message);
+                                                    }
+                                                );
+                                            },
+                                            function(error){console.log("Error al mostrar: " + error.message);},
+                                            function(){}
+                                        );
+                                    },
+                                    function(tx, error){
+                                        app.preloader.hide();
+                                        swal("Error al guardar",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    }else{
+                        swal("", "Todos los datos son requeridos." , "warning");
+                        return false;
+                    }
+                }else{
+                    swal("", "Todos los datos son requeridos." , "warning");
+                    return false;
+                }
+            }
+        }else{
+            swal("", "Todos los datos son requeridos." , "warning");
+        }
+    }
+    function moveMenuServ(){
+        var utlimahora="23:59:59";
+        var fecha = new Date();
+        var hora_actual = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var day = fecha.getDay();
+        if (day == 6 && hora_actual > "14:00:00" || day == 0 && hora_actual < "23:59:59"){
+            console.log('sabado despues de las 2');
+            console.log('ó');
+            console.log('domingo antes de ser lunes');
+            moveProgram();
+        }else{
+            console.log('día habil');
+            app.views.main.router.navigate({ name: 'yallegueServInd'});
+        }
+    }
+    function guardarPapeletaPendienteServ(){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var id_equ = localStorage.getItem("insertId");
+        if(!id_equ){ id_equ = 0};
+        var noParteC = $('#numero_parteC').val();
+        var descripcionC = $('#descripcionC').val();
+        var prioridadC = $('#prioridadC').val();
+        var cantidadC = $('#cantidadC').val();
+        var foto = $("#imagenC").val();
+        var motivo_pr = $("#motivo_pr").val();
+        var fecha = new Date();
+        var fecha_reg = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+        if(noParteC && descripcionC && motivo_pr){
+            if (prioridadC == 0){
+                swal("", "Todos los datos son requeridos." , "warning");
+                return false;
+            }else{
+                if (cantidadC){
+                    if (foto){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("INSERT INTO papeleta(id_cedula, foto_papeleta, numero_parte, descripcion, prioridad, cantidad, fecha_registro, motivo_pr, id_equipo) VALUES (?,?,?,?,?,?,?,?,?)",
+                                    [id_cedula, foto, noParteC, descripcionC, prioridadC, cantidadC, fecha_reg, motivo_pr, id_equ],
+                                    function(tx, results){
+                                        swal("","Datos guardados correctamente","success");
+                                        $("#numero_parteC").val('');
+                                        $('#numero_parteC').css("background-color", "#ffffff");
+                                        $("#descripcionC").val('');
+                                        $('#descripcionC').css("background-color", "#ffffff");
+                                        $("#prioridadC").val(0);
+                                        $("#cantidadC").val('');
+                                        $('#cantidadC').css("background-color", "#ffffff");
+                                        $("#motivo_pr").val('');
+                                        $("#motivo_pr").css("background-color", "#ffffff");
+                                        $("#imagenC").val('');
+                                        $("#smallImage").attr("src","img/blank.png");
+                                        $("#photoIcon").attr("src","img/camera.svg");
+                                        $("#table_papeleta").empty(""); 
+                                        databaseHandler.db.transaction(
+                                            function(tx){
+                                                tx.executeSql("Select * from papeleta where id_cedula = ?",
+                                                [id_cedula],
+                                                    function(tx, results){
+                                                        let length = results.rows.length;
+                                                        if (length ==0){
+                                                            $('.preloader').remove();
+                                                            $('.infinite-scroll-preloader').remove();
+                                                        }else{
+                                                            $("#message-nr").css("display", "none");
+                                                            $('.preloader').remove();
+                                                            $('.infinite-scroll-preloader').remove();
+                                                            for(var i = 0; i< length; i++){
+                                                                var item = results.rows.item(i);
+                                                                if (item.prioridad==1){
+                                                                    prioridad='Seguridad';
+                                                                }else if (item.prioridad==2){
+                                                                    prioridad='Funcionalidad';
+                                                                }else if (item.prioridad==3){
+                                                                    prioridad='Programa';
+                                                                }
+                                                                $("#table_papeleta").append("<tr id='fila"+ item.id_papeleta +
+                                                                "'><td id='tdaccion' style='align-items: center;padding: 0;justify-content: center;text-align: center;'><a href='#' onclick='eliminarFilaServ("+ 
+                                                                item.id_papeleta +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a><a href='#' onclick='editarFilaServ("+ 
+                                                                item.id_papeleta +",1);' style='border: none; outline:none;'><img src='img/editar.svg' width='27px' style='margin-top:10%'/></a></td><td><img src='"+
+                                                                item.foto_papeleta+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + 
+                                                                item.numero_parte + "</td><td style='text-align: center;'>" + 
+                                                                    item.descripcion + "</td><td style='text-align: center;'>" + 
+                                                                    prioridad + "</td><td style='text-align: center;'>" + 
+                                                                    item.motivo_pr + "</td><td style='text-align: center;'>" + 
+                                                                    item.cantidad + "</td></tr>");
+                                                            }
+                                                        }
+                                                    },
+                                                    function(tx, error){
+                                                        console.log("Error al mostrar: " + error.message);
+                                                    }
+                                                );
+                                            },
+                                            function(error){console.log("Error al mostrar: " + error.message);},
+                                            function(){}
+                                        );
+                                    },
+                                    function(tx, error){
+                                        app.preloader.hide();
+                                        swal("Error al guardar",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    }else{
+                        swal("", "Todos los datos son requeridos." , "warning");
+                        return false;
+                    }
+                }else{
+                    swal("", "Todos los datos son requeridos." , "warning");
+                    return false;
+                }
+            }
+        }else{
+            swal("", "Todos los datos son requeridos." , "warning");
+        }
+    }
+    function regresarpapeleta(){
+        app.views.main.router.back('/continuar_papeleta/', {force: true, ignoreCache: true, reload: true});
+    }
+    function tecnico_apoyo(){
+        if($("#tecnico_apoyo").prop("checked") == true){
+            $("#cierre").css("display", "none");
+            var tecnico= 'Apoyo';
+            change_tecnico(tecnico);
+        }else{
+            $("#cierre").css("display", "block");
+            var tecnico= 'Lider';
+            change_tecnico(tecnico);
+        }
+    }
+    function change_tecnico(tecnico){
+        var id_cedula = localStorage.getItem("IdCedula");
+        console.log(tecnico);
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE datos_generales_serv SET tecnico = ? WHERE id_cedula = ?",
+                    [tecnico ,id_cedula],
+                    function(tx, results){
+                    },
+                    function(tx, error){
+                        console.error("Error al guardar datos generales: " + error.message);
+                    }
+                );
+            },
+            function(error){
+                console.error("Error al guardar datos generales: " + error.message);
+            },
+            function(){}
+        );
+    }
+    function estatus_os(estatus,id_cedula){
+        console.log(estatus,id_cedula);
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE visita_servInd SET estatus_ced = ? WHERE id_cedula = ?",
+                    [estatus,id_cedula],
+                    function(tx, results){
+                    },
+                    function(tx, error){
+                        console.error("Error :" + error.message);
+                    }
+                );
+            },
+            function(error){console.error("Error :" + error.message);}
+        );
+    }
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [day, month, year].join('-');
+    }
 //Fin ServInd
     // Inicio MT
     function buscarClienteMT(){
@@ -11982,6 +12980,118 @@ function regresarProteuscheck(fase){
         }else{
             swal("", "La fotografía es requerida" ,"warning");
         }
+    }
+    
+    function startFromProgramProteus(id_visita,id_cliente,nombre_comercial,local,horario_programado,social_reason,direction,contact_name,phone1,email,category,description,ruc){
+        localStorage.setItem("id_visita", id_visita);
+        localStorage.setItem("id_cliente", id_cliente);
+        localStorage.setItem("nombre_comercial", nombre_comercial);
+        localStorage.setItem("local", local);
+        localStorage.setItem("social_reason", social_reason);
+        localStorage.setItem("direction", direction);
+        localStorage.setItem("contact_name", contact_name);
+        localStorage.setItem("phone1", phone1);
+        localStorage.setItem("email", email);
+        localStorage.setItem("category", category);
+        localStorage.setItem("description", description);
+        localStorage.setItem("ruc", ruc);
+        app.views.main.router.navigate({name: 'yallegueProteus2'});
+    }
+    
+    function iniciarClienteProteus(){
+        var id_usuario = localStorage.getItem("id_usuario");
+        var nombre_usuario = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido_paterno");
+        var fecha = new Date();
+        var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var geolocation = $("#geolocation").val();
+        var id_visita = localStorage.getItem("id_visita");
+        var id_cliente = localStorage.getItem("id_cliente");
+        var nombre_cliente = localStorage.getItem("nombre_comercial");
+        var local = localStorage.getItem("local");
+        var social_reason = localStorage.getItem("social_reason");
+        var direction = localStorage.getItem("direction");
+        var contact_name = localStorage.getItem("contact_name");
+        var phone1 = localStorage.getItem("phone1");
+        var email = localStorage.getItem("email");
+        var ruc = localStorage.getItem("ruc");
+        var horario_programado = fecha_llegada;
+        var foto_llegada = $("#imagenC").val();
+        var tipoCedula = localStorage.getItem("category");
+        console.log('tipoCedula',tipoCedula)
+        if(tipoCedula == "Instalacion"){
+            tipoCedula = "Instalacion";
+        } else if(tipoCedula == "Mantenimiento Preventivo"){
+            tipoCedula = "Preventivo";
+        } else if(tipoCedula == "Mantenimiento Correctivo"){
+            tipoCedula = "Correctivo";
+        } else if(tipoCedula == "Reposicion"){
+            tipoCedula = "Reposicion";
+        }
+        var estatus = 0;
+        if(foto_llegada != ''){
+            if(nombre_cliente != ''){
+                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,horario_programado,estatus);
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
+                            [],
+                            function(tx, results){
+                                var item = results.rows.item(0);
+                                var id_cedula = item.Id;
+                                localStorage.setItem("IdCedula", item.Id);
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+                                            [tipoCedula,id_cedula],
+                                            function(tx, results){
+                                                var orden_servicio = "OS-"+id_visita;                                             
+                                                productHandler.addDatosGenerales(id_cedula,orden_servicio,foto_llegada,social_reason,ruc,local,direction,contact_name,phone1,"0",email,tipoCedula);
+                                                if(tipoCedula == "Reposicion"){
+                                                    localStorage.setItem("tipoServicio", "1");
+                                                    app.views.main.router.back('/recorridoProteus1/', {force: true, ignoreCache: true, reload: true});
+                                                } else if(tipoCedula == "Preventivo"){
+                                                    localStorage.setItem("tipoServicio", "2");
+                                                    app.views.main.router.back('/recorridoProteus2/', {force: true, ignoreCache: true, reload: true});
+                                                } else if(tipoCedula == "Correctivo"){
+                                                    localStorage.setItem("tipoServicio", "3");
+                                                    app.views.main.router.back('/recorridoProteus3/', {force: true, ignoreCache: true, reload: true});
+                                                } else if(tipoCedula == "Instalacion"){
+                                                    localStorage.setItem("tipoServicio", "4");
+                                                    app.views.main.router.back('/recorridoProteus4/', {force: true, ignoreCache: true, reload: true});
+                                                }
+                                            },
+                                            function(tx, error){
+                                                console.error("Error al actualizar el tipo de cedula: " + error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                                // app.views.main.router.navigate({name: 'menuSMC'});
+                                app.preloader.hide();
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+            } else {
+                swal("Falta un campo", "El nombre del cliente es requerida para este proceso" ,"warning");
+                app.preloader.hide();
+            }
+        } else {
+            swal("Falta un campo", "La fotografía es requerida para este proceso" ,"warning");
+            app.preloader.hide();
+        }
+    }
+    function clearSelected(){
+        $('#estrategia option[value=""]').prop("selected", false);
+        $('#Estrategias option[value=""]').prop("selected", false);
     }
     //Fin Proteus
     //FIled Inicio
@@ -16215,182 +17325,42 @@ function regresarProteuscheck(fase){
                           function () { }
                         );
                     }
-                } else if(empresa == "Proteus"){
-                    var datosCedulaGeneral = new Array();
-                    var cedulageneral = 0;
-        
-                    var datosGeneralesProteus = new Array();
-                    var datos_equipos_proteus = new Array();
-                    var reposicion_proteus = new Array();
-                    var evidencias_proteus = new Array();
-                    var fotos_proteus = new Array();
-                    var check_limpieza = new Array();
-                    var check_revision = new Array();
-                    var mmto_correctivo = new Array();
-        
-                    var tipo = "";
-                    var fecha = new Date();
-                    var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                    databaseHandler.db.transaction(
-                        function(tx){
-                            tx.executeSql("SELECT * FROM cedulas_general WHERE id_cedula = ?",
-                                [id_cedula],
-                                function(tx, results){
-                                    var length = results.rows.length;
-                                    for(var i = 0; i< length; i++){
-                                        var item = results.rows.item(i);
-                                        tipo = item.tipo_cedula;
-                                        datosCedulaGeneral[cedulageneral] = {'Valor':cedulageneral,'id_cedula':item.id_cedula,'tipo_cedula':item.tipo_cedula,'id_usuario':item.id_usuario,'nombre_usuario':item.nombre_usuario,'fecha_entrada':item.fecha_entrada,'geolocalizacion_entrada': item.geolocalizacion_entrada,'id_cliente': item.id_cliente,'nombre_cliente': item.nombre_cliente,'horario_programado': item.horario_programado,'calificacion': item.calificacion,'fecha_salida':item.fecha_salida,'geolocalizacion_salida':item.geolocalizacion_salida,'nombre_evalua':item.nombre_evalua,'comentario_cliente':item.comentario_cliente,'fecha_envio':fecha_envio};
-                                        cedulageneral++;
-                                    }
-                                    if(tipo == "Preventivo"){
+                }  else if(empresa == "Proteus"){
+                    if(tipo_cedula == "Reposicion"){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
+                                    [id_cedula],
+                                    function(tx, results){
                                         databaseHandler.db.transaction(
                                             function(tx){
-                                                tx.executeSql("SELECT * FROM datos_generales_proteus WHERE id_cedula = ?",
+                                                tx.executeSql("DELETE FROM datos_generales_proteus WHERE id_cedula = ?",
                                                     [id_cedula],
                                                     function(tx, results){
-                                                        var length = results.rows.length;
-                                                        for(var i = 0; i< length; i++){
-                                                            var item2 = results.rows.item(i);
-                                                            datosGeneralesProteus[i] = {'Valor':i,
-                                                            'direccion':item2.direccion,
-                                                            'email':item2.email,
-                                                            'fecha_cliente':item2.fecha_cliente,
-                                                            'firma_cliente':item2.firma_cliente,
-                                                            'foto_entrada':item2.foto_entrada,
-                                                            'foto_salida':item2.foto_salida,
-                                                            'local':item2.local,
-                                                            'nombre_contacto':item2.nombre_contacto,
-                                                            'orden_servicio':item2.orden_servicio,
-                                                            'razon_social':item2.razon_social,
-                                                            'ruc':item2.ruc,
-                                                            'telefono1':item2.telefono1,
-                                                            'telefono2':item2.telefono2,
-                                                            'tipo_servicio':item2.tipo_servicio,
-                                                            'cargo': item2.cargo,
-                                                            'dni':item2.dni};
-                                                        }
                                                         databaseHandler.db.transaction(
                                                             function(tx){
-                                                                tx.executeSql("SELECT * from datos_equipos_proteus WHERE id_cedula = ?",
+                                                                tx.executeSql("DELETE FROM datos_equipos_proteus WHERE id_cedula = ?",
                                                                     [id_cedula],
                                                                     function(tx, results){
-                                                                        var length = results.rows.length;
-                                                                        for(var i = 0; i< length; i++){
-                                                                            var item3 = results.rows.item(i);
-                                                                            datos_equipos_proteus[i] = {'Valor':i,
-                                                                            'id_cliente':item3.id_cliente,
-                                                                            'id_equipo':item3.id_equipo,
-                                                                            'marca':item3.marca,
-                                                                            'modelo':item3.modelo,
-                                                                            'ubicacion':item3.ubicacion};
-                                                                        }
                                                                         databaseHandler.db.transaction(
                                                                             function(tx){
-                                                                                tx.executeSql("SELECT * from evidencias_proteus WHERE id_cedula = ?",
+                                                                                tx.executeSql("DELETE FROM reposicion_proteus WHERE id_cedula = ?",
                                                                                     [id_cedula],
                                                                                     function(tx, results){
-                                                                                        var length = results.rows.length;
-                                                                                        for(var i = 0; i< length; i++){
-                                                                                            var item5 = results.rows.item(i);
-                                                                                            evidencias_proteus[i] = {'Valor':i,
-                                                                                            'comentario': item5.comentario,
-                                                                                            'fecha': item5.fecha,
-                                                                                            'foto': item5.foto};
-                                                                                        }         
                                                                                         databaseHandler.db.transaction(
                                                                                             function(tx){
-                                                                                                tx.executeSql("SELECT * from fotos_proteus WHERE id_cedula = ?",
+                                                                                                tx.executeSql("DELETE FROM evidencias_proteus WHERE id_cedula = ?",
                                                                                                     [id_cedula],
                                                                                                     function(tx, results){
-                                                                                                        var length = results.rows.length;
-                                                                                                        for(var i = 0; i< length; i++){
-                                                                                                            var item6 = results.rows.item(i);
-                                                                                                            fotos_proteus[i] = {'Valor':i,
-                                                                                                            'apartado': item6.apartado,
-                                                                                                            'fase': item6.fase,
-                                                                                                            'fecha': item6.fecha,
-                                                                                                            'foto': item6.foto};
-                                                                                                        }
                                                                                                         databaseHandler.db.transaction(
                                                                                                             function(tx){
-                                                                                                                tx.executeSql("SELECT * from check_limpieza WHERE id_cedula = ?",
+                                                                                                                tx.executeSql("DELETE FROM fotos_proteus WHERE id_cedula = ?",
                                                                                                                     [id_cedula],
                                                                                                                     function(tx, results){
-                                                                                                                        var length = results.rows.length;
-                                                                                                                        for(var i = 0; i< length; i++){
-                                                                                                                            var item7 = results.rows.item(i);
-                                                                                                                            check_limpieza[i] = {'Valor':i,
-                                                                                                                            'comentarios': item7.comentarios,
-                                                                                                                            'componente': item7.componente,
-                                                                                                                            'fallos': item7.fallos,
-                                                                                                                            'piezas': item7.piezas};
-                                                                                                                        }
-                                                                                                                        databaseHandler.db.transaction(
-                                                                                                                            function(tx){
-                                                                                                                                tx.executeSql("SELECT * from check_revision WHERE id_cedula = ?",
-                                                                                                                                    [id_cedula],
-                                                                                                                                    function(tx, results){
-                                                                                                                                        var length = results.rows.length;
-                                                                                                                                        for(var i = 0; i< length; i++){
-                                                                                                                                            var item8 = results.rows.item(i);
-                                                                                                                                            check_revision[i] = {'Valor':i,
-                                                                                                                                            'comentarios': item8.comentarios,
-                                                                                                                                            'componente': item8.componente,
-                                                                                                                                            'fallos': item8.fallos,
-                                                                                                                                            'fuente': item8.fuente,
-                                                                                                                                            'piezas': item8.piezas,
-                                                                                                                                            'observaciones': item8.observaciones};
-                                                                                                                                        }
-                                                                                                                                            $.ajax({
-                                                                                                                                                type: "POST",
-                                                                                                                                                async : true,
-                                                                                                                                                url: "http://www.appbennetts.com/FWM2/app/guradarPreventivoProteus.php",
-                                                                                                                                                dataType: 'html',
-                                                                                                                                                data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
-                                                                                                                                                         'datosGeneralesProteus': JSON.stringify(datosGeneralesProteus),
-                                                                                                                                                         'datos_equipos_proteus': JSON.stringify(datos_equipos_proteus),
-                                                                                                                                                         'evidencias_proteus': JSON.stringify(evidencias_proteus),
-                                                                                                                                                         'fotos_proteus': JSON.stringify(fotos_proteus),
-                                                                                                                                                         'check_limpieza': JSON.stringify(check_limpieza),
-                                                                                                                                                         'check_revision': JSON.stringify(check_revision)},
-                                                                                                                                                success: function(respuesta){
-                                                                                                                                                    var respu1 = respuesta.split("._.");
-                                                                                                                                                    var dat1 = respu1[0];
-                                                                                                                                                    var dat2 = respu1[1];
-                                                                                                                                                    if(dat1 == "CEDULA"){
-                                                                                                                                                        if(dat2 > 0){
-                                                                                                                                                            databaseHandler.db.transaction(
-                                                                                                                                                                function(tx7){
-                                                                                                                                                                    tx7.executeSql(
-                                                                                                                                                                        "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
-                                                                                                                                                                        [id_cedula],
-                                                                                                                                                                        function(tx7, results){
-                                                                                                                                                                            localStorage.setItem("sendFlag", 0);
-                                                                                                                                                                            swal("Enviado!", "Ya se envio tu visita!", "success");
-                                                                                                                                                                        }
-                                                                                                                                                                    );
-                                                                                                                                                                }
-                                                                                                                                                            );
-                                                                                                                                                        }
-                                                                                                                                                    }
-                                                                                                                                                },
-                                                                                                                                                error: function(){
-                                                                                                                                                    console.log("Error en la comunicacion");
-                                                                                                                                                }
-                                                                                                                                            });
-                                                                                                                                    },
-                                                                                                                                    function(tx, error){
-                                                                                                                                        console.log("Error al consultar check_revision: " +error.message);
-                                                                                                                                    }
-                                                                                                                                );
-                                                                                                                            },
-                                                                                                                            function(error){},
-                                                                                                                            function(){}
-                                                                                                                        );
+                                                                                                                        $("#conc" + id_cedula).remove();
                                                                                                                     },
                                                                                                                     function(tx, error){
-                                                                                                                        console.log("Error al consultar check_limpieza: " +error.message);
+                                                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                                                                                     }
                                                                                                                 );
                                                                                                             },
@@ -16399,7 +17369,7 @@ function regresarProteuscheck(fase){
                                                                                                         );
                                                                                                     },
                                                                                                     function(tx, error){
-                                                                                                        console.log("Error al consultar fotos_proteus: " +error.message);
+                                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                                                                     }
                                                                                                 );
                                                                                             },
@@ -16408,7 +17378,7 @@ function regresarProteuscheck(fase){
                                                                                         );
                                                                                     },
                                                                                     function(tx, error){
-                                                                                        console.log("Error al consultar evidencias_proteus: " +error.message);
+                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                                                     }
                                                                                 );
                                                                             },
@@ -16417,7 +17387,7 @@ function regresarProteuscheck(fase){
                                                                         );
                                                                     },
                                                                     function(tx, error){
-                                                                        console.log("Error al consultar datos_equipos_proteus: " +error.message);
+                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                                     }
                                                                 );
                                                             },
@@ -16426,385 +17396,103 @@ function regresarProteuscheck(fase){
                                                         );
                                                     },
                                                     function(tx, error){
-                                                        console.log("Error al consultar datos_generales_proteus: " + error.message);
+                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                     }
                                                 );
                                             },
                                             function(error){},
                                             function(){}
                                         );
-                                    }else if(tipo == "Reposicion"){
+                                    },
+                                    function(tx, error){
+                                        swal("Error al eliminar cedulas_general",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    }else if(tipo_cedula == "Preventivo"){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
+                                    [id_cedula],
+                                    function(tx, results){
                                         databaseHandler.db.transaction(
                                             function(tx){
-                                                tx.executeSql("SELECT * FROM datos_generales_proteus WHERE id_cedula = ?",
+                                                tx.executeSql("DELETE FROM datos_generales_proteus WHERE id_cedula = ?",
                                                     [id_cedula],
                                                     function(tx, results){
-                                                        var length = results.rows.length;
-                                                        for(var i = 0; i< length; i++){
-                                                            var item2 = results.rows.item(i);
-                                                            datosGeneralesProteus[i] = {'Valor':i,
-                                                            'direccion':item2.direccion,
-                                                            'email':item2.email,
-                                                            'fecha_cliente':item2.fecha_cliente,
-                                                            'firma_cliente':item2.firma_cliente,
-                                                            'foto_entrada':item2.foto_entrada,
-                                                            'foto_salida':item2.foto_salida,
-                                                            'local':item2.local,
-                                                            'nombre_contacto':item2.nombre_contacto,
-                                                            'orden_servicio':item2.orden_servicio,
-                                                            'razon_social':item2.razon_social,
-                                                            'ruc':item2.ruc,
-                                                            'telefono1':item2.telefono1,
-                                                            'telefono2':item2.telefono2,
-                                                            'tipo_servicio':item2.tipo_servicio,
-                                                            'cargo': item2.cargo,
-                                                            'dni':item2.dni};
-                                                        }
                                                         databaseHandler.db.transaction(
                                                             function(tx){
-                                                                tx.executeSql("SELECT * from datos_equipos_proteus WHERE id_cedula = ?",
+                                                                tx.executeSql("DELETE FROM datos_equipos_proteus WHERE id_cedula = ?",
                                                                     [id_cedula],
                                                                     function(tx, results){
-                                                                        var length = results.rows.length;
-                                                                        for(var i = 0; i< length; i++){
-                                                                            var item3 = results.rows.item(i);
-                                                                            datos_equipos_proteus[i] = {'Valor':i,
-                                                                            'id_cliente':item3.id_cliente,
-                                                                            'id_equipo':item3.id_equipo,
-                                                                            'marca':item3.marca,
-                                                                            'modelo':item3.modelo,
-                                                                            'ubicacion':item3.ubicacion};
-                                                                        }
                                                                         databaseHandler.db.transaction(
                                                                             function(tx){
-                                                                                tx.executeSql("SELECT * from reposicion_proteus WHERE id_cedula = ?",
+                                                                                tx.executeSql("DELETE FROM reposicion_proteus WHERE id_cedula = ?",
                                                                                     [id_cedula],
                                                                                     function(tx, results){
-                                                                                        var length = results.rows.length;
-                                                                                        for(var i = 0; i< length; i++){
-                                                                                            var item4 = results.rows.item(i);
-                                                                                            reposicion_proteus[i] = {'Valor':i,
-                                                                                            'kit_micro': item4.kit_micro,
-                                                                                            'micro_activados': item4.micro_activados,
-                                                                                            'nivelador': item4.nivelador,
-                                                                                            'observaciones': item4.observaciones};
-                                                                                        }
                                                                                         databaseHandler.db.transaction(
                                                                                             function(tx){
-                                                                                                tx.executeSql("SELECT * from evidencias_proteus WHERE id_cedula = ?",
+                                                                                                tx.executeSql("DELETE FROM evidencias_proteus WHERE id_cedula = ?",
                                                                                                     [id_cedula],
                                                                                                     function(tx, results){
-                                                                                                        var length = results.rows.length;
-                                                                                                        for(var i = 0; i< length; i++){
-                                                                                                            var item5 = results.rows.item(i);
-                                                                                                            evidencias_proteus[i] = {'Valor':i,
-                                                                                                            'comentario': item5.comentario,
-                                                                                                            'fecha': item5.fecha,
-                                                                                                            'foto': item5.foto};
-                                                                                                        }
-                                                                                                        $.ajax({
-                                                                                                            type: "POST",
-                                                                                                            async : true,
-                                                                                                            url: "http://www.appbennetts.com/FWM2/app/guardarReposicionProteus.php",
-                                                                                                            dataType: 'html',
-                                                                                                            data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
-                                                                                                                     'datosGeneralesProteus': JSON.stringify(datosGeneralesProteus),
-                                                                                                                     'datos_equipos_proteus': JSON.stringify(datos_equipos_proteus),
-                                                                                                                     'reposicion_proteus': JSON.stringify(reposicion_proteus),
-                                                                                                                     'evidencias_proteus': JSON.stringify(evidencias_proteus)},
-                                                                                                            success: function(respuesta){
-                                                                                                                var respu1 = respuesta.split("._.");
-                                                                                                                var dat1 = respu1[0];
-                                                                                                                var dat2 = respu1[1];
-                                                                                                                if(dat1 == "CEDULA"){
-                                                                                                                    if(dat2 > 0){
-                                                                                                                        databaseHandler.db.transaction(
-                                                                                                                            function(tx7){
-                                                                                                                                tx7.executeSql(
-                                                                                                                                    "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
-                                                                                                                                    [id_cedula],
-                                                                                                                                    function(tx7, results){
-                                                                                                                                        localStorage.setItem("sendFlag", 0);
-                                                                                                                                        swal("Enviado!", "Ya se envio tu visita!", "success");
-                                                                                                                                    }
-                                                                                                                                );
-                                                                                                                            }
-                                                                                                                        );
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            },
-                                                                                                            error: function(){
-                                                                                                                console.log("Error en la comunicacion");
-                                                                                                            }
-                                                                                                        });
-                                                                                                    },
-                                                                                                    function(tx, error){
-                                                                                                        console.log("Error al consultar evidencias_proteus: " +error.message);
-                                                                                                    }
-                                                                                                );
-                                                                                            },
-                                                                                            function(error){},
-                                                                                            function(){}
-                                                                                        );
-                                                                                    },
-                                                                                    function(tx, error){
-                                                                                        console.log("Error al consultar reposicion_proteus: " +error.message);
-                                                                                    }
-                                                                                );
-                                                                            },
-                                                                            function(error){},
-                                                                            function(){}
-                                                                        );
-                                                                    },
-                                                                    function(tx, error){
-                                                                        console.log("Error al consultar datos_equipos_proteus: " +error.message);
-                                                                    }
-                                                                );
-                                                            },
-                                                            function(error){},
-                                                            function(){}
-                                                        );
-                                                    },
-                                                    function(tx, error){
-                                                        console.log("Error al consultar datos_generales_proteus: " + error.message);
-                                                    }
-                                                );
-                                            },
-                                            function(error){},
-                                            function(){}
-                                        );
-                                    }else if(tipo == "Correctivo"){
-                                        databaseHandler.db.transaction(
-                                            function(tx){
-                                                tx.executeSql("SELECT * FROM datos_generales_proteus WHERE id_cedula = ?",
-                                                    [id_cedula],
-                                                    function(tx, results){
-                                                        var length = results.rows.length;
-                                                        for(var i = 0; i< length; i++){
-                                                            var item2 = results.rows.item(i);
-                                                            datosGeneralesProteus[i] = {'Valor':i,
-                                                            'direccion':item2.direccion,
-                                                            'email':item2.email,
-                                                            'fecha_cliente':item2.fecha_cliente,
-                                                            'firma_cliente':item2.firma_cliente,
-                                                            'foto_entrada':item2.foto_entrada,
-                                                            'foto_salida':item2.foto_salida,
-                                                            'local':item2.local,
-                                                            'nombre_contacto':item2.nombre_contacto,
-                                                            'orden_servicio':item2.orden_servicio,
-                                                            'razon_social':item2.razon_social,
-                                                            'ruc':item2.ruc,
-                                                            'telefono1':item2.telefono1,
-                                                            'telefono2':item2.telefono2,
-                                                            'tipo_servicio':item2.tipo_servicio,
-                                                            'cargo': item2.cargo,
-                                                            'dni':item2.dni};
-                                                        }
-                                                        databaseHandler.db.transaction(
-                                                            function(tx){
-                                                                tx.executeSql("SELECT * from datos_equipos_proteus WHERE id_cedula = ?",
-                                                                    [id_cedula],
-                                                                    function(tx, results){
-                                                                        var length = results.rows.length;
-                                                                        for(var i = 0; i< length; i++){
-                                                                            var item3 = results.rows.item(i);
-                                                                            datos_equipos_proteus[i] = {'Valor':i,
-                                                                            'id_cliente':item3.id_cliente,
-                                                                            'id_equipo':item3.id_equipo,
-                                                                            'marca':item3.marca,
-                                                                            'modelo':item3.modelo,
-                                                                            'ubicacion':item3.ubicacion};
-                                                                        }
-                                                                        databaseHandler.db.transaction(
-                                                                            function(tx){
-                                                                                tx.executeSql("SELECT * from evidencias_proteus WHERE id_cedula = ?",
-                                                                                    [id_cedula],
-                                                                                    function(tx, results){
-                                                                                        var length = results.rows.length;
-                                                                                        for(var i = 0; i< length; i++){
-                                                                                            var item5 = results.rows.item(i);
-                                                                                            evidencias_proteus[i] = {'Valor':i,
-                                                                                            'comentario': item5.comentario,
-                                                                                            'fecha': item5.fecha,
-                                                                                            'foto': item5.foto};
-                                                                                        }         
-                                                                                        databaseHandler.db.transaction(
-                                                                                            function(tx){
-                                                                                                tx.executeSql("SELECT * from mmto_correctivo WHERE id_cedula = ?",
-                                                                                                    [id_cedula],
-                                                                                                    function(tx, results){
-                                                                                                        var length = results.rows.length;
-                                                                                                        for(var i = 0; i< length; i++){
-                                                                                                            var item9 = results.rows.item(i);
-                                                                                                            mmto_correctivo[i] = {'Valor':i,
-                                                                                                            'funcionamiento': item9.funcionamiento,
-                                                                                                            'reparacion': item9.reparacion};
-                                                                                                        }
-                                                                                                        $.ajax({
-                                                                                                            type: "POST",
-                                                                                                            async : true,
-                                                                                                            url: "http://www.appbennetts.com/FWM2/app/guardarCorrectivoProteus.php",
-                                                                                                            dataType: 'html',
-                                                                                                            data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
-                                                                                                                     'datosGeneralesProteus': JSON.stringify(datosGeneralesProteus),
-                                                                                                                     'datos_equipos_proteus': JSON.stringify(datos_equipos_proteus),
-                                                                                                                     'evidencias_proteus': JSON.stringify(evidencias_proteus),
-                                                                                                                     'mmto_correctivo': JSON.stringify(mmto_correctivo)
-                                                                                                                    },
-                                                                                                            success: function(respuesta){
-                                                                                                                var respu1 = respuesta.split("._.");
-                                                                                                                var dat1 = respu1[0];
-                                                                                                                var dat2 = respu1[1];
-                                                                                                                if(dat1 == "CEDULA"){
-                                                                                                                    if(dat2 > 0){
-                                                                                                                        databaseHandler.db.transaction(
-                                                                                                                            function(tx7){
-                                                                                                                                tx7.executeSql(
-                                                                                                                                    "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
-                                                                                                                                    [id_cedula],
-                                                                                                                                    function(tx7, results){
-                                                                                                                                        localStorage.setItem("sendFlag", 0);
-                                                                                                                                        swal("Enviado!", "Ya se envio tu visita!", "success");
-                                                                                                                                    }
-                                                                                                                                );
-                                                                                                                            }
-                                                                                                                        );
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            },
-                                                                                                            error: function(){
-                                                                                                                console.log("Error en la comunicacion");
-                                                                                                            }
-                                                                                                        });
-                                                                                                    },
-                                                                                                    function(tx, error){
-                                                                                                        console.log("Error al consultar mmto_correctivo: " +error.message);
-                                                                                                    }
-                                                                                                );
-                                                                                            },
-                                                                                            function(error){},
-                                                                                            function(){}
-                                                                                        );
-                                                                                    },
-                                                                                    function(tx, error){
-                                                                                        console.log("Error al consultar evidencias_proteus: " +error.message);
-                                                                                    }
-                                                                                );
-                                                                            },
-                                                                            function(error){},
-                                                                            function(){}
-                                                                        );
-                                                                    },
-                                                                    function(tx, error){
-                                                                        console.log("Error al consultar datos_equipos_proteus: " +error.message);
-                                                                    }
-                                                                );
-                                                            },
-                                                            function(error){},
-                                                            function(){}
-                                                        );
-                                                    },
-                                                    function(tx, error){
-                                                        console.log("Error al consultar datos_generales_proteus: " + error.message);
-                                                    }
-                                                );
-                                            },
-                                            function(error){},
-                                            function(){}
-                                        );
-                                    }else if(tipo == "Instalacion"){
-                                        databaseHandler.db.transaction(
-                                            function(tx){
-                                                tx.executeSql("SELECT * FROM datos_generales_proteus WHERE id_cedula = ?",
-                                                    [id_cedula],
-                                                    function(tx, results){
-                                                        var length = results.rows.length;
-                                                        for(var i = 0; i< length; i++){
-                                                            var item2 = results.rows.item(i);
-                                                            datosGeneralesProteus[i] = {'Valor':i,
-                                                            'direccion':item2.direccion,
-                                                            'email':item2.email,
-                                                            'fecha_cliente':item2.fecha_cliente,
-                                                            'firma_cliente':item2.firma_cliente,
-                                                            'foto_entrada':item2.foto_entrada,
-                                                            'foto_salida':item2.foto_salida,
-                                                            'local':item2.local,
-                                                            'nombre_contacto':item2.nombre_contacto,
-                                                            'orden_servicio':item2.orden_servicio,
-                                                            'razon_social':item2.razon_social,
-                                                            'ruc':item2.ruc,
-                                                            'telefono1':item2.telefono1,
-                                                            'telefono2':item2.telefono2,
-                                                            'tipo_servicio':item2.tipo_servicio,
-                                                            'cargo': item2.cargo,
-                                                            'dni':item2.dni};
-                                                        }
-                                                        databaseHandler.db.transaction(
-                                                            function(tx){
-                                                                tx.executeSql("SELECT * from datos_equipos_proteus WHERE id_cedula = ?",
-                                                                    [id_cedula],
-                                                                    function(tx, results){
-                                                                        var length = results.rows.length;
-                                                                        for(var i = 0; i< length; i++){
-                                                                            var item3 = results.rows.item(i);
-                                                                            datos_equipos_proteus[i] = {'Valor':i,
-                                                                            'id_cliente':item3.id_cliente,
-                                                                            'id_equipo':item3.id_equipo,
-                                                                            'marca':item3.marca,
-                                                                            'modelo':item3.modelo,
-                                                                            'ubicacion':item3.ubicacion};
-                                                                        }
-                                                                        databaseHandler.db.transaction(
-                                                                            function(tx){
-                                                                                tx.executeSql("SELECT * from evidencias_proteus WHERE id_cedula = ?",
-                                                                                    [id_cedula],
-                                                                                    function(tx, results){
-                                                                                        var length = results.rows.length;
-                                                                                        for(var i = 0; i< length; i++){
-                                                                                            var item5 = results.rows.item(i);
-                                                                                            evidencias_proteus[i] = {'Valor':i,
-                                                                                            'comentario': item5.comentario,
-                                                                                            'fecha': item5.fecha,
-                                                                                            'foto': item5.foto};
-                                                                                        }
-                                                                                        $.ajax({
-                                                                                            type: "POST",
-                                                                                            async : true,
-                                                                                            url: "http://www.appbennetts.com/FWM2/app/guardarInstalacionProteus.php",
-                                                                                            dataType: 'html',
-                                                                                            data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
-                                                                                                     'datosGeneralesProteus': JSON.stringify(datosGeneralesProteus),
-                                                                                                     'evidencias_proteus': JSON.stringify(evidencias_proteus),
-                                                                                                     'datos_equipos_proteus': JSON.stringify(datos_equipos_proteus)
-                                                                                                    },
-                                                                                            success: function(respuesta){
-                                                                                                var respu1 = respuesta.split("._.");
-                                                                                                var dat1 = respu1[0];
-                                                                                                var dat2 = respu1[1];
-                                                                                                if(dat1 == "CEDULA"){
-                                                                                                    if(dat2 > 0){
                                                                                                         databaseHandler.db.transaction(
-                                                                                                            function(tx7){
-                                                                                                                tx7.executeSql(
-                                                                                                                    "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                            function(tx){
+                                                                                                                tx.executeSql("DELETE FROM fotos_proteus WHERE id_cedula = ?",
                                                                                                                     [id_cedula],
-                                                                                                                    function(tx7, results){
-                                                                                                                        localStorage.setItem("sendFlag", 0);
-                                                                                                                        swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                    function(tx, results){
+                                                                                                                        databaseHandler.db.transaction(
+                                                                                                                            function(tx){
+                                                                                                                                tx.executeSql("DELETE FROM check_limpieza WHERE id_cedula = ?",
+                                                                                                                                    [id_cedula],
+                                                                                                                                    function(tx, results){
+                                                                                                                                        databaseHandler.db.transaction(
+                                                                                                                                            function(tx){
+                                                                                                                                                tx.executeSql("DELETE FROM check_revision WHERE id_cedula = ?",
+                                                                                                                                                    [id_cedula],
+                                                                                                                                                    function(tx, results){
+                                                                                                                                                        $("#conc" + id_cedula).remove();
+                                                                                                                                                    },
+                                                                                                                                                    function(tx, error){
+                                                                                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
+                                                                                                                                                    }
+                                                                                                                                                );
+                                                                                                                                            },
+                                                                                                                                            function(error){},
+                                                                                                                                            function(){}
+                                                                                                                                        );
+                                                                                                                                    },
+                                                                                                                                    function(tx, error){
+                                                                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
+                                                                                                                                    }
+                                                                                                                                );
+                                                                                                                            },
+                                                                                                                            function(error){},
+                                                                                                                            function(){}
+                                                                                                                        );
+                                                                                                                    },
+                                                                                                                    function(tx, error){
+                                                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                                                                                     }
                                                                                                                 );
-                                                                                                            }
+                                                                                                            },
+                                                                                                            function(error){},
+                                                                                                            function(){}
                                                                                                         );
+                                                                                                    },
+                                                                                                    function(tx, error){
+                                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                                                                     }
-                                                                                                }
+                                                                                                );
                                                                                             },
-                                                                                            error: function(){
-                                                                                                console.log("Error en la comunicacion");
-                                                                                            }
-                                                                                        });
+                                                                                            function(error){},
+                                                                                            function(){}
+                                                                                        );
                                                                                     },
                                                                                     function(tx, error){
-                                                                                        console.log("Error al consultar evidencias_proteus: " +error.message);
+                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                                                     }
                                                                                 );
                                                                             },
@@ -16813,7 +17501,7 @@ function regresarProteuscheck(fase){
                                                                         );
                                                                     },
                                                                     function(tx, error){
-                                                                        console.log("Error al consultar datos_equipos_proteus: " +error.message);
+                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                                     }
                                                                 );
                                                             },
@@ -16822,24 +17510,153 @@ function regresarProteuscheck(fase){
                                                         );
                                                     },
                                                     function(tx, error){
-                                                        console.log("Error al consultar datos_generales_proteus: " + error.message);
+                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
                                                     }
                                                 );
                                             },
                                             function(error){},
                                             function(){}
                                         );
+                                    },
+                                    function(tx, error){
+                                        swal("Error al eliminar cedulas_general",error.message,"error");
                                     }
-                                },
-                                function(tx, error){
-                                    console.log("Error al consultar cedulas generales: " + error.message);
-                                }
-                            );
-                        },
-                        function(error){},
-                        function(){}
-                    );
-        
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    }else if(tipo_cedula == "Correctivo"){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
+                                    [id_cedula],
+                                    function(tx, results){
+                                        databaseHandler.db.transaction(
+                                            function(tx){
+                                                tx.executeSql("DELETE FROM datos_generales_proteus WHERE id_cedula = ?",
+                                                    [id_cedula],
+                                                    function(tx, results){
+                                                        databaseHandler.db.transaction(
+                                                            function(tx){
+                                                                tx.executeSql("DELETE FROM datos_equipos_proteus WHERE id_cedula = ?",
+                                                                    [id_cedula],
+                                                                    function(tx, results){
+                                                                        databaseHandler.db.transaction(
+                                                                            function(tx){
+                                                                                tx.executeSql("DELETE FROM mmto_correctivo WHERE id_cedula = ?",
+                                                                                    [id_cedula],
+                                                                                    function(tx, results){
+                                                                                        databaseHandler.db.transaction(
+                                                                                            function(tx){
+                                                                                                tx.executeSql("DELETE FROM evidencias_proteus WHERE id_cedula = ?",
+                                                                                                    [id_cedula],
+                                                                                                    function(tx, results){
+                                                                                                        databaseHandler.db.transaction(
+                                                                                                            function(tx){
+                                                                                                                tx.executeSql("DELETE FROM fotos_proteus WHERE id_cedula = ?",
+                                                                                                                    [id_cedula],
+                                                                                                                    function(tx, results){
+                                                                                                                        $("#conc" + id_cedula).remove();
+                                                                                                                    },
+                                                                                                                    function(tx, error){
+                                                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
+                                                                                                                    }
+                                                                                                                );
+                                                                                                            },
+                                                                                                            function(error){},
+                                                                                                            function(){}
+                                                                                                        );
+                                                                                                    },
+                                                                                                    function(tx, error){
+                                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
+                                                                                                    }
+                                                                                                );
+                                                                                            },
+                                                                                            function(error){},
+                                                                                            function(){}
+                                                                                        );
+                                                                                    },
+                                                                                    function(tx, error){
+                                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
+                                                                                    }
+                                                                                );
+                                                                            },
+                                                                            function(error){},
+                                                                            function(){}
+                                                                        );
+                                                                    },
+                                                                    function(tx, error){
+                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
+                                                                    }
+                                                                );
+                                                            },
+                                                            function(error){},
+                                                            function(){}
+                                                        );
+                                                    },
+                                                    function(tx, error){
+                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
+                                                    }
+                                                );
+                                            },
+                                            function(error){},
+                                            function(){}
+                                        );
+                                    },
+                                    function(tx, error){
+                                        swal("Error al eliminar cedulas_general",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    }else if(tipo_cedula == "Instalacion"){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
+                                    [id_cedula],
+                                    function(tx, results){
+                                        databaseHandler.db.transaction(
+                                            function(tx){
+                                                tx.executeSql("DELETE FROM datos_generales_proteus WHERE id_cedula = ?",
+                                                    [id_cedula],
+                                                    function(tx, results){
+                                                        databaseHandler.db.transaction(
+                                                            function(tx){
+                                                                tx.executeSql("DELETE FROM datos_equipos_proteus WHERE id_cedula = ?",
+                                                                    [id_cedula],
+                                                                    function(tx, results){
+                                                                        $("#conc" + id_cedula).remove();
+                                                                    },
+                                                                    function(tx, error){
+                                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
+                                                                    }
+                                                                );
+                                                            },
+                                                            function(error){},
+                                                            function(){}
+                                                        );
+                                                    },
+                                                    function(tx, error){
+                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
+                                                    }
+                                                );
+                                            },
+                                            function(error){},
+                                            function(){}
+                                        );
+                                    },
+                                    function(tx, error){
+                                        swal("Error al eliminar cedulas_general",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    }
                 } else if(empresa == "Dilimpio"){
                     if(tipo_cedula == "visitaDilimpio"){
                         databaseHandler.db.transaction(
@@ -20746,6 +21563,110 @@ function regresarProteuscheck(fase){
                 function(error){},
                 function(){}
             );
+        } else if(empresa == "Devlyn"){
+            var datosCedulaGeneral = new Array();
+            var datosDevlyn = new Array();
+            var evidenciaDevlyn = new Array();
+
+            var fecha = new Date();
+            var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * FROM cedulas_general WHERE id_cedula = ?",
+                        [id_cedula],
+                        function(tx, results){
+                            var length = results.rows.length;
+                            for(var i = 0; i< length; i++){
+                                var item = results.rows.item(i);
+                                tipo = item.tipo_cedula;
+                                console.log(tipo)
+                                datosCedulaGeneral[i] = {'Valor':i,'id_cedula':item.id_cedula,'tipo_cedula':item.tipo_cedula,'id_usuario':item.id_usuario,'nombre_usuario':item.nombre_usuario,'fecha_entrada':item.fecha_entrada,'geolocalizacion_entrada': item.geolocalizacion_entrada,'id_cliente': item.id_cliente,'nombre_cliente': item.nombre_cliente,'horario_programado': item.horario_programado,'calificacion': item.calificacion,'fecha_salida':item.fecha_salida,'geolocalizacion_salida':item.geolocalizacion_salida,'nombre_evalua':item.nombre_evalua,'comentario_cliente':item.comentario_cliente,'fecha_envio':fecha_envio};
+                            }
+                            if(tipo == "Devlyn"){
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("SELECT * FROM datosDevlyn WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function(tx, results){
+                                                var length = results.rows.length;
+                                                var fecha = new Date();
+                                                var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                                for(var i = 0; i< length; i++){
+                                                    var item2 = results.rows.item(i);
+                                                    datosDevlyn[i] = {'Valor':i,'id_visita':item2.id_visita,'foto_entrada':item2.foto_entrada,'proveedor':item2.proveedor,'sucursal':item2.sucursal,'rfc':item2.rfc,'fecha':item2.fecha,'nombre_cliente':item2.nombre_cliente,'foto_llegada':item2.foto_llegada,'foto_salida':item2.foto_salida,'firma_cliente':item2.firma_cliente,'fecha_cliente':item2.fecha_cliente,'fecha_llegada':item2.fecha_llegada,'id_proveedor':item2.id_proveedor};
+                                                }
+                                                databaseHandler.db.transaction(
+                                                    function(tx){
+                                                        tx.executeSql("SELECT * from evidenciaDevlyn WHERE id_cedula = ?",
+                                                            [id_cedula],
+                                                            function(tx, results){
+                                                                var length = results.rows.length;
+                                                                for(var i = 0; i< length; i++){
+                                                                    var item3 = results.rows.item(i);
+                                                                    evidenciaDevlyn[i] = {'Valor':i,'tema': item3.tema,'observacion': item3.observacion,'foto': item3.foto,'fecha_registro': item3.fecha_registro};
+                                                                }
+                                                                console.log('Cedula',datosCedulaGeneral)
+                                                                console.log('evidenciaDevlyn',evidenciaDevlyn)
+                                                                console.log('datosDevlyn',datosDevlyn)
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    async : true,
+                                                                    url: "http://www.appbennetts.com/FWM2/app/guardarDevlyn.php",
+                                                                    dataType: 'html',
+                                                                    data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),'datosDevlyn': JSON.stringify(datosDevlyn),'evidenciaDevlyn': JSON.stringify(evidenciaDevlyn)},
+                                                                    success: function(respuesta){
+                                                                        var respu1 = respuesta.split("._.");
+                                                                        var dat1 = respu1[0];
+                                                                        var dat2 = respu1[1];
+                                                                        if(dat1 == "CEDULA"){
+                                                                            if(dat2 > 0){
+                                                                                databaseHandler.db.transaction(
+                                                                                    function(tx7){
+                                                                                        tx7.executeSql(
+                                                                                            "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                            [id_cedula],
+                                                                                            function(tx7, results){
+                                                                                                localStorage.setItem("sendFlag", 0);
+                                                                                                swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                            }
+                                                                                        );
+                                                                                    }
+                                                                                );
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    error: function(){
+                                                                        console.log("Error en la comunicacion");
+                                                                    }
+                                                                });
+                                                            },
+                                                            function(tx, error){
+                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                            }
+                                                        );
+                                                    },
+                                                    function(error){},
+                                                    function(){}
+                                                );
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al consultar sanitizacion: " + error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            }
+                        },
+                        function(tx, error){
+                            console.log("Error al consultar datos generales: " + error.message);
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
         } else if(empresa == "Dilimpio"){
             var datosCedulaGeneral = new Array();
             var cedulageneral = 0;
@@ -21994,9 +22915,6 @@ function regresarProteuscheck(fase){
                                                                     evidenciaLevantamiento[evidencialeva] = {'Valor':evidencialeva,'id_evidencia': item3.id_evidencia,'id_cedula': item3.id_cedula,'observacion': item3.observacion,'foto_observacion': item3.foto_observacion,'fecha_regristro': item3.fecha_regristro};
                                                                     evidencialeva++;
                                                                 }
-                                                                console.log(evidenciaLevantamiento);
-
-                                                            
                                                                 $.ajax({
                                                                     type: "POST",
                                                                     async : true,
@@ -23232,7 +24150,8 @@ function regresarProteuscheck(fase){
                                                 var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                                                 for(var i = 0; i< length; i++){
                                                     var item2 = results.rows.item(i);
-                                                    encuesta[i] = {'Valor':i,'nombre_remitente':item2.Nombre_remitente,'fecha_envio':item2.fecha_envio,'ubicacion':item2.ubicacion,'pregunta1':item2.pregunta1,'pregunta2':item2.pregunta2,'pregunta3':item2.pregunta3,'pregunta4':item2.pregunta4,'pregunta5':item2.pregunta5,'pregunta6':item2.pregunta6,'pregunta7':item2.pregunta7,'nombre_cliente':item2.nombre_cliente,'comentario1':item2.comentarios1,'comentario2':item2.comentarios2,'comentario3':item2.comentarios3,'comentario4':item2.comentarios4,'comentario5':item2.comentarios5,'comentario6':item2.comentarios6,'comentario7':item2.comentarios7,'nombre_sitio':item2.nombre_sitio};
+
+                                                    encuesta[i] = {'Valor':i,'nombre_remitente':item2.Nombre_remitente,'fecha_envio':item2.fecha_envio,'ubicacion':item2.ubicacion,'pregunta1':item2.pregunta1,'pregunta2':item2.pregunta2,'pregunta3':item2.pregunta3,'pregunta4':item2.pregunta4,'pregunta5':item2.pregunta5,'pregunta6':item2.pregunta6,'pregunta7':item2.pregunta7,'nombre_cliente':item2.nombre_cliente,'comentario1':item2.comentarios1,'comentario2':item2.comentarios2,'comentario3':item2.comentarios3,'comentario4':item2.comentarios4,'comentario5':item2.comentarios5,'comentario6':item2.comentarios6,'comentario7':item2.comentarios7};
                                                 }
                                                 databaseHandler.db.transaction(
                                                     function(tx){
@@ -23919,17 +24838,20 @@ function regresarProteuscheck(fase){
             );
         } else if(empresa == "ServInd"){
             var datosCedulaGeneral = new Array();
-            var reporteGeneral = new Array();
-            var evidenciaReporteGeneral = new Array();
-            var equiposReporteGeneral = new Array();
-
-            var checkList = new Array();
-            var evidenciaCheckList = new Array();
-
-            var fotosAuditoria = new Array();
-            var auditoriaDatos1 = new Array();
-            var auditoriaDatos2 = new Array();
-            
+            var datos_ge = new Array();
+            var visita_serv = new Array();
+            var encuesta = new Array();
+            var checklist = new Array();
+            var fotos_check = new Array();
+            var papeleta = new Array();
+            var refacciones = new Array();
+            var fotos_diagnostico = new Array();
+            var diagnostico = new Array();
+            var diagnostico_servInd = new Array();
+            var checklist_servind = new Array();
+            var visita_servInd = new Array();
+            var datos_eq = new Array();
+            var datos_generales_serv = new Array();
             var fecha = new Date();
             var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
             databaseHandler.db.transaction(
@@ -23943,10 +24865,10 @@ function regresarProteuscheck(fase){
                                 tipo = item.tipo_cedula;
                                 datosCedulaGeneral[i] = {'Valor':i,'id_cedula':item.id_cedula,'tipo_cedula':item.tipo_cedula,'id_usuario':item.id_usuario,'nombre_usuario':item.nombre_usuario,'fecha_entrada':item.fecha_entrada,'geolocalizacion_entrada': item.geolocalizacion_entrada,'id_cliente': item.id_cliente,'nombre_cliente': item.nombre_cliente,'horario_programado': item.horario_programado,'calificacion': item.calificacion,'fecha_salida':item.fecha_salida,'geolocalizacion_salida':item.geolocalizacion_salida,'nombre_evalua':item.nombre_evalua,'comentario_cliente':item.comentario_cliente,'fecha_envio':fecha_envio};
                             }
-                            if(tipo == "reporteGeneral"){
+                            if(tipo == "Caliente" || tipo == "Frio"){
                                 databaseHandler.db.transaction(
                                     function(tx){
-                                        tx.executeSql("SELECT * FROM reporteGeneral WHERE id_cedula = ?",
+                                        tx.executeSql("SELECT * FROM datos_generales_serv WHERE id_cedula = ?",
                                             [id_cedula],
                                             function(tx, results){
                                                 var length = results.rows.length;
@@ -23954,59 +24876,951 @@ function regresarProteuscheck(fase){
                                                 var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                                                 for(var i = 0; i< length; i++){
                                                     var item2 = results.rows.item(i);
-                                                    reporteGeneral[i] = {'Valor':i,'id_visita':item2.id_visita,'firma_cliente':item2.firma_cliente,'fecha_cliente':item2.fecha_cliente,'orden_servicio':item2.orden_servicio,'foto_entrada':item2.foto_entrada,'nombre_cliente':item2.nombre_cliente,'nombre_comercial':item2.nombre_comercial,'sucursal':item2.sucursal,'folio_interno':item2.folio_interno,'direccion':item2.direccion,'telefono':item2.telefono,'correo':item2.correo,'equipo':item2.equipo,'marca':item2.marca,'modelo':item2.modelo,'serie':item2.serie,'tipo_servicio':item2.tipo_servicio,'tipo_servicio':item2.tipo_servicio,'ciudad':item2.ciudad,'voltaje':item2.voltaje,'amp':item2.amp,'wc':item2.wc,'tierra_fisica':item2.tierra_fisica,'razon_servicio':item2.razon_servicio,'trabajo_realizado':item2.trabajo_realizado,'equipo_encontrado':item2.equipo_encontrado,'diagnostico':item2.diagnostico,'estatus_reporte':item2.estatus_reporte,'equipo_entrego':item2.equipo_entrego,'comentario':item2.comentario,'horas_activas':item2.horas_activas,'horas_viaje':item2.horas_viaje,'horas_espera':item2.horas_espera,'horas_totales':item2.horas_totales,'cotizacion':item2.cotizacion,'viaticos':item2.viaticos,'refacciones':item2.refacciones,'foto_salida':item2.foto_salida};
+                                                    datos_ge[i] = {'Valor':i,
+                                                    'id_datos':item2.id_datos,
+                                                    'ciudad':item2.ciudad,
+                                                    'cliente':item2.cliente,
+                                                    'correo':item2.correo,
+                                                    'direccion':item2.direccion,
+                                                    'equipo':item2.equipo,
+                                                    'fecha':item2.fecha,
+                                                    'firma_cliente':item2.firma_cliente,
+                                                    'firma_tecnico':item2.firma_tecnico,
+                                                    'foto_llegada':item2.foto_llegada,
+                                                    'foto_salida':item2.foto_salida,
+                                                    'foto_sello':item2.foto_sello,
+                                                    'id_cliente':item2.id_cliente,
+                                                    'marca':item2.marca,
+                                                    'ml':item2.ml,
+                                                    'modelo':item2.modelo,
+                                                    'no_orden':item2.no_orden,
+                                                    'nombre_comercial':item2.nombre_comercial,
+                                                    'serie':item2.serie,
+                                                    'sucursal_cliente':item2.sucursal_cliente,
+                                                    'telefono':item2.telefono,
+                                                    'tipo_servicio':item2.tipo_servicio,
+                                                    'fecha_cliente':item2.fecha_cliente};
+                                                }
+                                                    databaseHandler.db.transaction(
+                                                        function(tx){
+                                                            tx.executeSql("SELECT * from visita_servInd WHERE id_cedula = ?",
+                                                                [id_cedula],
+                                                                function(tx, results){
+                                                                    var length = results.rows.length;
+                                                                    for(var i = 0; i< length; i++){
+                                                                        var item3 = results.rows.item(i);
+                                                                        visita_serv[i] = {'Valor':i,
+                                                                        'id_visita':item3.id_visita,
+                                                                        'H_espera': item3.H_espera,
+                                                                        'H_totales': item3.H_totales,
+                                                                        'H_trabajo':item3.H_trabajo,
+                                                                        'H_viaje':item3.H_viaje,
+                                                                        'amp':item3.amp,
+                                                                        'comentarios_entrega':item3.comentarios_entrega,
+                                                                        'como_encontro':item3.como_encontro,
+                                                                        'como_entrego':item3.como_entrego,
+                                                                        'falla_reportada':item3.falla_reportada,
+                                                                        'papeleta':item3.papeleta,
+                                                                        'refacciones':item3.refacciones,
+                                                                        'tierra_fisica':item3.tierra_fisica,
+                                                                        'trabajo_realizado':item3.trabajo_realizado,
+                                                                        'voltaje':item3.voltaje,
+                                                                        'wc':item3.wc,
+                                                                        'viaticos':item3.viaticos,'estatus_ced':item3.estatus_ced};
+                                                                    }
+                                                                        databaseHandler.db.transaction(
+                                                                            function(tx){
+                                                                                tx.executeSql("SELECT * from encuesta_serv WHERE id_cedula = ?",
+                                                                                    [id_cedula],
+                                                                                    function(tx, results){
+                                                                                        var length = results.rows.length;
+                                                                                        for(var i = 0; i< length; i++){
+                                                                                            var item4 = results.rows.item(i);
+                                                                                            encuesta[i] = {'Valor':i,
+                                                                                            'atencion':item4.atencion,
+                                                                                            'capacidad': item4.capacidad,
+                                                                                            'fecha_encuesta': item4.fecha_encuesta,
+                                                                                            'id_encuesta':item4.id_encuesta,
+                                                                                            'rapidez':item4.rapidez,
+                                                                                            'recomienda':item4.recomienda,
+                                                                                            'satisfaccion':item4.satisfaccion};
+                                                                                        }
+                                                                                            databaseHandler.db.transaction(
+                                                                                                function(tx){
+                                                                                                    tx.executeSql("SELECT * from checklist_servind WHERE id_cedula = ?",
+                                                                                                        [id_cedula],
+                                                                                                        function(tx, results){
+                                                                                                            var length = results.rows.length;
+                                                                                                            for(var i = 0; i< length; i++){
+                                                                                                                var item5 = results.rows.item(i);
+                                                                                                                checklist[i] = {'Valor':i,
+                                                                                                                'fase':item5.fase,
+                                                                                                                'id_cedula':item5.id_cedula,
+                                                                                                                'id_pregunta': item5.id_pregunta,
+                                                                                                                'id_equipo': item5.id_equipo,
+                                                                                                                'no_pregunta':item5.no_pregunta,
+                                                                                                                'pregunta':item5.pregunta,
+                                                                                                                'tipo':item5.tipo,
+                                                                                                                'valor_p':item5.valor};
+                                                                                                            }
+                                                                                                                databaseHandler.db.transaction(
+                                                                                                                    function(tx){
+                                                                                                                        tx.executeSql("SELECT * from fotos_check WHERE id_cedula = ?",
+                                                                                                                            [id_cedula],
+                                                                                                                            function(tx, results){
+                                                                                                                                var length = results.rows.length;
+                                                                                                                                for(var i = 0; i< length; i++){
+                                                                                                                                    var item6 = results.rows.item(i);
+                                                                                                                                    fotos_check[i] = {'Valor':i,
+                                                                                                                                    'fase':item6.fase,
+                                                                                                                                    'fecha_foto': item6.fecha_foto,
+                                                                                                                                    'foto': item6.foto,
+                                                                                                                                    'id_foto':item6.id_foto,
+                                                                                                                                    'id_equipo':item6.id_equipo,
+                                                                                                                                    'no_pregunta':item6.no_pregunta,
+                                                                                                                                    'observaciones':item6.observaciones,
+                                                                                                                                    'pregunta':item6.pregunta};
+                                                                                                                                }
+                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                        function(tx){
+                                                                                                                                            tx.executeSql("SELECT * from papeleta WHERE id_cedula = ?",
+                                                                                                                                                [id_cedula],
+                                                                                                                                                function(tx, results){
+                                                                                                                                                    var length = results.rows.length;
+                                                                                                                                                    for(var i = 0; i< length; i++){
+                                                                                                                                                        var item7 = results.rows.item(i);
+                                                                                                                                                        papeleta[i] = {'Valor':i,
+                                                                                                                                                        'cantidad':item7.cantidad,
+                                                                                                                                                        'descripcion': item7.descripcion,
+                                                                                                                                                        'fecha_registro': item7.fecha_registro,
+                                                                                                                                                        'foto_papeleta':item7.foto_papeleta,
+                                                                                                                                                        'id_papeleta':item7.id_papeleta,
+                                                                                                                                                        'numero_parte':item7.numero_parte,
+                                                                                                                                                        'prioridad':item7.prioridad,
+                                                                                                                                                        'motivo_pr':item7.motivo_pr};
+                                                                                                                                                    }
+                                                                                                                                                        databaseHandler.db.transaction(
+                                                                                                                                                            function(tx){
+                                                                                                                                                                tx.executeSql("SELECT * from refacciones WHERE id_cedula = ?",
+                                                                                                                                                                    [id_cedula],
+                                                                                                                                                                    function(tx, results){
+                                                                                                                                                                        var length = results.rows.length;
+                                                                                                                                                                        for(var i = 0; i< length; i++){
+                                                                                                                                                                            var item8 = results.rows.item(i);
+                                                                                                                                                                            refacciones[i] = {'Valor':i,
+                                                                                                                                                                            'descripcion':item8.descripcion,
+                                                                                                                                                                            'fecha_registro': item8.fecha_registro,
+                                                                                                                                                                            'foto_refa': item8.foto_refa,
+                                                                                                                                                                            'id_refaccion':item8.id_refaccion,
+                                                                                                                                                                            'numero_parte':item8.numero_parte,
+                                                                                                                                                                            'parte':item8.parte};
+                                                                                                                                                                        }
+                                                                                                                                                                        databaseHandler.db.transaction(
+                                                                                                                                                                            function(tx){
+                                                                                                                                                                                tx.executeSql("SELECT * from fotos_diagnostico WHERE id_cedula = ?",
+                                                                                                                                                                                    [id_cedula],
+                                                                                                                                                                                    function(tx, results){
+                                                                                                                                                                                        var length = results.rows.length;
+                                                                                                                                                                                        for(var i = 0; i< length; i++){
+                                                                                                                                                                                            var item9 = results.rows.item(i);
+                                                                                                                                                                                            fotos_diagnostico[i] = {'Valor':i,
+                                                                                                                                                                                            'fecha':item9.fecha,
+                                                                                                                                                                                            'foto': item9.foto,
+                                                                                                                                                                                            'id_foto':item9.id_foto,
+                                                                                                                                                                                            'tipo':item9.tipo};
+                                                                                                                                                                                        }
+                                                                                                                                                                                            console.log(datosCedulaGeneral);
+                                                                                                                                                                                            console.log(refacciones);
+                                                                                                                                                                                            console.log(papeleta);
+                                                                                                                                                                                            console.log(fotos_check);
+                                                                                                                                                                                            console.log(checklist);
+                                                                                                                                                                                            console.log(encuesta);
+                                                                                                                                                                                            console.log(visita_serv);
+                                                                                                                                                                                            console.log(datos_ge);
+                                                                                                                                                                                            console.log(fotos_diagnostico);
+                                                                                                                                                                                            if(item3.estatus_ced==3){
+                                                                                                                                                                                                console.log("es ced 3");
+                                                                                                                                                                                                $.ajax({
+                                                                                                                                                                                                    type: "POST",
+                                                                                                                                                                                                    async : true,
+                                                                                                                                                                                                    url: "http://www.appbennetts.com/FWM2/app/guardarCheckServ.php",
+                                                                                                                                                                                                    dataType: 'html',
+                                                                                                                                                                                                    data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                                                                                                                                    'refacciones': JSON.stringify(refacciones),
+                                                                                                                                                                                                    'fotos_check': JSON.stringify(fotos_check),
+                                                                                                                                                                                                    'checklist': JSON.stringify(checklist),
+                                                                                                                                                                                                    'encuesta': JSON.stringify(encuesta),
+                                                                                                                                                                                                    'visita_serv': JSON.stringify(visita_serv),
+                                                                                                                                                                                                    'datos_ge': JSON.stringify(datos_ge),
+                                                                                                                                                                                                    'fotos_diagnostico': JSON.stringify(fotos_diagnostico)
+                                                                                                                                                                                                    },
+                                                                                                                                                                                                    success: function(respuesta){
+                                                                                                                                                                                                        var respu1 = respuesta.split("._.");
+                                                                                                                                                                                                        var dat1 = respu1[0];
+                                                                                                                                                                                                        var dat2 = respu1[1];
+                                                                                                                                                                                                        if(dat1 == "CEDULA"){
+                                                                                                                                                                                                            if(dat2 > 0){
+                                                                                                                                                                                                                databaseHandler.db.transaction(
+                                                                                                                                                                                                                    function(tx7){
+                                                                                                                                                                                                                        tx7.executeSql(
+                                                                                                                                                                                                                            "UPDATE visita_servInd SET id_servidor ='"+dat2+"' WHERE id_cedula = ?",
+                                                                                                                                                                                                                            [id_cedula],
+                                                                                                                                                                                                                            function(tx7, results){
+                                                                                                                                                                                                                                databaseHandler.db.transaction(
+                                                                                                                                                                                                                                    function(tx8){
+                                                                                                                                                                                                                                        tx8.executeSql(
+                                                                                                                                                                                                                                            "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                                                                                                                                            [id_cedula],
+                                                                                                                                                                                                                                            function(tx8, results){
+                                                                                                                                                                                                                                                localStorage.setItem("sendFlag", 0);
+                                                                                                                                                                                                                                                swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                        );
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                );
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                        );
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                );
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    },
+                                                                                                                                                                                                    error: function(){
+                                                                                                                                                                                                        console.log("Error en la comunicacion");
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                });
+                                                                                                                                                                                            }else{
+                                                                                                                                                                                                console.log("ced no 3");
+                                                                                                                                                                                                $.ajax({
+                                                                                                                                                                                                    type: "POST",
+                                                                                                                                                                                                    async : true,
+                                                                                                                                                                                                    url: "http://www.appbennetts.com/FWM2/app/guardarCheckServ.php",
+                                                                                                                                                                                                    dataType: 'html',
+                                                                                                                                                                                                    data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                                                                                                                                    'refacciones': JSON.stringify(refacciones),
+                                                                                                                                                                                                    'papeleta': JSON.stringify(papeleta),
+                                                                                                                                                                                                    'fotos_check': JSON.stringify(fotos_check),
+                                                                                                                                                                                                    'checklist': JSON.stringify(checklist),
+                                                                                                                                                                                                    'encuesta': JSON.stringify(encuesta),
+                                                                                                                                                                                                    'visita_serv': JSON.stringify(visita_serv),
+                                                                                                                                                                                                    'datos_ge': JSON.stringify(datos_ge),
+                                                                                                                                                                                                    'fotos_diagnostico': JSON.stringify(fotos_diagnostico)
+                                                                                                                                                                                                    },
+                                                                                                                                                                                                    success: function(respuesta){
+                                                                                                                                                                                                        var respu1 = respuesta.split("._.");
+                                                                                                                                                                                                        var dat1 = respu1[0];
+                                                                                                                                                                                                        var dat2 = respu1[1];
+                                                                                                                                                                                                        if(dat1 == "CEDULA"){
+                                                                                                                                                                                                            if(dat2 > 0){//  papeleta  id_cedula  id_papeleta
+                                                                                                                                                                                                                databaseHandler.db.transaction(
+                                                                                                                                                                                                                    function(tx8){
+                                                                                                                                                                                                                        tx8.executeSql(
+                                                                                                                                                                                                                            "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                                                                                                                            [id_cedula],
+                                                                                                                                                                                                                            function(tx8, results){
+                                                                                                                                                                                                                                localStorage.setItem("sendFlag", 0);
+                                                                                                                                                                                                                                swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                        );
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                );
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    },
+                                                                                                                                                                                                    error: function(){
+                                                                                                                                                                                                        console.log("Error en la comunicacion");
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                });
+                                                                                                                                                                                            }
+                                                                                                                                                                                    },
+                                                                                                                                                                                    function(tx, error){
+                                                                                                                                                                                        console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                                    }
+                                                                                                                                                                                );
+                                                                                                                                                                            },
+                                                                                                                                                                            function(error){},
+                                                                                                                                                                            function(){}
+                                                                                                                                                                        );
+                                                                                                                                                                    },
+                                                                                                                                                                    function(tx, error){
+                                                                                                                                                                        console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                    }
+                                                                                                                                                                );
+                                                                                                                                                            },
+                                                                                                                                                            function(error){},
+                                                                                                                                                            function(){}
+                                                                                                                                                        );
+                                                                                                                                                },
+                                                                                                                                                function(tx, error){
+                                                                                                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                }
+                                                                                                                                            );
+                                                                                                                                        },
+                                                                                                                                        function(error){},
+                                                                                                                                        function(){}
+                                                                                                                                    );
+                                                                                                                            },
+                                                                                                                            function(tx, error){
+                                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                            }
+                                                                                                                        );
+                                                                                                                    },
+                                                                                                                    function(error){},
+                                                                                                                    function(){}
+                                                                                                                );
+                                                                                                        },
+                                                                                                        function(tx, error){
+                                                                                                            console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                        }
+                                                                                                    );
+                                                                                                },
+                                                                                                function(error){},
+                                                                                                function(){}
+                                                                                            );
+                                                                                        
+                                                                                    },
+                                                                                    function(tx, error){
+                                                                                        console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                    }
+                                                                                );
+                                                                            },
+                                                                            function(error){},
+                                                                            function(){}
+                                                                        );
+                                                                },
+                                                                function(tx, error){
+                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                }
+                                                            );
+                                                        },
+                                                        function(error){},
+                                                        function(){}
+                                                    );
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al consultar sanitizacion: " + error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            }else if(tipo == "PMP_Caliente" || tipo == "PMP_Frio"){
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("SELECT * FROM datos_generales_serv WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function(tx, results){
+                                                var length = results.rows.length;
+                                                var fecha = new Date();
+                                                var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                                for(var i = 0; i< length; i++){
+                                                    var item2 = results.rows.item(i);
+                                                    datos_ge[i] = {'Valor':i,
+                                                    'id_datos':item2.id_datos,
+                                                    'ciudad':item2.ciudad,
+                                                    'cliente':item2.cliente,
+                                                    'correo':item2.correo,
+                                                    'direccion':item2.direccion,
+                                                    'equipo':item2.equipo,
+                                                    'fecha':item2.fecha,
+                                                    'firma_cliente':item2.firma_cliente,
+                                                    'firma_tecnico':item2.firma_tecnico,
+                                                    'foto_llegada':item2.foto_llegada,
+                                                    'foto_salida':item2.foto_salida,
+                                                    'foto_sello':item2.foto_sello,
+                                                    'id_cliente':item2.id_cliente,
+                                                    'marca':item2.marca,
+                                                    'ml':item2.ml,
+                                                    'modelo':item2.modelo,
+                                                    'no_orden':item2.no_orden,
+                                                    'nombre_comercial':item2.nombre_comercial,
+                                                    'serie':item2.serie,
+                                                    'sucursal_cliente':item2.sucursal_cliente,
+                                                    'telefono':item2.telefono,
+                                                    'tipo_servicio':item2.tipo_servicio};
+                                                }
+                                                    databaseHandler.db.transaction(
+                                                        function(tx){
+                                                            tx.executeSql("SELECT * from visita_servInd WHERE id_cedula = ?",
+                                                                [id_cedula],
+                                                                function(tx, results){
+                                                                    var length = results.rows.length;
+                                                                    for(var i = 0; i< length; i++){
+                                                                        var item3 = results.rows.item(i);
+                                                                        visita_serv[i] = {'Valor':i,
+                                                                        'id_visita':item3.id_visita,
+                                                                        'H_espera': item3.H_espera,
+                                                                        'H_totales': item3.H_totales,
+                                                                        'H_trabajo':item3.H_trabajo,
+                                                                        'H_viaje':item3.H_viaje,
+                                                                        'comentarios_entrega':item3.comentarios_entrega,
+                                                                        'como_entrego':item3.como_entrego,
+                                                                        'papeleta':item3.papeleta,
+                                                                        'refacciones':item3.refacciones,
+                                                                        'trabajo_realizado':item3.trabajo_realizado,
+                                                                        'viaticos':item3.viaticos,'estatus_ced':item3.estatus_ced};
+                                                                    }
+                                                                        databaseHandler.db.transaction(
+                                                                            function(tx){
+                                                                                tx.executeSql("SELECT * from encuesta_serv WHERE id_cedula = ?",
+                                                                                    [id_cedula],
+                                                                                    function(tx, results){
+                                                                                        var length = results.rows.length;
+                                                                                        for(var i = 0; i< length; i++){
+                                                                                            var item4 = results.rows.item(i);
+                                                                                            encuesta[i] = {'Valor':i,
+                                                                                            'atencion':item4.atencion,
+                                                                                            'capacidad': item4.capacidad,
+                                                                                            'fecha_encuesta': item4.fecha_encuesta,
+                                                                                            'id_encuesta':item4.id_encuesta,
+                                                                                            'rapidez':item4.rapidez,
+                                                                                            'recomienda':item4.recomienda,
+                                                                                            'satisfaccion':item4.satisfaccion};
+                                                                                        }
+                                                                                            databaseHandler.db.transaction(
+                                                                                                function(tx){
+                                                                                                    tx.executeSql("SELECT * from checklist_servind WHERE id_cedula = ?",
+                                                                                                        [id_cedula],
+                                                                                                        function(tx, results){
+                                                                                                            var length = results.rows.length;
+                                                                                                            for(var i = 0; i< length; i++){
+                                                                                                                var item5 = results.rows.item(i);
+                                                                                                                checklist[i] = {'Valor':i,
+                                                                                                                'fase':item5.fase,
+                                                                                                                'id_cedula':item5.id_cedula,
+                                                                                                                'id_pregunta': item5.id_pregunta,
+                                                                                                                'id_equipo': item5.id_equipo,
+                                                                                                                'no_pregunta':item5.no_pregunta,
+                                                                                                                'pregunta':item5.pregunta,
+                                                                                                                'tipo':item5.tipo,
+                                                                                                                'valor_p':item5.valor};
+                                                                                                            }
+                                                                                                                databaseHandler.db.transaction(
+                                                                                                                    function(tx){
+                                                                                                                        tx.executeSql("SELECT * from fotos_check WHERE id_cedula = ?",
+                                                                                                                            [id_cedula],
+                                                                                                                            function(tx, results){
+                                                                                                                                var length = results.rows.length;
+                                                                                                                                for(var i = 0; i< length; i++){
+                                                                                                                                    var item6 = results.rows.item(i);
+                                                                                                                                    fotos_check[i] = {'Valor':i,
+                                                                                                                                    'fase':item6.fase,
+                                                                                                                                    'fecha_foto': item6.fecha_foto,
+                                                                                                                                    'foto': item6.foto,
+                                                                                                                                    'id_foto':item6.id_foto,
+                                                                                                                                    'id_equipo':item6.id_equipo,
+                                                                                                                                    'no_pregunta':item6.no_pregunta,
+                                                                                                                                    'observaciones':item6.observaciones,
+                                                                                                                                    'pregunta':item6.pregunta};
+                                                                                                                                }
+                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                        function(tx){
+                                                                                                                                            tx.executeSql("SELECT * from papeleta WHERE id_cedula = ?",
+                                                                                                                                                [id_cedula],
+                                                                                                                                                function(tx, results){
+                                                                                                                                                    var length = results.rows.length;
+                                                                                                                                                    for(var i = 0; i< length; i++){
+                                                                                                                                                        var item7 = results.rows.item(i);
+                                                                                                                                                        papeleta[i] = {'Valor':i,
+                                                                                                                                                        'cantidad':item7.cantidad,
+                                                                                                                                                        'descripcion': item7.descripcion,
+                                                                                                                                                        'fecha_registro': item7.fecha_registro,
+                                                                                                                                                        'foto_papeleta':item7.foto_papeleta,
+                                                                                                                                                        'id_papeleta':item7.id_papeleta,
+                                                                                                                                                        'numero_parte':item7.numero_parte,
+                                                                                                                                                        'prioridad':item7.prioridad};
+                                                                                                                                                    }
+                                                                                                                                                        databaseHandler.db.transaction(
+                                                                                                                                                            function(tx){
+                                                                                                                                                                tx.executeSql("SELECT * from refacciones WHERE id_cedula = ?",
+                                                                                                                                                                    [id_cedula],
+                                                                                                                                                                    function(tx, results){
+                                                                                                                                                                        var length = results.rows.length;
+                                                                                                                                                                        for(var i = 0; i< length; i++){
+                                                                                                                                                                            var item8 = results.rows.item(i);
+                                                                                                                                                                            refacciones[i] = {'Valor':i,
+                                                                                                                                                                            'descripcion':item8.descripcion,
+                                                                                                                                                                            'fecha_registro': item8.fecha_registro,
+                                                                                                                                                                            'foto_refa': item8.foto_refa,
+                                                                                                                                                                            'id_refaccion':item8.id_refaccion,
+                                                                                                                                                                            'numero_parte':item8.numero_parte,
+                                                                                                                                                                            'parte':item8.parte};
+                                                                                                                                                                        }
+                                                                                                                                                                        databaseHandler.db.transaction(
+                                                                                                                                                                            function(tx){
+                                                                                                                                                                                tx.executeSql("SELECT * from fotos_diagnostico WHERE id_cedula = ?",
+                                                                                                                                                                                    [id_cedula],
+                                                                                                                                                                                    function(tx, results){
+                                                                                                                                                                                        var length = results.rows.length;
+                                                                                                                                                                                        for(var i = 0; i< length; i++){
+                                                                                                                                                                                            var item9 = results.rows.item(i);
+                                                                                                                                                                                            fotos_diagnostico[i] = {'Valor':i,
+                                                                                                                                                                                            'fecha':item9.fecha,
+                                                                                                                                                                                            'foto': item9.foto,
+                                                                                                                                                                                            'id_foto':item9.id_foto,
+                                                                                                                                                                                            'tipo':item9.tipo};
+                                                                                                                                                                                        }
+                                                                                                                                                                                            databaseHandler.db.transaction(
+                                                                                                                                                                                                function(tx){
+                                                                                                                                                                                                    tx.executeSql("SELECT * from diagnostico_servIndHBE WHERE id_cedula = ?",
+                                                                                                                                                                                                        [id_cedula],
+                                                                                                                                                                                                        function(tx, results){
+                                                                                                                                                                                                            var length = results.rows.length;
+                                                                                                                                                                                                            for(var i = 0; i< length; i++){
+                                                                                                                                                                                                                var item10 = results.rows.item(i);
+                                                                                                                                                                                                                diagnostico[i] = {'Valor':i,
+                                                                                                                                                                                                                'comentario':item10.comentario,
+                                                                                                                                                                                                                'pregunta': item10.pregunta,
+                                                                                                                                                                                                                'id_cedula':item10.id_cedula};
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                                console.log(datosCedulaGeneral);
+                                                                                                                                                                                                                console.log(refacciones);
+                                                                                                                                                                                                                console.log(papeleta);
+                                                                                                                                                                                                                console.log(fotos_check);
+                                                                                                                                                                                                                console.log(checklist);
+                                                                                                                                                                                                                console.log(encuesta);
+                                                                                                                                                                                                                console.log(visita_serv);
+                                                                                                                                                                                                                console.log(datos_ge);
+                                                                                                                                                                                                                console.log(fotos_diagnostico);
+                                                                                                                                                                                                                console.log(diagnostico);
+                                                                                                                                                                                                                if(item3.estatus_ced==3){
+                                                                                                                                                                                                                    console.log('es ced 3');
+                                                                                                                                                                                                                    $.ajax({
+                                                                                                                                                                                                                        type: "POST",
+                                                                                                                                                                                                                        async : true,
+                                                                                                                                                                                                                        url: "http://www.appbennetts.com/FWM2/app/guardarCheckServ1.php",
+                                                                                                                                                                                                                        dataType: 'html',
+                                                                                                                                                                                                                        data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                                                                                                                                                        'refacciones': JSON.stringify(refacciones),
+                                                                                                                                                                                                                        'fotos_check': JSON.stringify(fotos_check),
+                                                                                                                                                                                                                        'checklist': JSON.stringify(checklist),
+                                                                                                                                                                                                                        'encuesta': JSON.stringify(encuesta),
+                                                                                                                                                                                                                        'visita_serv': JSON.stringify(visita_serv),
+                                                                                                                                                                                                                        'datos_ge': JSON.stringify(datos_ge),
+                                                                                                                                                                                                                        'fotos_diagnostico': JSON.stringify(fotos_diagnostico),
+                                                                                                                                                                                                                        'diagnostico': JSON.stringify(diagnostico)
+                                                                                                                                                                                                                        },
+                                                                                                                                                                                                                        success: function(respuesta){
+                                                                                                                                                                                                                            var respu1 = respuesta.split("._.");
+                                                                                                                                                                                                                            var dat1 = respu1[0];
+                                                                                                                                                                                                                            var dat2 = respu1[1];
+                                                                                                                                                                                                                            if(dat1 == "CEDULA"){
+                                                                                                                                                                                                                                if(dat2 > 0){
+                                                                                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                                                                                        function(tx7){
+                                                                                                                                                                                                                                            tx7.executeSql(
+                                                                                                                                                                                                                                                "UPDATE visita_servInd SET id_servidor ='"+dat2+"' WHERE id_cedula = ?",
+                                                                                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                                                                                function(tx7, results){
+                                                                                                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                                                                                                        function(tx8){
+                                                                                                                                                                                                                                                            tx8.executeSql(
+                                                                                                                                                                                                                                                                "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                                                                                                function(tx8, results){
+                                                                                                                                                                                                                                                                    localStorage.setItem("sendFlag", 0);
+                                                                                                                                                                                                                                                                    swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                            );
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                    );
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                            );
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                    );
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                        },
+                                                                                                                                                                                                                        error: function(){
+                                                                                                                                                                                                                            console.log("Error en la comunicacion");
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                    });
+                                                                                                                                                                                                                }else{
+                                                                                                                                                                                                                    console.log('no es ced 3');
+                                                                                                                                                                                                                    $.ajax({
+                                                                                                                                                                                                                        type: "POST",
+                                                                                                                                                                                                                        async : true,
+                                                                                                                                                                                                                        url: "http://www.appbennetts.com/FWM2/app/guardarCheckServ1.php",
+                                                                                                                                                                                                                        dataType: 'html',
+                                                                                                                                                                                                                        data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                                                                                                                                                        'refacciones': JSON.stringify(refacciones),
+                                                                                                                                                                                                                        'papeleta': JSON.stringify(papeleta),
+                                                                                                                                                                                                                        'fotos_check': JSON.stringify(fotos_check),
+                                                                                                                                                                                                                        'checklist': JSON.stringify(checklist),
+                                                                                                                                                                                                                        'encuesta': JSON.stringify(encuesta),
+                                                                                                                                                                                                                        'visita_serv': JSON.stringify(visita_serv),
+                                                                                                                                                                                                                        'datos_ge': JSON.stringify(datos_ge),
+                                                                                                                                                                                                                        'fotos_diagnostico': JSON.stringify(fotos_diagnostico),
+                                                                                                                                                                                                                        'diagnostico': JSON.stringify(diagnostico)
+                                                                                                                                                                                                                        },
+                                                                                                                                                                                                                        success: function(respuesta){
+                                                                                                                                                                                                                            var respu1 = respuesta.split("._.");
+                                                                                                                                                                                                                            var dat1 = respu1[0];
+                                                                                                                                                                                                                            var dat2 = respu1[1];
+                                                                                                                                                                                                                            if(dat1 == "CEDULA"){
+                                                                                                                                                                                                                                if(dat2 > 0){
+                                                                                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                                                                                        function(tx7){
+                                                                                                                                                                                                                                            tx7.executeSql(
+                                                                                                                                                                                                                                                "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                                                                                function(tx7, results){
+                                                                                                                                                                                                                                                    localStorage.setItem("sendFlag", 0);
+                                                                                                                                                                                                                                                    swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                            );
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                    );
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                        },
+                                                                                                                                                                                                                        error: function(){
+                                                                                                                                                                                                                            console.log("Error en la comunicacion");
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                    });   
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                        },
+                                                                                                                                                                                                        function(tx, error){
+                                                                                                                                                                                                            console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    );
+                                                                                                                                                                                                },
+                                                                                                                                                                                                function(error){},
+                                                                                                                                                                                                function(){}
+                                                                                                                                                                                            );
+                                                                                                                                                                                        
+                                                                                                                                                                                        },
+                                                                                                                                                                                    function(tx, error){
+                                                                                                                                                                                        console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                                    }
+                                                                                                                                                                                );
+                                                                                                                                                                            },
+                                                                                                                                                                            function(error){},
+                                                                                                                                                                            function(){}
+                                                                                                                                                                        );
+                                                                                                                                                                    },
+                                                                                                                                                                    function(tx, error){
+                                                                                                                                                                        console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                    }
+                                                                                                                                                                );
+                                                                                                                                                            },
+                                                                                                                                                            function(error){},
+                                                                                                                                                            function(){}
+                                                                                                                                                        );
+                                                                                                                                                },
+                                                                                                                                                function(tx, error){
+                                                                                                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                }
+                                                                                                                                            );
+                                                                                                                                        },
+                                                                                                                                        function(error){},
+                                                                                                                                        function(){}
+                                                                                                                                    );
+                                                                                                                            },
+                                                                                                                            function(tx, error){
+                                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                            }
+                                                                                                                        );
+                                                                                                                    },
+                                                                                                                    function(error){},
+                                                                                                                    function(){}
+                                                                                                                );
+                                                                                                        },
+                                                                                                        function(tx, error){
+                                                                                                            console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                        }
+                                                                                                    );
+                                                                                                },
+                                                                                                function(error){},
+                                                                                                function(){}
+                                                                                            );
+                                                                                        
+                                                                                    },
+                                                                                    function(tx, error){
+                                                                                        console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                    }
+                                                                                );
+                                                                            },
+                                                                            function(error){},
+                                                                            function(){}
+                                                                        );
+                                                                },
+                                                                function(tx, error){
+                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                }
+                                                            );
+                                                        },
+                                                        function(error){},
+                                                        function(){}
+                                                    );
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al consultar sanitizacion: " + error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            }else if(tipo == "Rational"){
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("SELECT * FROM diagnostico_servInd WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function(tx, results){
+                                                var length = results.rows.length;
+                                                var fecha = new Date();
+                                                var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                                for(var i = 0; i< length; i++){
+                                                    var item2 = results.rows.item(i);
+                                                    diagnostico_servInd[i] = {'Valor':i,
+                                                    'foto_diagnostico': item2.foto_diagnostico,'falla_en': item2.falla_en, 'diagnostico': item2.diagnostico, 'sw': item2.sw,'usbInfo': item2.usbInfo,'usbHa': item2.usbHa};
                                                 }
                                                 databaseHandler.db.transaction(
                                                     function(tx){
-                                                        tx.executeSql("SELECT * from equiposReporte WHERE id_cedula = ?",
+                                                        tx.executeSql("SELECT * from visita_servInd WHERE id_cedula = ?",
                                                             [id_cedula],
                                                             function(tx, results){
                                                                 var length = results.rows.length;
                                                                 for(var i = 0; i< length; i++){
                                                                     var item3 = results.rows.item(i);
-                                                                    equiposReporteGeneral[i] = {'Valor':i,'origin': item3.origin,'numero_parte': item3.numero_parte,'descripcion': item3.descripcion,'prioridad': item3.prioridad,'cantidad': item3.cantidad,'fecha_registro': item3.fecha_registro};
+                                                                    visita_servInd[i] = {'Valor':i,'no_orden': item3.no_orden, 'fecha': item3.fecha, 'foto_llegada': item3.foto_llegada, 'tipo_servicio': item3.tipo_servicio, 'id_cliente':item3.id_cliente, 'cliente': item3.cliente, 'nombre_comercial': item3.nombre_comercial,'sucursal_cliente': item3.sucursal_cliente,'direccion': item3.direccion,'ciudad': item3.ciudad, 'telefono': item3.telefono,'correo':item3.correo, 'equipo':item3.equio, 'marca': item3.marca,'modelo': item3.modelo,'serie': item3.serie, 'ml': item3.ml,'voltaje': item3.voltaje, 'amp': item3.amp, 'wc': item3.wc , 'tierra_fisica':item3.tierra_fisica, 'falla_reportada': item3.falla_reportada,'como_encontro': item3.como_encontro,'foto_diagnostico': item3.como_encontro,'comentarios_entrega': item3.comentarios_entrega, 'diagnotico_corecto': item3.diagnotico_corecto,'trabajo_realizado': item3.trabajo_realizado,'como_entrego': item3.como_entrego, 'papeleta':item3.papeleta, 'refacciones': item3.refacciones, 'viaticos': item3.viaticos, 'H_viaje': item3.H_viaje, 'H_espera': item3.H_espera, 'H_trabajo': item3.H_trabajo , 'H_totales': item3.H_totales, 'firma_cliente': item3.firma_cliente, 'foto_sello': item3.foto_sello , 'foto_salida':  item3.foto_salida, 'fecha_cliente':item3.fecha_cliente, 'estatus_ced':item3.estatus_ced};
                                                                 }
                                                                 databaseHandler.db.transaction(
                                                                     function(tx){
-                                                                        tx.executeSql("SELECT * from evidenciasReporte WHERE id_cedula = ?",
+                                                                        tx.executeSql("SELECT * from fotos_diagnostico WHERE id_cedula = ?",
                                                                             [id_cedula],
                                                                             function(tx, results){
                                                                                 var length = results.rows.length;
                                                                                 for(var i = 0; i< length; i++){
-                                                                                    var item3 = results.rows.item(i);
-                                                                                    evidenciaReporteGeneral[i] = {'Valor':i,'fase': item3.fase,'titulo': item3.titulo,'foto': item3.foto,'fecha_registro': item3.fecha_registro};
+                                                                                    var item9 = results.rows.item(i);
+                                                                                    fotos_diagnostico[i] = {'Valor':i,
+                                                                                    'foto':item9.foto,
+                                                                                     'fecha': item9.fecha ,
+                                                                                     'tipo': item9.tipo};
                                                                                 }
-                                                                                $.ajax({
-                                                                                    type: "POST",
-                                                                                    async : true,
-                                                                                    url: "http://www.appbennetts.com/FWM2/app/guardarReporteGeneralServInd.php",
-                                                                                    dataType: 'html',
-                                                                                    data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),'reporteGeneral': JSON.stringify(reporteGeneral),'equiposReporteGeneral': JSON.stringify(equiposReporteGeneral),'evidenciaReporteGeneral': JSON.stringify(evidenciaReporteGeneral)},
-                                                                                    success: function(respuesta){
-                                                                                        var respu1 = respuesta.split("._.");
-                                                                                        var dat1 = respu1[0];
-                                                                                        var dat2 = respu1[1];
-                                                                                        if(dat1 == "CEDULA"){
-                                                                                            if(dat2 > 0){
-                                                                                                databaseHandler.db.transaction(
-                                                                                                    function(tx7){
-                                                                                                        tx7.executeSql(
-                                                                                                            "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
-                                                                                                            [id_cedula],
-                                                                                                            function(tx7, results){
-                                                                                                                localStorage.setItem("sendFlag", 0);
-                                                                                                                swal("Enviado!", "Ya se envio tu visita!", "success");
-                                                                                                            }
-                                                                                                        );
-                                                                                                    }
-                                                                                                );
+                                                                                databaseHandler.db.transaction(
+                                                                                function(tx){
+                                                                                    tx.executeSql("SELECT * from checklist_servind WHERE id_cedula = ?",
+                                                                                        [id_cedula],
+                                                                                        function(tx, results){
+                                                                                            var length = results.rows.length;
+                                                                                            for(var i = 0; i< length; i++){
+                                                                                                var item4 = results.rows.item(i);
+                                                                                                checklist_servind[i] = {'Valor':i,'fase': item4.fase,'pregunta': item4.pregunta,'tipo': item4.tipo,'valor': item4.valor,'no_pregunta': item4.no_pregunta};
                                                                                             }
+                                                                                            databaseHandler.db.transaction(
+                                                                                                function(tx){
+                                                                                                    tx.executeSql("SELECT * from fotos_check WHERE id_cedula = ?",
+                                                                                                        [id_cedula],
+                                                                                                        function(tx, results){
+                                                                                                            var length = results.rows.length;
+                                                                                                            for(var i = 0; i< length; i++){
+                                                                                                                var item5= results.rows.item(i);
+                                                                                                                fotos_check[i] = {'Valor':i,'foto': item5.foto, 'pregunta': item5.pregunta , 'fase': item5.fase, 'observaciones': item5.observaciones, 'fecha_foto': item5.fecha_foto,'no_pregunta':item5.no_pregunta};
+                                                                                                            }
+                                                                                                            databaseHandler.db.transaction(
+                                                                                                                function(tx){
+                                                                                                                    tx.executeSql("SELECT * from papeleta WHERE id_cedula = ?",
+                                                                                                                        [id_cedula],
+                                                                                                                        function(tx, results){
+                                                                                                                            var length = results.rows.length;
+                                                                                                                            for(var i = 0; i< length; i++){
+                                                                                                                                var item7 = results.rows.item(i);
+                                                                                                                                papeleta[i] = {'Valor':i,
+                                                                                                                                'cantidad':item7.cantidad,
+                                                                                                                                'descripcion': item7.descripcion,
+                                                                                                                                'fecha_registro': item7.fecha_registro,
+                                                                                                                                'foto_papeleta':item7.foto_papeleta,
+                                                                                                                                'id_papeleta':item7.id_papeleta,
+                                                                                                                                'numero_parte':item7.numero_parte,
+                                                                                                                                'prioridad':item7.prioridad};
+                                                                                                                            }
+                                                                                                                            databaseHandler.db.transaction(
+                                                                                                                                function(tx){
+                                                                                                                                    tx.executeSql("SELECT * from refacciones WHERE id_cedula = ?",
+                                                                                                                                        [id_cedula],
+                                                                                                                                        function(tx, results){
+                                                                                                                                            var length = results.rows.length;
+                                                                                                                                            for(var i = 0; i< length; i++){
+                                                                                                                                                var item8 = results.rows.item(i);
+                                                                                                                                                refacciones[i] = {'Valor':i,
+                                                                                                                                                'descripcion':item8.descripcion,
+                                                                                                                                                'fecha_registro': item8.fecha_registro,
+                                                                                                                                                'foto_refa': item8.foto_refa,
+                                                                                                                                                'id_refaccion':item8.id_refaccion,
+                                                                                                                                                'numero_parte':item8.numero_parte,
+                                                                                                                                                'parte':item8.parte};
+                                                                                                                                            }
+                                                                                                                                                databaseHandler.db.transaction(
+                                                                                                                                                    function(tx){
+                                                                                                                                                        tx.executeSql("SELECT * from encuesta_serv WHERE id_cedula = ?",
+                                                                                                                                                            [id_cedula],
+                                                                                                                                                            function(tx, results){
+                                                                                                                                                                var length = results.rows.length;
+                                                                                                                                                                for(var i = 0; i< length; i++){
+                                                                                                                                                                    var item4 = results.rows.item(i);
+                                                                                                                                                                    encuesta[i] = {'Valor':i,
+                                                                                                                                                                    'atencion':item4.atencion,
+                                                                                                                                                                    'capacidad': item4.capacidad,
+                                                                                                                                                                    'fecha_encuesta': item4.fecha_encuesta,
+                                                                                                                                                                    'id_encuesta':item4.id_encuesta,
+                                                                                                                                                                    'rapidez':item4.rapidez,
+                                                                                                                                                                    'recomienda':item4.recomienda,
+                                                                                                                                                                    'satisfaccion':item4.satisfaccion};
+                                                                                                                                                                }
+                                                                                                                                                                console.log('Rational8');
+                                                                                                                                                                console.log('datosCedulaGeneral',datosCedulaGeneral);
+                                                                                                                                                                console.log('fotos_check',fotos_check);
+                                                                                                                                                                console.log('checklist_servind',checklist_servind);
+                                                                                                                                                                console.log('diagnostico_servInd',diagnostico_servInd);
+                                                                                                                                                                console.log('visita_servInd',visita_servInd);
+                                                                                                                                                                console.log('refra',refacciones);
+                                                                                                                                                                console.log('pap',papeleta);
+                                                                                                                                                                console.log('encuesta',encuesta);
+                                                                                                                                                                console.log('fotos_diagnostico',fotos_diagnostico)
+                                                                                                                                                                if(item3.estatus_ced==3){
+                                                                                                                                                                    console.log("ced 3");
+                                                                                                                                                                    $.ajax({
+                                                                                                                                                                        type: "POST",
+                                                                                                                                                                        async : true,
+                                                                                                                                                                        url: "http://www.appbennetts.com/FWM2/app/guardarRationalServInd.php",
+                                                                                                                                                                        dataType: 'html',
+                                                                                                                                                                        data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                                                                                                        'fotos_check': JSON.stringify(fotos_check),
+                                                                                                                                                                        'checklist_servind': JSON.stringify(checklist_servind),
+                                                                                                                                                                        'visita_servInd': JSON.stringify(visita_servInd),
+                                                                                                                                                                        'diagnostico_servInd': JSON.stringify(diagnostico_servInd),
+                                                                                                                                                                        'refacciones': JSON.stringify(refacciones),
+                                                                                                                                                                        'encuesta': JSON.stringify(encuesta),
+                                                                                                                                                                        'fotos_diagnostico': JSON.stringify(fotos_diagnostico)},
+                                                                                                                                                                        success: function(respuesta){
+                                                                                                                                                                            var respu1 = respuesta.split("._.");
+                                                                                                                                                                            var dat1 = respu1[0];
+                                                                                                                                                                            var dat2 = respu1[1];
+                                                                                                                                                                            if(dat1 == "CEDULA"){
+                                                                                                                                                                                if(dat2 > 0){
+                                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                                        function(tx7){
+                                                                                                                                                                                            tx7.executeSql(
+                                                                                                                                                                                                "UPDATE visita_servInd SET id_servidor ='"+dat2+"' WHERE id_cedula = ?",
+                                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                                function(tx7, results){
+                                                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                                                        function(tx8){
+                                                                                                                                                                                                            tx8.executeSql(
+                                                                                                                                                                                                                "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                                                function(tx8, results){
+                                                                                                                                                                                                                    localStorage.setItem("sendFlag", 0);
+                                                                                                                                                                                                                    swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                            );
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    );
+                                                                                                                                                                                                }
+                                                                                                                                                                                            );
+                                                                                                                                                                                        }
+                                                                                                                                                                                    );
+                                                                                                                                                                                }
+                                                                                                                                                                            }
+                                                                                                                                                                        },
+                                                                                                                                                                        error: function(){
+                                                                                                                                                                            console.log("Error en la comunicacion");
+                                                                                                                                                                        }
+                                                                                                                                                                    });
+                                                                                                                                                                }else{
+                                                                                                                                                                    console.log("ced no 3");
+                                                                                                                                                                    $.ajax({
+                                                                                                                                                                        type: "POST",
+                                                                                                                                                                        async : true,
+                                                                                                                                                                        url: "http://www.appbennetts.com/FWM2/app/guardarRationalServInd.php",
+                                                                                                                                                                        dataType: 'html',
+                                                                                                                                                                        data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                                                                                                        'fotos_check': JSON.stringify(fotos_check),
+                                                                                                                                                                        'checklist_servind': JSON.stringify(checklist_servind),
+                                                                                                                                                                        'visita_servInd': JSON.stringify(visita_servInd),
+                                                                                                                                                                        'diagnostico_servInd': JSON.stringify(diagnostico_servInd),
+                                                                                                                                                                        'refacciones': JSON.stringify(refacciones),
+                                                                                                                                                                        'papeleta': JSON.stringify(papeleta),
+                                                                                                                                                                        'encuesta': JSON.stringify(encuesta),
+                                                                                                                                                                        'fotos_diagnostico': JSON.stringify(fotos_diagnostico)},
+                                                                                                                                                                        success: function(respuesta){
+                                                                                                                                                                            console.log('RESPUESTA',respuesta);
+                                                                                                                                                                            var respu1 = respuesta.split("._.");
+                                                                                                                                                                            var dat1 = respu1[0];
+                                                                                                                                                                            var dat2 = respu1[1];
+                                                                                                                                                                            if(dat1 == "CEDULA"){
+                                                                                                                                                                                if(dat2 > 0){
+                                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                                        function(tx7){
+                                                                                                                                                                                            tx7.executeSql(
+                                                                                                                                                                                                "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                                function(tx7, results){
+                                                                                                                                                                                                    localStorage.setItem("sendFlag", 0);
+                                                                                                                                                                                                    swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                                                                                                }
+                                                                                                                                                                                            );
+                                                                                                                                                                                        }
+                                                                                                                                                                                    );
+                                                                                                                                                                                }
+                                                                                                                                                                            }else{
+                                                                                                                                                                                AlmacenarError(respuesta);
+                                                                                                                                                                            }
+                                                                                                                                                                        },
+                                                                                                                                                                        error: function(){
+                                                                                                                                                                            console.log("Error en la comunicacion");
+                                                                                                                                                                        }
+                                                                                                                                                                    });
+                                                                                                                                                                }
+                                                                                                                                                                
+                                                                                                                                                            },
+                                                                                                                                                            function(tx, error){
+                                                                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                            }
+                                                                                                                                                        );
+                                                                                                                                                    },
+                                                                                                                                                    function(error){},
+                                                                                                                                                    function(){}
+                                                                                                                                                );
+                                                                                                                                        },
+                                                                                                                                        function(tx, error){
+                                                                                                                                            console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                        }
+                                                                                                                                    );
+                                                                                                                                },
+                                                                                                                                function(error){},
+                                                                                                                                function(){}
+                                                                                                                            );
+                                                                                                                        },
+                                                                                                                        function(tx, error){
+                                                                                                                            console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                        }
+                                                                                                                    );
+                                                                                                                },
+                                                                                                                function(error){},
+                                                                                                                function(){}
+                                                                                                            );
+                                                                                                        },
+                                                                                                        function(tx, error){
+                                                                                                            console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                        }
+                                                                                                    );
+                                                                                                },
+                                                                                                function(error){},
+                                                                                                function(){}
+                                                                                            );
+                                                                                        },
+                                                                                        function(tx, error){
+                                                                                            console.log("Error al consultar fotos sanitizacion: " +error.message);
                                                                                         }
-                                                                                    },
-                                                                                    error: function(){
-                                                                                        console.log("Error en la comunicacion");
-                                                                                    }
-                                                                                });
+                                                                                    );
+                                                                                },
+                                                                                function(error){},
+                                                                                function(){}
+                                                                            );
                                                                             },
                                                                             function(tx, error){
                                                                                 console.log("Error al consultar fotos sanitizacion: " +error.message);
@@ -24034,11 +25848,10 @@ function regresarProteuscheck(fase){
                                     function(error){},
                                     function(){}
                                 );
-                            }
-                            if(tipo == "checklistServ"){
+                            }else if(tipo == "HEB"){
                                 databaseHandler.db.transaction(
                                     function(tx){
-                                        tx.executeSql("SELECT * FROM checklist WHERE id_cedula = ?",
+                                        tx.executeSql("SELECT * FROM diagnostico_servIndHBE WHERE id_cedula = ?",
                                             [id_cedula],
                                             function(tx, results){
                                                 var length = results.rows.length;
@@ -24046,150 +25859,230 @@ function regresarProteuscheck(fase){
                                                 var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                                                 for(var i = 0; i< length; i++){
                                                     var item2 = results.rows.item(i);
-                                                    checkList[i] = {'Valor':i,'id_visita':item2.id_visita,'orden_servicio':item2.orden_servicio,'foto_entrada':item2.foto_entrada,'nombre_cliente':item2.nombre_cliente,'nombre_comercial':item2.nombre_comercial,'sucursal':item2.sucursal,'tienda':item2.nombre_comercial,'tienda':item2.sucursal,'direccion':item2.direccion,'modelo':item2.modelo,'serie':item2.serie,'voltaje':item2.voltaje,'amperaje':item2.amperaje,'breaker':item2.breaker,'presion':item2.presion,'dinamica':item2.dinamica,'estatica':item2.estatica,'amp1':item2.amp1,'amp2':item2.amp2,'amp3':item2.amp3,'amp4':item2.amp4,'amp5':item2.amp5,'amp6':item2.amp6,'amp7':item2.amp7,'amp8':item2.amp8,'temperatura':item2.temperatura,'nivel':item2.nivel,'magneto':item2.magneto,'magnetron':item2.magnetron,'transformadorhv':item2.transformadorhv,'diodohv':item2.diodohv,'capacitorhv':item2.capacitorhv,'firma_cliente':item2.firma_cliente,'fecha_cliente':item2.fecha_cliente,'foto_salida':item2.foto_salida};
+                                                    console.log(item2)
+                                                    diagnostico_servInd[i] = {'Valor':i,'comentario':item2.comentario,'pregunta':item2.pregunta};
                                                 }
-                                                    databaseHandler.db.transaction(
-                                                        function(tx){
-                                                            tx.executeSql("SELECT * from selectcheck WHERE id_cedula = ?",
-                                                                [id_cedula],
-                                                                function(tx, results){
-                                                                    var length = results.rows.length;
-                                                                    for(var i = 0; i< length; i++){
-                                                                        var item3 = results.rows.item(i);
-                                                                        evidenciaCheckList[i] = {'Valor':i,'fase': item3.fase,'opcion': item3.opcion,'valor': item3.valor};
-                                                                    }
-                                                                    $.ajax({
-                                                                        type: "POST",
-                                                                        async : true,
-                                                                        url: "http://www.appbennetts.com/FWM2/app/guardarChecklistServInd.php",
-                                                                        dataType: 'html',
-                                                                        data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),'checkList': JSON.stringify(checkList),'evidenciaCheckList': JSON.stringify(evidenciaCheckList)},
-                                                                        success: function(respuesta){
-                                                                            var respu1 = respuesta.split("._.");
-                                                                            var dat1 = respu1[0];
-                                                                            var dat2 = respu1[1];
-                                                                            if(dat1 == "CEDULA"){
-                                                                                if(dat2 > 0){
-                                                                                    databaseHandler.db.transaction(
-                                                                                        function(tx7){
-                                                                                            tx7.executeSql(
-                                                                                                "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
-                                                                                                [id_cedula],
-                                                                                                function(tx7, results){
-                                                                                                    localStorage.setItem("sendFlag", 0);
-                                                                                                    swal("Enviado!", "Ya se envio tu visita!", "success");
-                                                                                                }
-                                                                                            );
-                                                                                        }
-                                                                                    );
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        error: function(){
-                                                                            console.log("Error en la comunicacion");
-                                                                        }
-                                                                    });
-                                                                },
-                                                                function(tx, error){
-                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                databaseHandler.db.transaction(
+                                                    function(tx){
+                                                        tx.executeSql("SELECT * from visita_servInd WHERE id_cedula = ?",
+                                                            [id_cedula],
+                                                            function(tx, results){
+                                                                var length = results.rows.length;
+                                                                for(var i = 0; i< length; i++){
+                                                                    var item3 = results.rows.item(i);
+                                                                    visita_servInd[i] = {'Valor':i,'no_orden': item3.no_orden, 'fecha': item3.fecha, 'foto_llegada': item3.foto_llegada, 'tipo_servicio': item3.tipo_servicio, 'id_cliente':item3.id_cliente, 'cliente': item3.cliente, 'nombre_comercial': item3.nombre_comercial,'sucursal_cliente': item3.sucursal_cliente,'direccion': item3.direccion,'ciudad': item3.ciudad, 'telefono': item3.telefono,'correo':item3.correo, 'equipo':item3.equio, 'marca': item3.marca,'modelo': item3.modelo,'serie': item3.serie, 'ml': item3.ml,'voltaje': item3.voltaje, 'amp': item3.amp, 'wc': item3.wc , 'tierra_fisica':item3.tierra_fisica, 'falla_reportada': item3.falla_reportada,'como_encontro': item3.como_encontro,'foto_diagnostico': item3.como_encontro,'comentarios_entrega': item3.comentarios_entrega, 'diagnotico_corecto': item3.diagnotico_corecto,'trabajo_realizado': item3.trabajo_realizado,'como_entrego': item3.como_entrego, 'papeleta':item3.papeleta, 'refacciones': item3.refacciones, 'viaticos': item3.viaticos, 'H_viaje': item3.H_viaje, 'H_espera': item3.H_espera, 'H_trabajo': item3.H_trabajo , 'H_totales': item3.H_totales, 'firma_cliente': item3.firma_cliente, 'foto_sello': item3.foto_sello , 'foto_salida':  item3.foto_salida};
                                                                 }
-                                                            );
-                                                        },
-                                                        function(error){},
-                                                        function(){}
-                                                    );
-                                            },
-                                            function(tx, error){
-                                                console.log("Error al consultar sanitizacion: " + error.message);
-                                            }
-                                        );
-                                    },
-                                    function(error){},
-                                    function(){}
-                                );
-                            }
-                            if(tipo == "AuditoriaTecnico" || tipo == "AuditoriaSupervisorTecnico" || tipo == "AuditoriaLider"){
-                                databaseHandler.db.transaction(
-                                    function(tx){
-                                        tx.executeSql("SELECT * FROM SV_Fotos WHERE SV_ID_Cedula = ?",
-                                            [id_cedula],
-                                            function(tx, results){
-                                                var length = results.rows.length;
-                                                var fecha = new Date();
-                                                var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                                                for(var i = 0; i< length; i++){
-                                                    var item2 = results.rows.item(i);
-                                                    fotosAuditoria[i] = {'Valor':i,'SV_Recorrido':item2.SV_Recorrido,'SV_Proceso':item2.SV_Proceso,'SV_titulo':item2.SV_titulo,'SV_FechaHora':item2.SV_FechaHora,'SV_Foto':item2.SV_Foto};
-                                                }
-                                                    databaseHandler.db.transaction(
-                                                        function(tx){
-                                                            tx.executeSql("SELECT * from Aud_Tec WHERE AT_ID_cedula = ?",
-                                                                [id_cedula],
-                                                                function(tx, results){
-                                                                    var length = results.rows.length;
-                                                                    for(var i = 0; i< length; i++){
-                                                                        var item3 = results.rows.item(i);
-                                                                        auditoriaDatos1[i] = {'Valor':i,'AT_Pregunta': item3.AT_Pregunta,'AT_Resp1': item3.AT_Resp1,'AT_Resp2': item3.AT_Resp2,'AT_Resp3': item3.AT_Resp3,'AT_Resp4': item3.AT_Resp4,'AT_Resp5': item3.AT_Resp5,'AT_Resp6': item3.AT_Resp6,'AT_Resp7': item3.AT_Resp7,'AT_Resp8': item3.AT_Resp8,'AT_Resp9': item3.AT_Resp9,'AT_Resp10': item3.AT_Resp10,'AT_Resp11': item3.AT_Resp11,'AT_Resp12': item3.AT_Resp12,'AT_Resp13': item3.AT_Resp13,'AT_Resp14': item3.AT_Resp14,'AT_Resp15': item3.AT_Resp15,'AT_Resp16': item3.AT_Resp16,'AT_Resp17': item3.AT_Resp17,'AT_Total': item3.AT_Total};
-                                                                    }
-                                                                    databaseHandler.db.transaction(
-                                                                        function(tx){
-                                                                            tx.executeSql("SELECT * from Aud_General WHERE AG_ID_cedula = ?",
-                                                                                [id_cedula],
-                                                                                function(tx, results){
-                                                                                    var length = results.rows.length;
-                                                                                    for(var i = 0; i< length; i++){
-                                                                                        var item3 = results.rows.item(i);
-                                                                                        auditoriaDatos2[i] = {'Valor':i,'AG_Auditoria': item3.AG_Auditoria,'AG_CaliGen': item3.AG_CaliGen,'AG_Cali': item3.AG_Cali,'AG_PorcentajeM': item3.AG_PorcentajeM,'AG_Obse': item3.AG_Obse,'AG_correo': item3.AG_correo,'AG_ID_Tecnico': item3.AG_ID_Tecnico,'AG_Tecnico': item3.AG_Tecnico,'AG_Puesto': item3.AG_Puesto};
-                                                                                    }
-                                                                                    $.ajax({
-                                                                                        type: "POST",
-                                                                                        async : true,
-                                                                                        url: "http://www.appbennetts.com/FWM2/app/guardarAuditoriaServInd.php",
-                                                                                        dataType: 'html',
-                                                                                        data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),'fotosAuditoria': JSON.stringify(fotosAuditoria),'auditoriaDatos1': JSON.stringify(auditoriaDatos1),'auditoriaDatos2': JSON.stringify(auditoriaDatos2)},
-                                                                                        success: function(respuesta){
-                                                                                            var respu1 = respuesta.split("._.");
-                                                                                            var dat1 = respu1[0];
-                                                                                            var dat2 = respu1[1];
-                                                                                            if(dat1 == "CEDULA"){
-                                                                                                if(dat2 > 0){
-                                                                                                    databaseHandler.db.transaction(
-                                                                                                        function(tx7){
-                                                                                                            tx7.executeSql(
-                                                                                                                "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
-                                                                                                                [id_cedula],
-                                                                                                                function(tx7, results){
-                                                                                                                    localStorage.setItem("sendFlag", 0);
-                                                                                                                    swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                databaseHandler.db.transaction(
+                                                                    function(tx){
+                                                                        tx.executeSql("SELECT * from datos_eq WHERE id_cedula = ?",
+                                                                            [id_cedula],
+                                                                            function(tx, results){
+                                                                                var length = results.rows.length;
+                                                                                for(var i = 0; i< length; i++){
+                                                                                    var item7 = results.rows.item(i);
+                                                                                    datos_eq[i] = {'Valor':i,'id_datos': item7.id_datos,'marca': item7.marca,'modelo': item7.modelo,'serie':item7.serie,'numero_id': item7.numero_id,'volts':item7.volts , 'amp': item7.amp,'tierra':item7.tierra,'breaker': item7.breaker,'fase': item7.fase,'estatus': item7.estatus,'observaciones': item7.observaciones,'nombre': item7.nombre,'papeleta': item7.papeleta,'refacciones': item7.refacciones , 'viaticos': item7.viaticos,'ml': item7.ml};
+                                                                                }
+                                                                                databaseHandler.db.transaction(
+                                                                                    function(tx){
+                                                                                        tx.executeSql("SELECT * from checklist_servind WHERE id_cedula = ?",
+                                                                                            [id_cedula],
+                                                                                            function(tx, results){
+                                                                                                var length = results.rows.length;
+                                                                                                for(var i = 0; i< length; i++){
+                                                                                                    var item4 = results.rows.item(i);
+                                                                                                    checklist_servind[i] = {'Valor':i,'fase': item4.fase,'pregunta': item4.pregunta,'tipo': item4.tipo,'valor': item4.valor,'no_pregunta': item4.no_pregunta};
+                                                                                                }
+                                                                                                databaseHandler.db.transaction(
+                                                                                                    function(tx){
+                                                                                                        tx.executeSql("SELECT * from fotos_check WHERE id_cedula = ?",
+                                                                                                            [id_cedula],
+                                                                                                            function(tx, results){
+                                                                                                                var length = results.rows.length;
+                                                                                                                for(var i = 0; i< length; i++){
+                                                                                                                    var item5= results.rows.item(i);
+                                                                                                                    fotos_check[i] = {'Valor':i,'foto': item5.foto, 'pregunta': item5.pregunta , 'fase': item5.fase, 'observaciones': item5.observaciones, 'fecha_foto': item5.fecha_foto,'no_pregunta':item5.no_pregunta};
                                                                                                                 }
-                                                                                                            );
-                                                                                                        }
-                                                                                                    );
-                                                                                                }
+                                                                                                                databaseHandler.db.transaction(
+                                                                                                                    function(tx){
+                                                                                                                        tx.executeSql("SELECT * from papeleta WHERE id_cedula = ?",
+                                                                                                                            [id_cedula],
+                                                                                                                            function(tx, results){
+                                                                                                                                var length = results.rows.length;
+                                                                                                                                for(var i = 0; i< length; i++){
+                                                                                                                                    var item7 = results.rows.item(i);
+                                                                                                                                    papeleta[i] = {'Valor':i,
+                                                                                                                                    'cantidad':item7.cantidad,
+                                                                                                                                    'descripcion': item7.descripcion,
+                                                                                                                                    'fecha_registro': item7.fecha_registro,
+                                                                                                                                    'foto_papeleta':item7.foto_papeleta,
+                                                                                                                                    'id_papeleta':item7.id_papeleta,
+                                                                                                                                    'numero_parte':item7.numero_parte,
+                                                                                                                                    'prioridad':item7.prioridad};
+                                                                                                                                }
+                                                                                                                                databaseHandler.db.transaction(
+                                                                                                                                    function(tx){
+                                                                                                                                        tx.executeSql("SELECT * from refacciones WHERE id_cedula = ?",
+                                                                                                                                            [id_cedula],
+                                                                                                                                            function(tx, results){
+                                                                                                                                                var length = results.rows.length;
+                                                                                                                                                for(var i = 0; i< length; i++){
+                                                                                                                                                    var item8 = results.rows.item(i);
+                                                                                                                                                    refacciones[i] = {'Valor':i,
+                                                                                                                                                    'descripcion':item8.descripcion,
+                                                                                                                                                    'fecha_registro': item8.fecha_registro,
+                                                                                                                                                    'foto_refa': item8.foto_refa,
+                                                                                                                                                    'id_refaccion':item8.id_refaccion,
+                                                                                                                                                    'numero_parte':item8.numero_parte,
+                                                                                                                                                    'parte':item8.parte};
+                                                                                                                                                }
+                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                        function(tx){
+                                                                                                                                                            tx.executeSql("SELECT * from encuesta_serv WHERE id_cedula = ?",
+                                                                                                                                                                [id_cedula],
+                                                                                                                                                                function(tx, results){
+                                                                                                                                                                    var length = results.rows.length;
+                                                                                                                                                                    for(var i = 0; i< length; i++){
+                                                                                                                                                                        var item4 = results.rows.item(i);
+                                                                                                                                                                        encuesta[i] = {'Valor':i,
+                                                                                                                                                                        'atencion':item4.atencion,
+                                                                                                                                                                        'capacidad': item4.capacidad,
+                                                                                                                                                                        'fecha_encuesta': item4.fecha_encuesta,
+                                                                                                                                                                        'id_encuesta':item4.id_encuesta,
+                                                                                                                                                                        'rapidez':item4.rapidez,
+                                                                                                                                                                        'recomienda':item4.recomienda,
+                                                                                                                                                                        'satisfaccion':item4.satisfaccion};
+                                                                                                                                                                    }
+                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                        function(tx){
+                                                                                                                                                                            tx.executeSql("SELECT * from fotos_diagnostico WHERE id_cedula = ?",
+                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                function(tx, results){
+                                                                                                                                                                                    var length = results.rows.length;
+                                                                                                                                                                                    for(var i = 0; i< length; i++){
+                                                                                                                                                                                        var item9 = results.rows.item(i);
+                                                                                                                                                                                        fotos_diagnostico[i] = {'Valor':i,
+                                                                                                                                                                                        'foto':item9.foto,
+                                                                                                                                                                                        'fecha': item9.fecha ,
+                                                                                                                                                                                        'tipo': item9.tipo};
+                                                                                                                                                                                    }
+                                                                                                                                                                                    
+                                                                                                                                                                                    console.log('datosCedulaGeneral',datosCedulaGeneral);
+                                                                                                                                                                                    console.log('fotos_check',fotos_check);
+                                                                                                                                                                                    console.log('checklist_servind',checklist_servind);
+                                                                                                                                                                                    console.log('diagnostico_servInd',diagnostico_servInd);
+                                                                                                                                                                                    console.log('visita_servInd',visita_servInd);
+                                                                                                                                                                                    console.log('refra',refacciones);
+                                                                                                                                                                                    console.log('pap',papeleta);
+                                                                                                                                                                                    console.log('encuesta',encuesta); 
+                                                                                                                                                                                    console.log('fotos_diagnostico',fotos_diagnostico);
+                                                                                                                                                                                    console.log('datos_eq',datos_eq);                                                                                                                                                        
+                                                                                    
+                                                                                                                                                                                    $.ajax({
+                                                                                                                                                                                        type: "POST",
+                                                                                                                                                                                        async : true,
+                                                                                                                                                                                        url: "http://www.appbennetts.com/FWM2/app/guardarHEBServInd.php",
+                                                                                                                                                                                        dataType: 'html',
+                                                                                                                                                                                        data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),'fotos_check': JSON.stringify(fotos_check),'checklist_servind': JSON.stringify(checklist_servind),'visita_servInd': JSON.stringify(visita_servInd),'diagnostico_servInd': JSON.stringify(diagnostico_servInd),'refacciones': JSON.stringify(refacciones),'papeleta': JSON.stringify(papeleta),'encuesta': JSON.stringify(encuesta),'fotos_diagnostico':JSON.stringify(fotos_diagnostico),'datos_eq':JSON.stringify(datos_eq)},
+                                                                                                                                                                                        success: function(respuesta){
+                                                                                                                                                                                            console.log('RESPUESTA',respuesta);
+                                                                                                                                                                                            var respu1 = respuesta.split("._.");
+                                                                                                                                                                                            var dat1 = respu1[0];
+                                                                                                                                                                                            var dat2 = respu1[1];
+                                                                                                                                                                                            if(dat1 == "CEDULA"){
+                                                                                                                                                                                                if(dat2 > 0){
+                                                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                                                        function(tx7){
+                                                                                                                                                                                                            tx7.executeSql(
+                                                                                                                                                                                                                "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                                                function(tx7, results){
+                                                                                                                                                                                                                    localStorage.setItem("sendFlag", 0);
+                                                                                                                                                                                                                    swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                            );
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    );
+                                                                                                                                                                                                }
+                                                                                                                                                                                            }else{
+                                                                                                                                                                                                AlmacenarError(respuesta);
+                                                                                                                                                                                            }
+                                                                                                                                                                                        },
+                                                                                                                                                                                        error: function(){
+                                                                                                                                                                                            console.log("Error en la comunicacion");
+                                                                                                                                                                                        }
+                                                                                                                                                                                    });
+                                                                                                                                                                                },
+                                                                                                                                                                                function(tx, error){
+                                                                                                                                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                                }
+                                                                                                                                                                            );
+                                                                                                                                                                        },
+                                                                                                                                                                        function(error){},
+                                                                                                                                                                        function(){}
+                                                                                                                                                                    );
+                                                                                                                                                                },
+                                                                                                                                                                function(tx, error){
+                                                                                                                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                }
+                                                                                                                                                            );
+                                                                                                                                                        },
+                                                                                                                                                        function(error){},
+                                                                                                                                                        function(){}
+                                                                                                                                                    );
+                                                                                                                                            },
+                                                                                                                                            function(tx, error){
+                                                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    },
+                                                                                                                                    function(error){},
+                                                                                                                                    function(){}
+                                                                                                                                );
+                                                                                                                            },
+                                                                                                                            function(tx, error){
+                                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                            }
+                                                                                                                        );
+                                                                                                                    },
+                                                                                                                    function(error){},
+                                                                                                                    function(){}
+                                                                                                                );
+                                                                                                            },
+                                                                                                            function(tx, error){
+                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                            }
+                                                                                                        );
+                                                                                                    },
+                                                                                                    function(error){},
+                                                                                                    function(){}
+                                                                                                );
+                                                                                            },
+                                                                                            function(tx, error){
+                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
                                                                                             }
-                                                                                        },
-                                                                                        error: function(){
-                                                                                            console.log("Error en la comunicacion");
-                                                                                        }
-                                                                                    });
-                                                                                },
-                                                                                function(tx, error){
-                                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
-                                                                                }
-                                                                            );
-                                                                        },
-                                                                        function(error){},
-                                                                        function(){}
-                                                                    );
-                                                                },
-                                                                function(tx, error){
-                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
-                                                                }
-                                                            );
-                                                        },
-                                                        function(error){},
-                                                        function(){}
-                                                    );
+                                                                                        );
+                                                                                    },
+                                                                                    function(error){},
+                                                                                    function(){}
+                                                                                );
+                                                                            },
+                                                                            function(tx, error){
+                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                            }
+                                                                        );
+                                                                    },
+                                                                    function(error){},
+                                                                    function(){}
+                                                                );
+                                                            },
+                                                            function(tx, error){
+                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                            }
+                                                        );
+                                                    },
+                                                    function(error){},
+                                                    function(){}
+                                                );
                                             },
                                             function(tx, error){
                                                 console.log("Error al consultar sanitizacion: " + error.message);
@@ -24199,7 +26092,283 @@ function regresarProteuscheck(fase){
                                     function(error){},
                                     function(){}
                                 );
-                            }
+                            }else if(tipo == "PMP"){
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("SELECT * FROM diagnostico_servIndHBE WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function(tx, results){
+                                                var length = results.rows.length;
+                                                var fecha = new Date();
+                                                var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                                for(var i = 0; i< length; i++){
+                                                    var item2 = results.rows.item(i);
+                                                    diagnostico_servInd[i] = {'Valor':i,'comentario':item2.comentario,'pregunta':item2.pregunta};
+                                                }
+                                                databaseHandler.db.transaction(
+                                                    function(tx){
+                                                        tx.executeSql("SELECT * from visita_servInd WHERE id_cedula = ?",
+                                                            [id_cedula],
+                                                            function(tx, results){
+                                                                var length = results.rows.length;
+                                                                for(var i = 0; i< length; i++){
+                                                                    var item3 = results.rows.item(i);
+                                                                    visita_servInd[i] = {'Valor':i,'no_orden': item3.no_orden, 'fecha': item3.fecha, 'foto_llegada': item3.foto_llegada, 'tipo_servicio': item3.tipo_servicio, 'id_cliente':item3.id_cliente, 'cliente': item3.cliente, 'nombre_comercial': item3.nombre_comercial,'sucursal_cliente': item3.sucursal_cliente,'direccion': item3.direccion,'ciudad': item3.ciudad, 'telefono': item3.telefono,'correo':item3.correo, 'equipo':item3.equio, 'marca': item3.marca,'modelo': item3.modelo,'serie': item3.serie, 'ml': item3.ml,'voltaje': item3.voltaje, 'amp': item3.amp, 'wc': item3.wc , 'tierra_fisica':item3.tierra_fisica, 'falla_reportada': item3.falla_reportada,'como_encontro': item3.como_encontro,'foto_diagnostico': item3.como_encontro,'comentarios_entrega': item3.comentarios_entrega, 'diagnotico_corecto': item3.diagnotico_corecto,'trabajo_realizado': item3.trabajo_realizado,'como_entrego': item3.como_entrego, 'papeleta':item3.papeleta, 'refacciones': item3.refacciones, 'viaticos': item3.viaticos, 'H_viaje': item3.H_viaje, 'H_espera': item3.H_espera, 'H_trabajo': item3.H_trabajo , 'H_totales': item3.H_totales, 'firma_cliente': item3.firma_cliente, 'foto_sello': item3.foto_sello , 'foto_salida':  item3.foto_salida};
+                                                                }
+                                                                databaseHandler.db.transaction(
+                                                                    function(tx){
+                                                                        tx.executeSql("SELECT * from datos_eq WHERE id_cedula = ?",
+                                                                            [id_cedula],
+                                                                            function(tx, results){
+                                                                                var length = results.rows.length;
+                                                                                for(var i = 0; i< length; i++){
+                                                                                    var item7 = results.rows.item(i);
+                                                                                    datos_eq[i] = {'Valor':i,'id_datos': item7.id_datos,'marca': item7.marca,'modelo': item7.modelo,'serie':item7.serie,'numero_id': item7.numero_id,'volts':item7.volts , 'amp': item7.amp,'tierra':item7.tierra,'breaker': item7.breaker,'fase': item7.fase,'estatus': item7.estatus,'observaciones': item7.observaciones,'nombre': item7.nombre,'papeleta': item7.papeleta,'refacciones': item7.refacciones , 'viaticos': item7.viaticos,'ml': item7.ml};
+                                                                                }
+                                                                                databaseHandler.db.transaction(
+                                                                                    function(tx){
+                                                                                        tx.executeSql("SELECT * from checklist_servind WHERE id_cedula = ?",
+                                                                                            [id_cedula],
+                                                                                            function(tx, results){
+                                                                                                var length = results.rows.length;
+                                                                                                for(var i = 0; i< length; i++){
+                                                                                                    var item4 = results.rows.item(i);
+                                                                                                    checklist_servind[i] = {'Valor':i,'fase': item4.fase,'pregunta': item4.pregunta,'tipo': item4.tipo,'valor': item4.valor,'no_pregunta': item4.no_pregunta};
+                                                                                                }
+                                                                                                databaseHandler.db.transaction(
+                                                                                                    function(tx){
+                                                                                                        tx.executeSql("SELECT * from fotos_check WHERE id_cedula = ?",
+                                                                                                            [id_cedula],
+                                                                                                            function(tx, results){
+                                                                                                                var length = results.rows.length;
+                                                                                                                for(var i = 0; i< length; i++){
+                                                                                                                    var item5= results.rows.item(i);
+                                                                                                                    fotos_check[i] = {'Valor':i,'foto': item5.foto, 'pregunta': item5.pregunta , 'fase': item5.fase, 'observaciones': item5.observaciones, 'fecha_foto': item5.fecha_foto,'no_pregunta':item5.no_pregunta};
+                                                                                                                }
+                                                                                                                databaseHandler.db.transaction(
+                                                                                                                    function(tx){
+                                                                                                                        tx.executeSql("SELECT * from papeleta WHERE id_cedula = ?",
+                                                                                                                            [id_cedula],
+                                                                                                                            function(tx, results){
+                                                                                                                                var length = results.rows.length;
+                                                                                                                                for(var i = 0; i< length; i++){
+                                                                                                                                    var item7 = results.rows.item(i);
+                                                                                                                                    papeleta[i] = {'Valor':i,
+                                                                                                                                    'cantidad':item7.cantidad,
+                                                                                                                                    'descripcion': item7.descripcion,
+                                                                                                                                    'fecha_registro': item7.fecha_registro,
+                                                                                                                                    'foto_papeleta':item7.foto_papeleta,
+                                                                                                                                    'id_papeleta':item7.id_papeleta,
+                                                                                                                                    'numero_parte':item7.numero_parte,
+                                                                                                                                    'prioridad':item7.prioridad};
+                                                                                                                                }
+                                                                                                                                databaseHandler.db.transaction(
+                                                                                                                                    function(tx){
+                                                                                                                                        tx.executeSql("SELECT * from refacciones WHERE id_cedula = ?",
+                                                                                                                                            [id_cedula],
+                                                                                                                                            function(tx, results){
+                                                                                                                                                var length = results.rows.length;
+                                                                                                                                                for(var i = 0; i< length; i++){
+                                                                                                                                                    var item8 = results.rows.item(i);
+                                                                                                                                                    refacciones[i] = {'Valor':i,
+                                                                                                                                                    'descripcion':item8.descripcion,
+                                                                                                                                                    'fecha_registro': item8.fecha_registro,
+                                                                                                                                                    'foto_refa': item8.foto_refa,
+                                                                                                                                                    'id_refaccion':item8.id_refaccion,
+                                                                                                                                                    'numero_parte':item8.numero_parte,
+                                                                                                                                                    'parte':item8.parte};
+                                                                                                                                                }
+                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                        function(tx){
+                                                                                                                                                            tx.executeSql("SELECT * from encuesta_serv WHERE id_cedula = ?",
+                                                                                                                                                                [id_cedula],
+                                                                                                                                                                function(tx, results){
+                                                                                                                                                                    var length = results.rows.length;
+                                                                                                                                                                    for(var i = 0; i< length; i++){
+                                                                                                                                                                        var item4 = results.rows.item(i);
+                                                                                                                                                                        encuesta[i] = {'Valor':i,
+                                                                                                                                                                        'atencion':item4.atencion,
+                                                                                                                                                                        'capacidad': item4.capacidad,
+                                                                                                                                                                        'fecha_encuesta': item4.fecha_encuesta,
+                                                                                                                                                                        'id_encuesta':item4.id_encuesta,
+                                                                                                                                                                        'rapidez':item4.rapidez,
+                                                                                                                                                                        'recomienda':item4.recomienda,
+                                                                                                                                                                        'satisfaccion':item4.satisfaccion};
+                                                                                                                                                                    }
+                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                        function(tx){
+                                                                                                                                                                            tx.executeSql("SELECT * from fotos_diagnostico WHERE id_cedula = ?",
+                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                function(tx, results){
+                                                                                                                                                                                    var length = results.rows.length;
+                                                                                                                                                                                    for(var i = 0; i< length; i++){
+                                                                                                                                                                                        var item9 = results.rows.item(i);
+                                                                                                                                                                                        fotos_diagnostico[i] = {'Valor':i,
+                                                                                                                                                                                        'foto':item9.foto,
+                                                                                                                                                                                        'fecha': item9.fecha ,
+                                                                                                                                                                                        'tipo': item9.tipo};
+                                                                                                                                                                                    }
+                                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                                        function(tx){
+                                                                                                                                                                                            tx.executeSql("SELECT * from datos_generales_serv WHERE id_cedula = ?",
+                                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                                function(tx, results){
+                                                                                                                                                                                                    var length = results.rows.length;
+                                                                                                                                                                                                    for(var i = 0; i< length; i++){
+                                                                                                                                                                                                        var item10 = results.rows.item(i);
+                                                                                                                                                                                                        datos_generales_serv[i] = {'Valor':i,
+                                                                                                                                                                                                        'ciudad':item10.ciudad,
+                                                                                                                                                                                                        'cliente':item10.cliente,
+                                                                                                                                                                                                        'correo':item10.correo,
+                                                                                                                                                                                                        'direccion':item10.direccion,
+                                                                                                                                                                                                        'fecha':item10.fecha,
+                                                                                                                                                                                                        'id_cliente':item10.id_cliente,
+                                                                                                                                                                                                        'no_orden':item10.no_orden,
+                                                                                                                                                                                                        'sucursal_cliente':item10.sucursal_cliente,
+                                                                                                                                                                                                        'telefono':item10.telefono,
+                                                                                                                                                                                                        'tipo_servicio':item10.tipo_servicio,
+                                                                                                                                                                                                        'tecnico':item10.tecnico};
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                    
+                                                                                                                                                                                                    console.log('datosCedulaGeneral',datosCedulaGeneral);
+                                                                                                                                                                                                    console.log('fotos_check',fotos_check);
+                                                                                                                                                                                                    console.log('checklist_servind',checklist_servind);
+                                                                                                                                                                                                    console.log('diagnostico_servInd',diagnostico_servInd);
+                                                                                                                                                                                                    console.log('visita_servInd',visita_servInd);
+                                                                                                                                                                                                    console.log('refra',refacciones);
+                                                                                                                                                                                                    console.log('pap',papeleta);
+                                                                                                                                                                                                    console.log('encuesta',encuesta); 
+                                                                                                                                                                                                    console.log('fotos_diagnostico',fotos_diagnostico);
+                                                                                                                                                                                                    console.log('datos_eq',datos_eq);
+                                                                                                                                                                                                    console.log('datos_generales_serv',datos_generales_serv);
+                                                                                                    
+                                                                                                                                                                                                    $.ajax({
+                                                                                                                                                                                                        type: "POST",
+                                                                                                                                                                                                        async : true,
+                                                                                                                                                                                                        url: "http://www.appbennetts.com/FWM2/app/guardarPMPCIServ.php",
+                                                                                                                                                                                                        dataType: 'html',
+                                                                                                                                                                                                        data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),'fotos_check': JSON.stringify(fotos_check),
+                                                                                                                                                                                                        'checklist_servind': JSON.stringify(checklist_servind),'visita_servInd': JSON.stringify(visita_servInd),
+                                                                                                                                                                                                        'diagnostico_servInd': JSON.stringify(diagnostico_servInd),'refacciones': JSON.stringify(refacciones),
+                                                                                                                                                                                                        'papeleta': JSON.stringify(papeleta),'encuesta': JSON.stringify(encuesta),'fotos_diagnostico':JSON.stringify(fotos_diagnostico),
+                                                                                                                                                                                                        'datos_eq':JSON.stringify(datos_eq),'datos_generales_serv':JSON.stringify(datos_generales_serv)},
+                                                                                                                                                                                                        success: function(respuesta){
+                                                                                                                                                                                                            console.log('RESPUESTA',respuesta);
+                                                                                                                                                                                                            var respu1 = respuesta.split("._.");
+                                                                                                                                                                                                            var dat1 = respu1[0];
+                                                                                                                                                                                                            var dat2 = respu1[1];
+                                                                                                                                                                                                            if(dat1 == "CEDULA"){
+                                                                                                                                                                                                                if(dat2 > 0){
+                                                                                                                                                                                                                    databaseHandler.db.transaction(
+                                                                                                                                                                                                                        function(tx7){
+                                                                                                                                                                                                                            tx7.executeSql(
+                                                                                                                                                                                                                                "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                                                                                                                                [id_cedula],
+                                                                                                                                                                                                                                function(tx7, results){
+                                                                                                                                                                                                                                    localStorage.setItem("sendFlag", 0);
+                                                                                                                                                                                                                                    swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                            );
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                    );
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                        },
+                                                                                                                                                                                                        error: function(){
+                                                                                                                                                                                                            console.log("Error en la comunicacion");
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    });
+                                                                                                                                                                                                },
+                                                                                                                                                                                                function(tx, error){
+                                                                                                                                                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                                                }
+                                                                                                                                                                                            );
+                                                                                                                                                                                        },
+                                                                                                                                                                                        function(error){},
+                                                                                                                                                                                        function(){}
+                                                                                                                                                                                    );
+                                                                                                                                                                                },
+                                                                                                                                                                                function(tx, error){
+                                                                                                                                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                                }
+                                                                                                                                                                            );
+                                                                                                                                                                        },
+                                                                                                                                                                        function(error){},
+                                                                                                                                                                        function(){}
+                                                                                                                                                                    );
+                                                                                                                                                                },
+                                                                                                                                                                function(tx, error){
+                                                                                                                                                                    console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                                                }
+                                                                                                                                                            );
+                                                                                                                                                        },
+                                                                                                                                                        function(error){},
+                                                                                                                                                        function(){}
+                                                                                                                                                    );
+                                                                                                                                            },
+                                                                                                                                            function(tx, error){
+                                                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                                            }
+                                                                                                                                        );
+                                                                                                                                    },
+                                                                                                                                    function(error){},
+                                                                                                                                    function(){}
+                                                                                                                                );
+                                                                                                                            },
+                                                                                                                            function(tx, error){
+                                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                                            }
+                                                                                                                        );
+                                                                                                                    },
+                                                                                                                    function(error){},
+                                                                                                                    function(){}
+                                                                                                                );
+                                                                                                            },
+                                                                                                            function(tx, error){
+                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                            }
+                                                                                                        );
+                                                                                                    },
+                                                                                                    function(error){},
+                                                                                                    function(){}
+                                                                                                );
+                                                                                            },
+                                                                                            function(tx, error){
+                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                            }
+                                                                                        );
+                                                                                    },
+                                                                                    function(error){},
+                                                                                    function(){}
+                                                                                );
+                                                                            },
+                                                                            function(tx, error){
+                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                            }
+                                                                        );
+                                                                    },
+                                                                    function(error){},
+                                                                    function(){}
+                                                                );
+                                                            },
+                                                            function(tx, error){
+                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                            }
+                                                        );
+                                                    },
+                                                    function(error){},
+                                                    function(){}
+                                                );
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al consultar sanitizacion: " + error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                             }
                         },
                         function(tx, error){
                             console.log("Error al consultar datos generales: " + error.message);
@@ -26967,6 +29136,357 @@ function regresarProteuscheck(fase){
           );
     }
     //Suro Fin
+    //Inicio SURO2
+    function buscarClienteSURO2(){
+        var id_usuario = localStorage.getItem("id_usuario");
+        var nombre_usuario = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido_paterno");
+        var fecha = new Date();
+        var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var geolocation = $("#geolocation").val();
+        var id_cliente = "N/A";
+        var horario_programado = fecha_llegada;
+        var foto_llegada = $("#imagenC").val();
+        var nombre_cliente = $("#cliente-Field").val();
+        var estatus = 0;
+        if(foto_llegada != ''){
+            if(nombre_cliente != ''){
+                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,horario_programado,estatus);
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
+                            [],
+                            function(tx, results){
+                                var item = results.rows.item(0);
+                                localStorage.setItem("IdCedula", item.Id);
+                                localStorage.setItem("nombreCliente", nombre_cliente);
+                                localStorage.setItem("foto_llegada", foto_llegada);
+                                app.views.main.router.navigate({name: 'menuSURO2'});
+                                app.preloader.hide();
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+            } else {
+                swal("Falta un campo", "El nombre del cliente es requerida para este proceso" ,"warning");
+                app.preloader.hide();
+            }
+        } else {
+            swal("Falta un campo", "La fotografía es requerida para este proceso" ,"warning");
+            app.preloader.hide();
+        }
+    }
+    //Fin SURO2
+    
+//Inicio Devlyn
+function buscarClientedevlyn(){
+    var id_usuario = localStorage.getItem("id_usuario");
+    var nombre_usuario = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido_paterno");
+    var fecha = new Date();
+    var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+    var geolocation = $("#geolocation").val();
+    var id_cliente = "N/A";
+    var horario_programado = fecha_llegada;
+    var foto_llegada = $("#imagenC").val();
+    var nombre_cliente = $("#autocomplete-dropdown-ajax").val();
+    var estatus = 0;
+    if(foto_llegada != ''){
+       if(nombre_cliente != ''){
+            productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,horario_programado,estatus);
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
+                        [],
+                        function(tx, results){
+                            var item = results.rows.item(0);
+                            localStorage.setItem("IdCedula", item.Id);
+                            localStorage.setItem("nombreCliente", nombre_cliente);
+                            localStorage.setItem("foto_llegada", foto_llegada);
+
+                            app.views.main.router.navigate({name: 'recorridoDevlyn'});
+                            app.preloader.hide();
+                        },
+                        function(tx, error){
+                            console.log("Error al guardar cedula: " + error.message);
+                            app.preloader.hide();
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+        } else {
+            swal("Falta un campo", "El nombre del cliente es requerida para este proceso" ,"warning");
+            app.preloader.hide();
+        }
+    } else {
+        swal("Falta un campo", "La fotografía es requerida para este proceso" ,"warning");
+        app.preloader.hide();
+    }
+}
+function guardarObservacionesDevlyn(){
+    app.preloader.show('blue');
+    if($("#tema").val() == "" || $('#imagenC').val() == ""){
+        swal("","El tema y la fotografia son obligatorios","warning");
+        app.preloader.hide();
+        return false;
+    }
+    var id_cedula = localStorage.getItem("IdCedula");
+    var tema = $("#tema").val();
+    var observacion = $("#observacion").val();
+    var foto = $('#imagenC').val();
+    var fecha = new Date();
+    var fecha_registro = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+    databaseHandler.db.transaction(
+        function(tx){
+            tx.executeSql("INSERT INTO evidenciaDevlyn(id_cedula,tema,observacion,foto,fecha_registro) VALUES (?,?,?,?,?)",
+                [id_cedula,tema,observacion,foto,fecha_registro],
+                function(tx, results){
+                    app.preloader.hide();
+                    databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql("Select MAX(id_evidencia) as Id from evidenciaDevlyn",
+                                [],
+                                function(tx, results){
+                                    var item = results.rows.item(0);
+                                    var id_evidencia = item.Id;
+                                    app.preloader.hide();
+                                    //Consultar el producto
+                                    databaseHandler.db.transaction(
+                                        function(tx){
+                                            tx.executeSql("Select * from evidenciaDevlyn where id_evidencia = ?",
+                                            [id_evidencia],
+                                                function(tx, results){
+                                                    var item = results.rows.item(0);
+                                                    $("#smallImage").attr("src","img/blank.png");
+                                                    $("#photoIcon").attr("src","img/camera.svg");
+                                                    $('#imagenC').val("");
+                                                    $("#titulo").val("");
+                                                    $("#observacion").val("");
+                                                    $("#titulo").css("background-color", "#FFFFFF");
+                                                    $("#observacion").css("background-color", "#FFFFFF");
+                                                    $("#tabla_evidencias tbody").append("<tr id='fila"+ item.id_evidencia +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaDIPREC("+ item.id_evidencia +",6);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + unescape(item.tema) + "</td><td style='text-align: center;'>" + unescape(item.observacion) + "</td><td style='text-align: center;'>" + item.fecha_registro + "</td></tr>");
+                                                    $("#message-nr").css("display", "none");
+                                                    $('.preloader').remove();
+                                                    $('.infinite-scroll-preloader').remove();
+                                                    app.preloader.hide();
+                                                },
+                                                function(tx, error){
+                                                    console.log("Error al guardar cedula: " + error.message);
+                                                    app.preloader.hide();
+                                                }
+                                            );
+                                        },
+                                        function(error){},
+                                        function(){}
+                                    );
+                                },
+                                function(tx, error){
+                                    swal("Error al mostrar Registro guardado",error.message,"error");
+                                    app.preloader.hide();
+                                }
+                            );
+                        },
+                        function(error){},
+                        function(){}
+                    );
+                    swal("","Acuerdo guardado","success");
+                    app.preloader.hide();
+                },
+                function(tx, error){
+                    swal("Error al guardar plaga",error.message,"error");
+                    app.preloader.hide();
+                }
+            );
+        },
+        function(error){},
+        function(){}
+    );
+}
+function guardarDGDevlyn(){
+app.preloader.show('blue');
+if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val() == "" || $("#fecha").val() == "") {
+        swal("", "Debes llenar todos los campos", "warning");
+        app.preloader.hide();
+        return false;
+    }
+        var proveedor = $("#proveedor").val();
+        var sucursal = $("#sucursal").val();
+        var rfc = $("#rfc").val();
+        var fecha = $("#fecha").val();
+        var id_cedula = localStorage.getItem("IdCedula");
+        databaseHandler.db.transaction(
+            function (tx) {
+                tx.executeSql("UPDATE datosDevlyn SET proveedor  = ? , sucursal = ?, rfc = ? , fecha = ? WHERE id_cedula = ?",
+                    [proveedor,sucursal,rfc,fecha,id_cedula],
+                    function (tx, results) {
+                        $("#proveedor").css("background-color", "#FFFFFF");
+                        $("#sucursal").css("background-color", "#FFFFFF");
+                        $("#rfc").css("background-color", "#FFFFFF");
+                        $("#fecha").css("background-color", "#FFFFFF");  
+                        swal("", "Se guardaron los datos correctamente", "success");
+                        app.preloader.hide();
+                    },
+                    function (tx, error) {
+                        swal("Error al guardar", error.message, "error");
+                        app.preloader.hide();
+                    }
+                );
+            },
+            function (error) { },
+            function () { }
+        );
+    }
+    function generarDevlyDG() {
+        let id_cedula = localStorage.getItem("IdCedula");
+        let nombre_cliente = localStorage.getItem("nombreCliente");
+        let nombre_usuario = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido_paterno");
+        let foto_llegada = localStorage.getItem("foto_llegada");
+        var fecha = new Date();
+        var fecha_llegada = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+        let tipoCedula = "Devlyn";
+        let direccion = localStorage.getItem("direccion");
+        let correo = localStorage.getItem("correo");
+        let sucursal = localStorage.getItem("sucursal");
+        let proveedor = localStorage.getItem("proveedor");
+        let rfc = localStorage.getItem("rfc");
+        let id_proveedor = localStorage.getItem("id_proveedor");
+        let proceso = 0;
+        let recorrido = 0;
+        databaseHandler.db.transaction(
+            function (tx) {
+                tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+                    [tipoCedula, id_cedula],
+                    function (tx, results) {
+                        databaseHandler.db.transaction(
+                            function (tx) {
+                                tx.executeSql("select * from datosDevlyn WHERE id_cedula = ?",
+                                    [id_cedula],
+                                    function (tx, results) {
+                                        let length = results.rows.length;        
+                                        var item = results.rows.item(i);
+                                        if (length > 0) { 
+                                            app.views.main.router.navigate({ name: 'datosgeneralesDevlyn' });
+                                        }else{
+                                            productHandler.addDV(id_cedula, nombre_cliente,fecha_llegada, foto_llegada,proveedor,rfc,sucursal,id_proveedor);
+                                            app.views.main.router.navigate({ name: 'datosgeneralesDevlyn' });
+                                        } 
+
+                                    },
+                                    function (tx, error) {
+                                        console.error("Error al actualizar el tipo de cedula: " + error.message);
+                                    }
+                                );
+                            },
+                            function (error) { },
+                            function () { }
+                        );                    
+    
+                    },
+                    function (tx, error) {
+                        console.error("Error al actualizar el tipo de cedula: " + error.message);
+                    }
+                );
+            },
+            function (error) { },
+            function () { }
+        );
+    
+    }
+    function guardarCierreDevlyn(){
+        if($("#NombreFirma").val() == "" || $("#signate").val() == "" || $("#eval").val() == ""){
+            swal("","Todos los campos son obligatorios","warning");
+            return false;
+        }
+        if($("#eval").val() <= '3' && $("#comentario_cliente").val() == ""){
+            swal("","Por favor, ingresa el motivo de tu calificacion","warning");
+            return false;
+        }
+        var id_cedula = localStorage.getItem("IdCedula");
+        var nombrefirma = $("#NombreFirma").val();
+        var firmaCliente = $("#signate").val();
+        var calificacion = $("#eval").val();
+        var comentarioCliente = $('#comentario_cliente').val();
+        var fecha = new Date();
+        var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE datosDevlyn SET firma_cliente = ?,fecha_cliente = ? WHERE id_cedula = ?",
+                    [firmaCliente,fecha_firma,id_cedula],
+                    function(tx, results){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("UPDATE cedulas_general SET calificacion = ?,nombre_evalua = ?,comentario_cliente = ? WHERE id_cedula = ?",
+                                    [calificacion,nombrefirma,comentarioCliente,id_cedula],
+                                    function(tx, results){
+                                        swal("","Guardado correctamente","success");
+                                        app.views.main.router.back('/yamevoyDevlyn/', {force: true, ignoreCache: true, reload: true});
+                                    },
+                                    function(tx, error){
+                                        console.error("Error al guardar cierre: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    },
+                    function(tx, error){
+                        console.error("Error al guardar cierre: " + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+    function terminarDevlyn(){
+        if($('#imagenC').val() == ""){
+            swal("","La fotografia es obligatoria","warning");
+            return false;
+        }
+        var id_cedula = localStorage.getItem("IdCedula");
+        var foto_salida = $('#imagenC').val();
+        var fecha = new Date();
+        var fecha_salida = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var ubicacion_salida = $('#geolocation').val();
+        var estatus = 1;
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE datosDevlyn SET foto_salida  = ? WHERE id_cedula = ?",
+                    [foto_salida,id_cedula],
+                    function(tx, results){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("UPDATE cedulas_general SET fecha_salida  = ?,geolocalizacion_salida = ?,estatus = ? WHERE id_cedula = ?",
+                                    [fecha_salida,ubicacion_salida,estatus,id_cedula],
+                                    function(tx, results){
+                                        window.location.href = "./menu.html";
+                                    },
+                                    function(tx, error){
+                                        swal("Error al guardar",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    },
+                    function(tx, error){
+                        swal("Error al guardar",error.message,"error");
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+    //Fin Devlyn
     //INICIO VIC
     function guardarFotoVIC(proceso,limite,id_p) {
         app.preloader.show('blue');
@@ -31828,12 +34348,16 @@ function recorrido3(reco){
             app.views.main.router.navigate({ name: 'yallegueBennetts'});
         } else if(empresa == "SURO"){
             app.views.main.router.navigate({ name: 'yallegueSURO'});
+        } else if(empresa == "SURO2"){
+            app.views.main.router.navigate({ name: 'yallegueSuroE'});
         } else if(empresa == "Field"){
             app.views.main.router.navigate({ name: 'yallegueField'});
         } else if(empresa == "PlatoLimpio"){
             app.views.main.router.navigate({ name: 'yalleguePlatoLimpio'});
         } else if(empresa == "ServInd"){
-            app.views.main.router.navigate({ name: 'yallegueServInd'});
+            moveMenuServ();
+        } else if(empresa == "Devlyn"){
+            app.views.main.router.navigate({ name: 'yalleguedevlyn'});
         } else if(empresa == "MerGroup"){
             app.views.main.router.navigate({ name: 'yallegueMerGroup'});
         } else if(empresa == "VIC"){

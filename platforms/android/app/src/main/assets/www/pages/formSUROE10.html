@@ -1,0 +1,121 @@
+<template>
+  <div class="page" style="background-color: rgb(245, 245, 245);">
+    <div class="navbar" style="background-color: #063E7F;height: 52px;">
+      <div style="text-align: center;">
+        <img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field">
+      </div>
+      <div class="navbar-inner sliding" style="height: 52px;">
+        <div class="left">
+          <a href="#" class="link" style="margin-left: 5px;">
+            <span class="nav-text-regresar">Regresar</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <h2 class="global-dates">Programa de Limpieza</h2>
+      <div class="list" id="demo-form" style="margin-top: 0;">
+        <!-- <div class="form-baja">
+          <span class="span FWM-span-form">Ubicación:</span>
+          <div style="position:relative;">
+            <input type="text" class="FWM-input" id="ubicacion" name="ubicacion">
+            <button class="barcode-button" id="take-ubicacion"><img class="barcode-image" src="img/iconsMenu/barcode.svg"></button>
+          </div>
+          <span class="span FWM-span-form">Código:</span>
+          <div style="position:relative;">
+            <input type="text" class="FWM-input" id="codigo" name="codigo">
+            <button class="barcode-button" id="take-codigo"><img class="barcode-image" src="img/iconsMenu/barcode.svg"></button>
+          </div>
+          <div style="display: flex;flex-direction: row;align-items: end;display:none" id="filtrosUbicacion">
+            <button class="fwm-boton-setenta" onclick="llevarUbicacion()">Nueva Ubicación</button>
+            <button class="fwm-boton-setenta" onclick="rotate()" style="width: 15%;margin: 0;margin-left: 5%;height: 40px;background-color: red;"><i class="material-icons md-light" style="color: #ffffff;">rotate_right</i></button>
+          </div>
+        </div> -->
+      </div>
+      <style>
+        #inventario_filter label{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-left: 20px;
+          margin-bottom: 15px;
+        }
+        #inventario_length label{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-left: 20px;
+        }
+        #inventario_length label select{
+          width: 36px;
+          height: 32px;
+          padding: 0 0 0 4px;
+          margin: 10px;
+          line-height: 15px;
+        }
+        tr ul{
+          width: 100%;
+        }
+      </style>
+
+      <table id="inventario" class="display responsive nowrap" style="width:100%;margin-bottom: 30px;">
+        <thead>
+            <tr>
+                <th style="color: white;background-color: #505759;">Operador</th>
+                <th style="color: white;background-color: #505759;">Area General</th>
+                <th style="color: white;background-color: #505759;">Area Especifica:</th>
+                <th style="color: white;background-color: #505759;">Actividades Destacadas:</th>
+                <th style="color: white;background-color: #505759;">Hora:</th>
+                <th style="color: white;background-color: #505759;">Tipo de Limpieza:</th>
+                <th style="color: white;background-color: #505759;">Zona:</th>
+                <th style="color: white;background-color: #505759;">Freciencia:</th>
+                <th style="color: white;background-color: #505759;">Fecha Programada:</th>
+                <th style="color: white;background-color: #505759;">Día 14:</th>
+                <th style="color: white;background-color: #505759;">Día 15:</th>
+                <th style="color: white;background-color: #505759;">Día 16:</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function () {
+        var id_cedula = localStorage.getItem("IdCedula");
+        var table = $('#inventario').DataTable({
+          responsive: true,
+          language: {
+            "decimal": "",
+            "emptyTable": "Sin registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+          },
+          "columnDefs": [
+            {
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }
+          ]
+        });
+        
+        table.row.add(["1","PB","Baño Mujeres","Limpieza General","08:20","Normal","Critica","Diaria","15/03/2022","<input type='number' value='' style='width:60px;border: 1px solid;'>","<input type='number' value='' style='width:60px;border: 1px solid;'>","<input type='number' value='' style='width:60px;border: 1px solid;'>"]).draw();
+      }
+    }
+  }
+</script>

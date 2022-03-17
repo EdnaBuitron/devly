@@ -28,6 +28,7 @@
                         <span class="span FWM-span-form" style="line-height: 1.3;margin-top: 20px;margin-left: 20px;">Requiere refacción:</span>
                         <div style="display: flex;justify-content: space-around;margin-bottom: 30px;margin-top: -17px;">
                             <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="cotizacion-1" onclick="checkAndSave(this.id,this.value,'1'),requiereCotizacion()" value="1" >Si</label>
+                            <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="cotizacion-3" onclick="checkAndSave(this.id,this.value,'1'),norequiereCotizacion()" value="3" >Pendiente</label>
                             <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="cotizacion-2" onclick="checkAndSave(this.id,this.value,'1'),norequiereCotizacion()" value="2" >No</label>
                         </div>
                         
@@ -196,6 +197,7 @@
                                 function(tx, results){
                                     let length = results.rows.length;
                                     var item = results.rows.item(0);
+                                    console.log(item)
                                         if (item.refacciones=='Sí'){
                                             $("#refaccion-1").prop("checked", true)
                                             $("#refacciones").css("display","block")
@@ -209,6 +211,9 @@
                                         }else if (item.papeleta=='No'){
                                             $("#cotizacion-2").prop("checked", true)
                                             $("#cotizacion").css("display","none")
+                                        }else if (item.papeleta=='Pendiente'){
+                                            $("#cotizacion-3").prop("checked", true)
+                                            $("#cotizacion").css("display","block")
                                         }
                                         if (item.viaticos=='Sí'){
                                             $("#viaticos-1").prop("checked", true)
@@ -252,11 +257,12 @@
                                             var item = results.rows.item(i);
                                             $("#table_papeleta").append("<tr id='fila"+ item.id_papeleta +
                                             "'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ 
-                                            item.id_papeleta +",5);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
+                                            item.id_papeleta +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
                                             item.foto_papeleta+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + 
                                             item.numero_parte + "</td><td style='text-align: center;'>" + 
                                                 item.descripcion + "</td><td style='text-align: center;'>" + 
                                                 item.prioridad + "</td><td style='text-align: center;'>" + 
+                                                item.motivo_pr + "</td><td style='text-align: center;'>" + 
                                                 item.cantidad + "</td></tr>");
                                         }
                                     }
@@ -290,7 +296,7 @@
                                             var item = results.rows.item(i);
                                             $("#tabla_refacciones").append("<tr id='fila"+ item.id_refaccion +
                                                 "'><td><a href='#' onclick='eliminarFilaServ("+ 
-                                                item.id_refaccion +",5);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
+                                                item.id_refaccion +",4);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
                                                 item.foto_refa +"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + 
                                                 item.numero_parte + "</td><td style='text-align: center;'>" + 
                                                  item.descripcion + "</td><td style='text-align: center;'>" + 
@@ -307,7 +313,30 @@
                         function(error){console.log("Error al mostrar: " + error.message);},
                         function(){}
                     );
-                
+
+                var id_cedula = localStorage.getItem("IdCedula");
+
+                databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql(
+                                "Select * from visita_servInd WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    var item = results.rows.item(0);
+                                    console.log(item)
+                                    },
+                                function(tx, error){
+                                    console.log("Error: " + error.message);
+                                    app.preloader.hide();  
+                                }
+                            );  
+                        },
+                        function(error){
+                            console.log("Error: " + error.message);
+                        },
+                        function(){}
+                );
             }
         }  
     }

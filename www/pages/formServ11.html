@@ -45,7 +45,7 @@
                             <textarea class ="FWM-input" id="falla" name="falla"  cols="30" rows="10" onchange="inputLleno(this.id,this.value)" value="falla" readonly></textarea>
     
                             <span class="span FWM-span-form">Cómo encontró el equipo (Diagnostico):</span>
-                            <select id="como_encontro"name="2-5-select" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;">
+                            <select id="como_encontro"name="2-5-select" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;" onchange="datosDiagnostico(this.id,this.value)">
                                 <option value="0">Selecciona un opción</option>
                                 <option value="1">En funcionamiento</option>
                                 <option value="2">Sin funcionar</option>
@@ -53,16 +53,16 @@
                             </select>
     
                             <span class="span FWM-span-form">Voltaje:</span>
-                            <input type="text" name="" id="volt" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <input type="text" name="" id="volt" class="FWM-input" onchange="inputLleno(this.id,this.value),datosDiagnostico(this.id,this.value)">
 
                             <span class="span FWM-span-form">Amperaje:</span>
-                            <input type="text" name="" id="amp" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <input type="text" name="" id="amp" class="FWM-input" onchange="inputLleno(this.id,this.value),datosDiagnostico(this.id,this.value)">
 
                             <span class="span FWM-span-form">W. C.:</span>
-                            <input type="text" name="" id="wc" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <input type="text" name="" id="wc" class="FWM-input" onchange="inputLleno(this.id,this.value),datosDiagnostico(this.id,this.value)">
 
                             <span class="span FWM-span-form">Tierra física:</span>
-                            <input type="text" name="" id="tierra_fisica" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <input type="text" name="" id="tierra_fisica" class="FWM-input" onchange="inputLleno(this.id,this.value),datosDiagnostico(this.id,this.value)">
 
                             <span class="span FWM-span-form">Foto:</span>
                             <div class="FWM-photo-container">
@@ -101,16 +101,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            
-                            <div class="block grid-resizable-demo" style="margin-bottom: 120px;">
-                                <div class="row align-items-stretch" style="text-align: center;">
-                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
-                                        <span class="resize-handler"></span>
-                                        <a href="#" onclick="guardarDiagnosticoServ();" class="boton-equipo">Guardar Diagnostico</a>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -118,7 +108,7 @@
                     <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 80px; margin-bottom: 20px;">
                         <button class="btn-next" onclick="app.views.main.router.back('/datosgeneralesServ1/', {force: true, ignoreCache: true, reload: true});">Anterior</button>
 
-                        <button class="btn-next" onclick="app.views.main.router.back('/formServ12/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>
+                        <button class="btn-next" onclick="guardarDiagnosticoServ(2);">Siguiente</button>
                     </div>
     
                     <div class="popover popover-links">
@@ -187,7 +177,6 @@
                                     var item = results.rows.item(0);
                                     if (item.como_encontro==undefined){
                                     }else{
-                                        $('#falla').val(item.falla_reportada);
                                         $('#como_encontro').val(item.como_encontro);
                                         $('#volt').val(item.voltaje);
                                         $('#amp').val(item.amp);

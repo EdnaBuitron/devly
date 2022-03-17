@@ -621,7 +621,7 @@ var productHandler={
         databaseHandler.db.transaction(
             function (tx) {
               tx.executeSql(
-                "insert into visita_servInd(id_cedula, no_orden, fecha, foto_llegada, tipo_servicio, cliente, sucursal_cliente) values(?,?,?,?,?,?,?)",
+                "insert into datos_generales_serv(id_cedula, no_orden, fecha, foto_llegada, tipo_servicio, cliente, sucursal_cliente) values(?,?,?,?,?,?,?)",
                 [id_cedula, orden, fecha, foto, servicio, cliente, sucursal],
                 function (tx, results) {
                   //console.log("Frio correcto");
@@ -638,12 +638,12 @@ var productHandler={
             function () {}
           );
     },
-    addVisitaServ: function (id_cedula){
+    addVisitaServ: function (id_cedula,servicio){
         databaseHandler.db.transaction(
             function (tx) {
               tx.executeSql(
-                "insert into visita_servInd(id_cedula) values(?)",
-                [id_cedula],
+                "insert into visita_servInd(id_cedula,tipo_servicio) values(?,?)",
+                [id_cedula,servicio],
                 function (tx, results) {
                   //console.log("Frio correcto");
                 },
@@ -680,7 +680,48 @@ var productHandler={
             function () {}
           );
     },
+    addreporteRationals: function (id_cedula, orden, fecha, foto, servicio, cliente, sucursal){
+        databaseHandler.db.transaction(
+            function (tx) {
+              tx.executeSql(
+                "insert into visita_servInd(id_cedula, no_orden, fecha, foto_llegada, tipo_servicio, cliente, sucursal_cliente) values(?,?,?,?,?,?,?)",
+                [id_cedula, orden, fecha, foto, servicio, cliente, sucursal],
+                function (tx, results) {
+                  //console.log("Frio correcto");
+                },
+                function (tx, error) {
+                  console.error("Error registrar:" + error.message);
+                }
+              );
+            },
+            function (error) {
+                console.log(error)
+            },
+      
+            function () {}
+          );
+    },
     //Fin ServInd
+    //Inicio Devly
+    addDV: function (id_cedula, nombre_cliente,fecha_llegada, foto_llegada,proveedor,rfc,sucursal,id_proveedor) {
+        databaseHandler.db.transaction(
+            function (tx) {
+                tx.executeSql(
+                    "insert into datosDevlyn(id_cedula,nombre_cliente,fecha_llegada , foto_llegada,proveedor,rfc,sucursal,id_proveedor) values(?,?,?,?,?,?,?,?)",
+                    [id_cedula, nombre_cliente,fecha_llegada, foto_llegada,proveedor,rfc,sucursal,id_proveedor],
+                    function (tx, results) {
+                        //console.log("Registro de DG_PlatoL exitosamente");
+                    },
+                    function (tx, error) {
+                        console.error("Error al registrar datosDevlyn: " + error.message);
+                    }
+                );
+            },
+            function (error) { },
+            function () { }
+        );
+    },
+    //Fin Devlyn
     //Plato Limpio
     addPL: function (id_cedula, Empresa, correo) {
         var cero = 0;

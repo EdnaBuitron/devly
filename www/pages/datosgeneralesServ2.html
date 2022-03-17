@@ -107,13 +107,17 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="">
+                        <a onclick="reprogramarVisitaServ();">Reprogramar Visita</a>
+                    </div>
+
                 </div>  
             </div>
 
-            <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 50px; margin-bottom: 20px;">
-                <button class="btn-next">Anterior</button>
+            <div style="display: flex;flex-direction: row;justify-content: end; margin-top: 50px; margin-bottom: 20px; margin-right: 10px;">
                         
-                <button class="btn-next" onclick="app.views.main.router.back('/formServ1/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>
+                <button class="btn-next" onclick="moveReprogramado();">Siguiente</button>
             </div>
         </div>
     </div>
@@ -188,8 +192,8 @@
                 databaseHandler.db.transaction(
                     function(tx){
                         tx.executeSql(
-                            "Select * from cedulas_general WHERE id_usuario = ?",
-                            [id_usuario],
+                            "Select * from cedulas_general WHERE id_cedula = ?",
+                            [id_cedula],
                             function(tx, results){
                                 let length = results.rows.length;
                                 var item = results.rows.item(0);

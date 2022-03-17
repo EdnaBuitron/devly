@@ -634,6 +634,126 @@
                     function(error){},
                     function(){}
                     );    
+                } else if(empresa == "Proteus"){
+                    $('#continuar-container').append(`
+                        <h2 style="color:#00A7B5;">Continuar Cedulas</h2>
+                        <div style="text-align: left;">
+                            <div class="item-inner">
+                                <div class="block-title continuar-cedula">REPOSICIÓN</div>
+                            </div>
+                        </div>            
+                        <div class="list sortable" id="cedpendientes" style="margin-top: 0;margin-bottom: 0;">
+                            <ul id="proteus_reposicion" style="background-color:white;margin-top: 0;margin-bottom: 0;"></ul>
+                        </div>
+
+                        <div style="text-align: left;">
+                            <div class="item-inner">
+                                <div class="block-title continuar-cedula">MANTENIMIENTO PREVENTIVO</div>
+                            </div>
+                        </div>            
+                        <div class="list sortable" id="cedpendientes" style="margin-top: 0;margin-bottom: 0;">
+                            <ul id="proteus_preventivo" style="background-color:white;margin-top: 0;margin-bottom: 0;"></ul>
+                        </div>
+
+                        <div style="text-align: left;">
+                            <div class="item-inner">
+                                <div class="block-title continuar-cedula">MANTENIMIENTO CORRECTIVO</div>
+                            </div>
+                        </div>            
+                        <div class="list sortable" id="cedpendientes" style="margin-top: 0;margin-bottom: 0;">
+                            <ul id="proteus_correctivo" style="background-color:white;margin-top: 0;margin-bottom: 0;"></ul>
+                        </div>
+
+                        <div style="text-align: left;">        
+                            <div class="item-inner">
+                                <div class="block-title continuar-cedula">INSTALACIÓN</div>
+                            </div>
+                        </div>            
+                        <div class="list sortable" id="cedpendientes" style="margin-top: 0;margin-bottom: 0;">
+                            <ul id="proteus_instalacion" style="background-color:white;margin-top: 0;margin-bottom: 0;"></ul>
+                        </div>
+                    `);
+                    var estatus=0;
+                    var tipo1="Reposicion";
+                    var tipo2="Preventivo";
+                    var tipo3="Correctivo";
+                    var tipo4="Instalacion";
+                    databaseHandler.db.transaction(
+                        function(tx1){
+                            tx1.executeSql("SELECT * FROM cedulas_general WHERE id_usuario = ? AND estatus = ? AND tipo_cedula = ?",
+                            [id_usuario, estatus, tipo1],
+                                function(tx1, results){
+                                    var length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item1 = results.rows.item(i);
+                                        $("#proteus_reposicion").append("<li id='conc"+item1.id_cedula+"'><div class='item-content'><div class='item-media'><i class='icon'><img src='img/circulo.png' width='20px' height='20px' /></i></div><div class='item-inner'><div class='item-title'>" + item1.nombre_cliente + "</div><div class='item-after'><a href='#' onclick='continuarCedProteus(`" + item1.id_cedula + "`,1);' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:#00A7B5'>play_circle_outline</i></a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='EliminarReg(" + item1.id_cedula+ ",`" + item1.tipo_cedula + "`)' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:red'>delete_forever</i></a></div></div></div></li>");
+                                    }
+                                },
+                                function(tx5, error){
+                                    console.error("Error al consultar bandeja de salida: " + error.message);
+                                }
+                            );  
+                        },
+                        function(error){},
+                        function(){}
+                    );
+                    databaseHandler.db.transaction(
+                        function(tx2){
+                            tx2.executeSql("SELECT * FROM cedulas_general WHERE id_usuario = ? AND estatus = ? AND tipo_cedula = ?",
+                            [id_usuario, estatus, tipo2],
+                                function(tx2, results){
+                                    var length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item2 = results.rows.item(i);
+                                        $("#proteus_preventivo").append("<li id='conc"+item2.id_cedula+"'><div class='item-content'><div class='item-media'><i class='icon'><img src='img/circulo.png' width='20px' height='20px' /></i></div><div class='item-inner'><div class='item-title'>" + item2.nombre_cliente + "</div><div class='item-after'><a href='#' onclick='continuarCedProteus(`" + item2.id_cedula + "`,2);' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:#00A7B5'>play_circle_outline</i></a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='EliminarReg(" + item2.id_cedula+ ",`" + item2.tipo_cedula + "`)' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:red'>delete_forever</i></a></div></div></div></li>");
+                                    }
+                                },
+                                function(tx2, error){
+                                    console.error("Error al consultar bandeja de salida: " + error.message);
+                                }
+                            );  
+                        },
+                        function(error){},
+                        function(){}
+                    );
+                    databaseHandler.db.transaction(
+                        function(tx3){
+                            tx3.executeSql("SELECT * FROM cedulas_general WHERE id_usuario = ? AND estatus = ? AND tipo_cedula = ?",
+                            [id_usuario, estatus, tipo3],
+                                function(tx3, results){
+                                    var length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item3 = results.rows.item(i);
+                                        $("#proteus_correctivo").append("<li id='conc"+item3.id_cedula+"'><div class='item-content'><div class='item-media'><i class='icon'><img src='img/circulo.png' width='20px' height='20px' /></i></div><div class='item-inner'><div class='item-title'>" + item3.nombre_cliente + "</div><div class='item-after'><a href='#' onclick='continuarCedProteus(`" + item3.id_cedula + "`,3);' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:#00A7B5'>play_circle_outline</i></a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='EliminarReg(" + item3.id_cedula+ ",`" + item3.tipo_cedula + "`)' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:red'>delete_forever</i></a></div></div></div></li>");
+                                    }
+                                },
+                                function(tx3, error){
+                                    console.error("Error al consultar bandeja de salida: " + error.message);
+                                }
+                            );  
+                        },
+                        function(error){},
+                        function(){}
+                    );
+                    databaseHandler.db.transaction(
+                        function(tx4){
+                            tx4.executeSql("SELECT * FROM cedulas_general WHERE id_usuario = ? AND estatus = ? AND tipo_cedula = ?",
+                            [id_usuario, estatus, tipo4],
+                                function(tx4, results){
+                                    var length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item4 = results.rows.item(i);
+                                        $("#proteus_instalacion").append("<li id='conc"+item4.id_cedula+"'><div class='item-content'><div class='item-media'><i class='icon'><img src='img/circulo.png' width='20px' height='20px' /></i></div><div class='item-inner'><div class='item-title'>" + item4.nombre_cliente + "</div><div class='item-after'><a href='#' onclick='continuarCedProteus(`" + item4.id_cedula + "`,4);' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:#00A7B5'>play_circle_outline</i></a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='EliminarReg(" + item4.id_cedula+ ",`" + item4.tipo_cedula + "`)' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:red'>delete_forever</i></a></div></div></div></li>");
+                                    }
+                                },
+                                function(tx5, error){
+                                    console.error("Error al consultar bandeja de salida: " + error.message);
+                                }
+                            );  
+                        },
+                        function(error){},
+                        function(){}
+                    );
                 } else if(empresa == "Bennetts"){
                     $('#continuar-container').append(`
                         <h2 style="color:#00A7B5;">Continuar Cedulas</h2>

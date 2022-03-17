@@ -2,6 +2,16 @@
     input[type=text]{
         font-family: 'ITC Avant Garde Gothic', sans-serif;
     }
+    .FWM-half-modal {
+        margin-top: 30%;
+    }
+    a{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .FWM-photo {
+        margin-left: 40px !important;
+    }
 </style>
 <template>
     <div class="view view-main view-init safe-areas">
@@ -11,7 +21,7 @@
                 <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
                 <div class="navbar-inner sliding" style="height: 52px;">
                     <div class="left">
-                        <a href="#" onclick="regresar();">
+                        <a href="#" onclick="regresarpapeleta();">
                             <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
                         </a>
                     </div>
@@ -25,6 +35,7 @@
                 <div style="text-align: left;">     
                     <div class="list FWM-fixing-form">
                         <div id="cotizacion">
+                            <input type="hidden" id="id_servidor"/>
                             <div style="width: 100%;text-align: center;display: flex;flex-direction: column;color: gray;">
                                 <span>Tipo de Prioridad a indicar en PR</span>
                                 <span>A: Seguridad / B: Funcionalidad / C: Programa</span>
@@ -60,18 +71,19 @@
                                     <div class="row align-items-stretch" style="text-align: center;">
                                         <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
                                             <span class="resize-handler"></span>
-                                            <a href="#" onclick="guardarPapeletaServ();" class="boton-equipo">Guardar Datos Papeleta</a>
+                                            <a href="#" onclick="guardarPapeletaPendienteServ();" class="boton-equipo">Guardar Datos Papeleta</a>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                            <div class="block-title FWM-subtitulo">Papeleta:</div>  
-                            <div class="card data-table">
+                        <div class="block-title FWM-subtitulo">Papeleta:</div>  
+                            <div class="card data-table" style="margin: 0;">
                                 <div class="infinite-scroll-content">
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;width: 120px;display: flex;justify-content: center;align-items: center;">Accion</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Numero de parte</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;width: 373px;display: flex;justify-content: center;align-items: center;">Descripcion</th>
@@ -89,8 +101,10 @@
                                 </div>
                             </div>
                         </div>
-              
-                    </div>
+
+                        <div class="FWM-button-modal-container">
+                            <div class="FWM-button-modal popup-close" onclick="LlevarPapeletaServ()">Enviar Papeleta</div>
+                        </div>
 
                     <div style="display: flex;flex-direction: row;justify-content: space-between; margin-bottom: 20px; margin-top: 80px;">
                         <a href="#" class="buble-float link popover-open" data-popover=".popover-links" style="background:cadetblue; width: 20%; margin-left: auto;margin-right: auto;">
@@ -125,7 +139,7 @@
 
                     databaseHandler.db.transaction(
                         function(tx){
-                            tx.executeSql("Select * from papeleta where id_cedula = ? ORDER BY id_papeleta ASC",
+                            tx.executeSql("Select * from papeleta where id_cedula = ?",
                             [id_cedula],
                                 function(tx, results){
                                     let length = results.rows.length;
@@ -140,13 +154,21 @@
                                         app.preloader.hide();
                                         for(var i = 0; i< length; i++){
                                             var item = results.rows.item(i);
+                                                if (item.prioridad==1){
+                                                    prioridad='Seguridad';
+                                                }else if (item.prioridad==2){
+                                                    prioridad='Funcionalidad';
+                                                }else if (item.prioridad==3){
+                                                    prioridad='Programa';
+                                                }
                                             $("#table_papeleta").append("<tr id='fila"+ item.id_papeleta +
-                                            "'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ 
-                                            item.id_papeleta +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
+                                            "'><td id='tdaccion' style='align-items: center;padding: 0;justify-content: center;text-align: center;'><a href='#' onclick='eliminarFilaServ("+ 
+                                            item.id_papeleta +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a><a href='#' onclick='editarFilaServ("+ 
+                                            item.id_papeleta +",1);' style='border: none; outline:none;'><img src='img/editar.svg' width='27px' style='margin-top:10%'/></a></td><td><img src='"+
                                             item.foto_papeleta+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + 
                                             item.numero_parte + "</td><td style='text-align: center;'>" + 
                                                 item.descripcion + "</td><td style='text-align: center;'>" + 
-                                                item.prioridad + "</td><td style='text-align: center;'>" + 
+                                                prioridad + "</td><td style='text-align: center;'>" + 
                                                 item.motivo_pr + "</td><td style='text-align: center;'>" + 
                                                 item.cantidad + "</td></tr>");
                                         }
@@ -161,6 +183,27 @@
                         function(error){console.log("Error al mostrar: " + error.message);},
                         function(){}
                     );
+                    databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from visita_servInd WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                $('#id_servidor').val(item.id_servidor);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
             }
         }  
     }

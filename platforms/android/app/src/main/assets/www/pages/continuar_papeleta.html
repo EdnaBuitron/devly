@@ -49,34 +49,48 @@
                         <h2 style="color:#00A7B5;">Continuar Papeletas</h2>
                         <div style="text-align: left;">        
                             <div class="item-inner">
-                                <div class="block-title continuar-cedula">papeletas</div>
+                                <div class="block-title continuar-cedula">Papeletas Pendientes</div>
                             </div>
                         </div>            
                         <div class="list sortable" id="cedpendientes" style="margin-top: 0;margin-bottom: 0;">
                             <ul id="papeletas" style="background-color:white;margin-top: 0;margin-bottom: 0;">
-                                <li id='conc"+item2.id_cedula+"'><div class='item-content'><div class='item-media'><i class='icon'><img src='img/circulo.png' width='20px' height='20px' /></i></div><div class='item-inner'><div class='item-title'>nombre cliente o id equipo</div><div class='item-after'><a href='#' onclick='continuarPapeleta("1",1);' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:#00A7B5'>play_circle_outline</i></a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='EliminarPapeleta("1",1)' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:red'>delete_forever</i></a></div></div></div></li>
+                            </ul>
+                        </div>
+                        <div style="text-align: left;">        
+                            <div class="item-inner">
+                                <div class="block-title continuar-cedula">Papeletas Enviadas</div>
+                            </div>
+                        </div>            
+                        <div class="list sortable" id="cedpendientesen" style="margin-top: 0;margin-bottom: 0;">
+                            <ul id="papeletas" style="background-color:white;margin-top: 0;margin-bottom: 0;">
                             </ul>
                         </div>
                     `);
-                    databaseHandler.db.transaction(
-                        function(tx5){
-                            tx5.executeSql("SELECT * FROM papeleta",
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("Select d.id_cedula,c.tipo_cedula,c.nombre_cliente,d.fecha_papeleta,d.estatus_ced from visita_servInd d INNER JOIN cedulas_general c ON d.id_cedula = c.id_cedula where (d.estatus_ced = 6 OR d.estatus_ced = 5) AND c.estatus = 3",
                                 [],
-                                function(tx5, results){
-                                    var length = results.rows.length;
-                                    for(var i = 0; i< length; i++){
-                                        var item2 = results.rows.item(i);
-                                        $("#papeletas").append("<li id='conc"+item2.id_cedula+"'><div class='item-content'><div class='item-media'><i class='icon'><img src='img/circulo.png' width='20px' height='20px' /></i></div><div class='item-inner'><div class='item-title'>" + item2.nombre_cliente + "</div><div class='item-after'><a href='#' onclick='continuarPapeleta(`" + item2.id_cedula + "`,1);' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:#00A7B5'>play_circle_outline</i></a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='EliminarReg(" + item2.id_cedula+ ",`" + item2.tipo_cedula + "`)' style='border: none; outline:none;'><i class='material-icons md-light' style='font-size:35px;color:red'>delete_forever</i></a></div></div></div></li>");
+                                    function(tx, results){
+                                        var length = results.rows.length;
+                                        for(var i = 0; i< length; i++){
+                                            var item2 = results.rows.item(i);
+                                            if(item2.estatus_ced==6){
+                                                $("#cedpendientesen").append("<li id='conc"+item2.id_cedula+"'><div class='item-content'><div class='item-media'><i class='icon'><img src='img/circuloVerde.png' width='20px' height='20px' /></i></div><div class='item-inner'><div class='item-title'>" + item2.nombre_cliente + " | "+fechac+" | [Vacía]</div></div></div></li>");
+                                            }else{
+                                                fechac= formatDate(item2.fecha_papeleta);
+                                                $("#cedpendientesen").append("<li id='conc"+item2.id_cedula+"'><div class='item-content'><div class='item-media'><i class='icon'><img src='img/circuloVerde.png' width='20px' height='20px' /></i></div><div class='item-inner'><div class='item-title'>" + item2.nombre_cliente + " | "+fechac+"</div></div></div></li>");
+                                            }
+                                            
+                                        }
+                                    },
+                                    function(tx, error){
+                                        console.log("Error al mostrar datos cedula: " + error.message);
                                     }
-                                },
-                                function(tx5, error){
-                                    console.error("Error al consultar bandeja de salida: " + error.message);
-                                }
-                            );  
-                        },
-                    function(error){console.log("Error: " + error.message);},
-                    function(error){console.log("Error: " + error.message);}
-                    );
+                                );
+                            },
+                            function(error){console.log("Error al mostrar datos cedula: " + error.message);},
+                            function(){}
+                        );
             }
         }
     }

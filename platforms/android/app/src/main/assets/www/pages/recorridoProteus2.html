@@ -25,29 +25,29 @@
                             <span class="fwm-text-recorrido">Datos Generales</span>
                         </a>
                         <a href="/formProteus6/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/datoscoche.svg" width="90px" height="90px" id="img2"/>
+                            <img src="img/iconsMenu/equipo_informacion.svg" width="90px" height="90px" id="img2"/>
                             <span class="fwm-text-recorrido">Datos del Equipo</span>
                         </a>
                     </div>
                     <div class="buttons-container" style="display: flex;margin-top: 5%;">
                         <!-- <a href="/formProteus2/" class="fwm-button-recorrido"> -->
                         <a onclick="formRevisionProteus();" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/despues.svg" width="90px" height="90px" id="img3"/>
+                            <img src="img/iconsMenu/equipo_limpieza.svg" width="90px" height="90px" id="img3"/>
                             <span class="fwm-text-recorrido">Checklist Limpieza</span>
                         </a>
                         <!-- <a href="/formProteus3/" class="fwm-button-recorrido"> -->
                         <a onclick="formEvidenciasProteus(1);" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/diagnostico.svg" width="90px" height="90px" id="img4"/>
+                            <img src="img/iconsMenu/equipo_revision.svg" width="90px" height="90px" id="img4"/>
                             <span class="fwm-text-recorrido">Checklist Revisión</span>
                         </a>
                     </div>
                     <div class="buttons-container" style="display: flex;margin-top: 5%;">
                         <a onclick="formEvidenciasProteus(2);" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/documento.svg" width="90px" height="90px" id="img5"/>
+                            <img src="img/iconsMenu/equipo_grasa.svg" width="90px" height="90px" id="img5"/>
                             <span class="fwm-text-recorrido">Checklist Trampa de Grasa</span>
                         </a>
                         <a href="/formProteus5/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/durante.svg" width="90px" height="90px" id="img6"/>
+                            <img src="img/iconsMenu/equipo_evidencia.svg" width="90px" height="90px" id="img6"/>
                             <span class="fwm-text-recorrido">Evidencias despues del servicio</span>
                         </a>
                     </div>
@@ -100,7 +100,7 @@
                                 var length = results.rows.length;
                                 var item = results.rows.item(0);
                                 if(item.id_cedula > 0){
-                                    document.getElementById("img2").src="img/iconsMenu/datoscoche2.svg";
+                                    document.getElementById("img2").src="img/iconsMenu/equipo_informacion2.svg";
                                 }
                             },
                             function(tx, error){
@@ -136,7 +136,7 @@
                                                                 var length = results.rows.length;
                                                                 if (length == 0){}else{paso1=1;}
                                                                 if(paso == 0 || paso1 == 0){} else {
-                                                                    document.getElementById("img3").src="img/iconsMenu/despues2.svg";
+                                                                    document.getElementById("img3").src="img/iconsMenu/equipo_limpieza2.svg";
                                                                     paso=0; paso1=0;
                                                                 }
                                                             },
@@ -193,7 +193,7 @@
                                                                 var length = results.rows.length;
                                                                 if (length == 0){}else{paso3=1;}
                                                                 if(paso2 == 0 || paso3 == 0){} else {
-                                                                    document.getElementById("img4").src="img/iconsMenu/diagnostico2.svg";
+                                                                    document.getElementById("img4").src="img/iconsMenu/equipo_revision2.svg";
                                                                     paso2=0; paso3=0;
                                                                 }
                                                             },
@@ -249,7 +249,7 @@
                                                                 var length = results.rows.length;
                                                                 if (length == 0){}else{paso6=1;}
                                                                 if(paso4 == 0 || paso5 == 0 || paso6 == 0){} else {
-                                                                    document.getElementById("img5").src="img/iconsMenu/documento2.svg";
+                                                                    document.getElementById("img5").src="img/iconsMenu/equipo_grasa2.svg";
                                                                     paso4=0; paso5=0; paso6=0;
                                                                 }
                                                             },
@@ -288,7 +288,7 @@
                                 var length = results.rows.length;
                                 var item = results.rows.item(0);
                                 if(item.id_cedula > 0){
-                                    document.getElementById("img6").src="img/iconsMenu/durante2.svg";
+                                    document.getElementById("img6").src="img/iconsMenu/equipo_evidencia2.svg";
                                 }
                             },
                             function(tx, error){

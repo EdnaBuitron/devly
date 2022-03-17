@@ -15,9 +15,6 @@
     .swal-button {
         width: 100%;
     }
-    input[type=text]{
-        font-family: 'ITC Avant Garde Gothic', sans-serif;
-    }
     </style>
     <template>
         <div class="view view-main view-init safe-areas">
@@ -139,7 +136,7 @@
                 pageInit: function (e, page) {
                     var id_usuario = localStorage.getItem("id_usuario");
                     var id_cedula = localStorage.getItem("IdCedula");
-                    var tipo = 'correctivo';
+                    var tipo = 'Correctivo';
                     databaseHandler.db.transaction(
                     function(tx){
                         tx.executeSql("Select * from fotos_diagnostico where id_cedula = ? AND tipo = ? ORDER BY id_foto DESC",
@@ -159,7 +156,7 @@
                                         var item = results.rows.item(i);
                                         console.log(item);
                                         //console.log('item',item)
-                                        $("#tabla_diagnostico").append("<tr id='fila"+ item.id_foto +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
+                                        $("#tabla_diagnostico").append("<tr id='fila"+ item.id_foto +"'><td id='tdaccion'><a href='#' onclick='eliminarFilaServ("+ item.id_foto +",2);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
 
                                                     
                                     }
@@ -177,36 +174,39 @@
                     function(){}
                 );
                     databaseHandler.db.transaction(
-                        function (tx) {
-                            tx.executeSql("select * from diagnostico_servInd WHERE id_cedula = ?",
-                                [id_cedula],
-                                function (tx, results) {
-                                    var item = results.rows.item(0);
-                                    console.log(item);
-                                    $('#falla').val(item.falla_en);
-                                    $('#sw').val(item.sw);                            
-                                    $("#Como-select option[value='"+item.diagnostico+"']").attr("selected", true);
-                                    if(item.usbInfo == 1){
-                                        $('#viaticos-1').prop("checked",true);
-                                    }else{
-                                        $('#viaticos-1').prop("checked",false);
-                                    }  
-                                    if(item.usbHa == 1){
-                                        $('#viaticos-2').prop("checked",true);
-                                    }else{
-                                        $('#viaticos-2').prop("checked",false);
-                                    }
-                                    app.preloader.hide();
-                                },
-                                function (tx, error) {
-                                    swal("Error al guardar", error.message, "error");
-                                    app.preloader.hide();
-                                }
-                            );
+                function (tx) {
+                    tx.executeSql("select * from diagnostico_servInd WHERE id_cedula = ?",
+                        [id_cedula],
+                        function (tx, results) {
+                            var item = results.rows.item(0);
+                            console.log(item);
+                            $('#falla').val(item.falla_en);
+                            $('#sw').val(item.sw);                            
+                            $("#Como-select option[value='"+item.diagnostico+"']").attr("selected", true);
+                            if(item.usbInfo == 1){
+                                $('#viaticos-1').prop("checked",true);
+                            }else{
+                                $('#viaticos-1').prop("checked",false);
+                            }  
+                            if(item.usbHa == 1){
+                                $('#viaticos-2').prop("checked",true);
+                            }else{
+                                $('#viaticos-2').prop("checked",false);
+                            }   
+                                       
+
+                            
+                            app.preloader.hide();
                         },
-                        function (error) { },
-                        function () { }
+                        function (tx, error) {
+                            swal("Error al guardar", error.message, "error");
+                            app.preloader.hide();
+                        }
                     );
+                },
+                function (error) { },
+                function () { }
+            );
 
                 }
             }  

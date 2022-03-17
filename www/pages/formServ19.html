@@ -30,6 +30,7 @@
                         <span class="span FWM-span-form" style="line-height: 1.3;margin-top: 20px;margin-left: 20px;">Requiere refacción:</span>
                         <div style="display: flex;justify-content: space-around;margin-bottom: 30px;margin-top: -17px;">
                             <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="cotizacion-1" onclick="checkAndSave(this.id,this.value,'1'),requiereCotizacion()" value="1" >Si</label>
+                            <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="cotizacion-3" onclick="checkAndSave(this.id,this.value,'1'),norequiereCotizacion()" value="3" >Pendiente</label>
                             <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="cotizacion-2" onclick="checkAndSave(this.id,this.value,'1'),norequiereCotizacion()" value="2" >No</label>
                         </div>
                         
@@ -217,7 +218,7 @@
                                             $("#cotizacion").css("display","none")
                                         }else if (item.papeleta=='Pendiente'){
                                             $("#cotizacion-3").prop("checked", true)
-                                            $("#cotizacion").css("display","none")
+                                            $("#cotizacion").css("display","block")
                                         }
                                         if (item.viaticos=='Sí'){
                                             $("#viaticos-1").prop("checked", true)

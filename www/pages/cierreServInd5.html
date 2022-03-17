@@ -40,7 +40,7 @@ p {
                             <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
                         </a>
                     </div>
-                    <div class="title" style="color: white;text-align:center;padding-left: 40px;">Cierre con Cliente HEB</div>
+                    <div class="title" style="color: white;text-align:center;padding-left: 40px;">Cierre con Cliente CI</div>
                 </div>
             </div>
             <div class="toolbar toolbar-bottom tabbar">
@@ -144,47 +144,56 @@ p {
                     <div id="tab-3" class="page-content tab bg-color-white" style="margin-top: 20px;background-color: rgb(245, 245, 245);">
                         <div class="block">
                             <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
-                                <div id="firmaElectronica2" style="text-align: center;margin-top: 35px;">
-                                    <div style="color: gray;"><b>Firma Electronica</b></div>
-                                    <div id="firmaElectro2"></div>
-                                </div>
-                                <div style="width: 100%" id="mapa"></div>
-                                <p>
-                                    <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Nombre y firma de quién recibe el servicio</strong></label>
-                                </p>
-                                <center><input style="display: block;margin: 0 auto;width: 100%;border: 0;border-bottom: 1px solid rgba(0,0,0,.2);height: 35px;line-height: 45px;  margin-bottom: 10px;font-size: 1em;" class="spanBlanco" type="text" name="NombreFirma" id="NombreFirma" placeholder="Nombre de quién recibió el servicio:"></center><br/>
-                                <!-- Contenedor de botones -->
-                                <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
-                                    <a class="link popup-open" href="#" onclick="vertical();" data-popup=".popup-photo"><img src="img/iconsMenu/firmardigital.svg" width="80px" /></a>
-                                    <input type="hidden" name="signate" id="signate" placeholder="sfirmc"/>
-                                    <center><img id="ImagenFirmaView" src="" width="70%"><br>
-                                        <span id="VolverFirmar"></span>
-                                        <input type="button" value="Volver a Firmar" style="position:absolute;display:none;margin:0 !important;color:white;background-color: #019cdc;top:40px;margin-left:160px !important" /></center>
-                                    <a class="link popup-open" href="#" onclick="createFirma()" data-popup=".popup-services"><img src="img/iconsMenu/firmar.svg" width="80px" /></a><br /><br />
+                                <div>
+                                    <label style="font-size: 18px;font-family: 'ITC Avant Garde Gothic', sans-serif;font-weight: bold;color: gray;"><input type="checkbox" id="tecnico_apoyo" onclick="tecnico_apoyo()">Soy Técnico de Apoyo</label>
                                 </div>
 
-                                <p>
-                                    <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Foto del sello</strong></label>
-                                </p>
-                                <div class="FWM-photo-container">
-                                    <div class="border-capture">
-                                        <a onclick="capturePhoto();">
-                                            <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px" />
-                                        </a>
+                                <div id="cierre">
+                                    <div id="firmaElectronica2" style="text-align: center;margin-top: 35px;">
+                                        <div style="color: gray;"><b>Firma Electronica</b></div>
+                                        <div id="firmaElectro2"></div>
                                     </div>
-                                    <img class="FWM-photo-hide" id="smallImage" src=""/>
-                                    <input type="hidden" id="imagenC" name="imagenC"/>
+
+                                    <div style="width: 100%" id="mapa"></div>
+                                    <p>
+                                        <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Nombre y firma de quién recibe el servicio</strong></label>
+                                    </p>
+                                    <center><input style="display: block;margin: 0 auto;width: 100%;border: 0;border-bottom: 1px solid rgba(0,0,0,.2);height: 35px;line-height: 45px;  margin-bottom: 10px;font-size: 1em;" class="spanBlanco" type="text" name="NombreFirma" id="NombreFirma" placeholder="Nombre de quién recibió el servicio:"></center><br/>
+                                    <!-- Contenedor de botones -->
+                                    <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
+                                        <a class="link popup-open" href="#" onclick="vertical();" data-popup=".popup-photo"><img src="img/iconsMenu/firmardigital.svg" width="80px" /></a>
+                                        <input type="hidden" name="signate" id="signate" placeholder="sfirmc"/>
+                                        <center><img id="ImagenFirmaView" src="" width="70%"><br>
+                                            <span id="VolverFirmar"></span>
+                                            <input type="button" value="Volver a Firmar" style="position:absolute;display:none;margin:0 !important;color:white;background-color: #019cdc;top:40px;margin-left:160px !important" /></center>
+                                        <a class="link popup-open" href="#" onclick="createFirma()" data-popup=".popup-services"><img src="img/iconsMenu/firmar.svg" width="80px" /></a><br /><br />
+                                    </div>
+
+                                    <p>
+                                        <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Foto del sello</strong></label>
+                                    </p>
+                                    <div class="FWM-photo-container">
+                                        <div class="border-capture">
+                                            <a onclick="capturePhoto();">
+                                                <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px" />
+                                            </a>
+                                        </div>
+                                        <img class="FWM-photo-hide" id="smallImage" src=""/>
+                                        <input type="hidden" id="imagenC" name="imagenC"/>
+                                    </div>
+
+                                    <p>
+                                        <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Encuesta</strong></label>
+                                    </p>
+
+                                    <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
+                                        <a class="link sheet-open" href="#" data-sheet=".my-sheet-push"><img src="img/iconsMenu/encuesta3.svg" width="80px" /></a><br /><br />
+                                        <a class="link popup-open" href="#" data-popup=".popup-calificacion"><img src="img/iconsMenu/qr.svg" width="80px" /></a><br /><br />
+                                    </div>
+
                                 </div>
-
-                                <p>
-                                    <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Encuesta</strong></label>
-                                </p>
-
-                                <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
-                                    <a class="link sheet-open" href="#" data-sheet=".my-sheet-push"><img src="img/iconsMenu/encuesta3.svg" width="80px" /></a><br /><br />
-                                    <a class="link popup-open" href="#" data-popup=".popup-calificacion"><img src="img/iconsMenu/qr.svg" width="80px" /></a><br /><br />
-                                </div>
-
+                                
+    
                                 <div class="popup popup-photo" style="text-align: center;">
                                     <br/>
                                     <div class="headerPopupPhoto" style="width: 90%;display: flex;justify-content: space-between;padding-left: 20px;margin-bottom: 50px;">
@@ -473,13 +482,11 @@ p {
                  databaseHandler.db.transaction(
                     function(tx){
                         tx.executeSql(
-                            "Select * from visita_servInd WHERE id_cedula = ?",
+                            "Select * from datos_generales_serv WHERE id_cedula = ?",
                             [id_cedula],
                             function(tx, results){
                                 let length = results.rows.length;
                                 var item = results.rows.item(0);
-                                var equipo='';
-                                var modelo='';
                                     $('#numero_orden').html(item.no_orden);
                                     $('#nombre_comercial').html(item.cliente);
                                     $('#sucursal').html(item.sucursal_cliente);
@@ -487,14 +494,7 @@ p {
                                     $('#ciudad').html(item.ciudad);
                                     $('#telefono').html(item.telefono);
                                     $('#correo').html(item.correo);
-                                    $('#equipo').html(item.equipo);
-                                    equipo=item.equipo;
-                                    $('#marca').html(item.marca);
-                                    $('#modelo').html(item.modelo);
-                                    modelo=item.modelo;
-                                    $('#serie').html(item.serie);
                                     $('#tipo_servicio').html(item.tipo_servicio);
-                                    $('#fecha_entrada').html(item.fecha);
                                     
                                     if (item.foto_sello == undefined){
                                     }else{

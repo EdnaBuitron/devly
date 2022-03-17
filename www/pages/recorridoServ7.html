@@ -82,75 +82,7 @@
     return {
         on: {      
               pageInit: function () {
-                  var id_cedula = localStorage.getItem("IdCedula");
-                  databaseHandler.db.transaction(
-                      function(tx){
-                          tx.executeSql("SELECT * from reporteGeneral WHERE id_cedula = ? AND (nombre_cliente IS NOT NULL AND orden_servicio IS NOT NULL AND sucursal IS NOT NULL AND folio_interno IS NOT NULL AND direccion IS NOT NULL AND telefono IS NOT NULL AND correo IS NOT NULL AND equipo IS NOT NULL AND marca IS NOT NULL AND modelo IS NOT NULL AND serie IS NOT NULL AND ciudad IS NOT NULL AND tipo_servicio IS NOT NULL)",
-                              [id_cedula],
-                              function(tx, results){
-                                  var item = results.rows.item(0);
-                                  if(item.id_cedula > 0){
-                                      document.getElementById("img1").src="img/iconsMenu/persona.svg";
-                                  }
-                              },
-                              function(tx, error){
-                              }
-                          );
-                      },
-                      function(error){},
-                      function(){}
-                  );
-                  databaseHandler.db.transaction(
-                      function(tx){
-                          tx.executeSql("SELECT * from reporteGeneral WHERE id_cedula = ? AND (voltaje IS NOT NULL AND razon_servicio IS NOT NULL)",
-                              [id_cedula],
-                              function(tx, results){
-                                  var item = results.rows.item(0);
-                                  if(item.id_cedula > 0){
-                                      document.getElementById("img2").src="img/iconsMenu/diagnostico2.svg";
-                                  }
-                              },
-                              function(tx, error){
-                              }
-                          );
-                      },
-                      function(error){},
-                      function(){}
-                  );
-                  databaseHandler.db.transaction(
-                      function(tx){
-                          tx.executeSql("SELECT * from reporteGeneral WHERE id_cedula = ? AND (equipo_entrego IS NOT NULL AND horas_activas IS NOT NULL)",
-                              [id_cedula],
-                              function(tx, results){
-                                  var item = results.rows.item(0);
-                                  if(item.id_cedula > 0){
-                                      document.getElementById("img3").src="img/iconsMenu/equifina2.svg";
-                                  }
-                              },
-                              function(tx, error){
-                              }
-                          );
-                      },
-                      function(error){},
-                      function(){}
-                  );
-                  databaseHandler.db.transaction(
-                      function(tx){
-                          tx.executeSql("SELECT * from reporteGeneral WHERE id_cedula = ? AND (cotizacion IS NOT NULL AND viaticos IS NOT NULL AND refacciones IS NOT NULL)",
-                              [id_cedula],
-                              function(tx, results){
-                                  var item = results.rows.item(0);
-                                  if(item.id_cedula > 0){
-                                      document.getElementById("img4").src="img/iconsMenu/cotizacion2.svg";
-                                  }
-                              },
-                              function(tx, error){
-                              }
-                          );
-                      },
-                      function(error){},
-                      function(){}
-                  );
+                  
             }
         }
     }

@@ -1,0 +1,86 @@
+<style>
+    .FWM-textBox{
+        width: 100%; 
+        padding-left: 3px; 
+        font-size: 15px; 
+        height: 37px; 
+        font-family: 'ITC Avant Garde Gothic', sans-serif; 
+        background-color: white; 
+        border-radius: 8px; 
+        border: 1px solid gray;
+    }
+    input[type=text]{
+        background-color: white;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        padding-top: 5px;
+    }
+    .span{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    </style>
+    <template>
+        <div class="view view-main view-init safe-areas">
+            <div class="page" id="FWM-1">
+                <!-- Navbar -->
+                <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                    <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                    <div class="navbar-inner sliding" style="height: 52px;">
+                        <div class="left">
+                            <a href="#" onclick="">
+                                <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido Formulario -->                                
+                <div class="page-content">
+
+                    <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                        <h2 class="FWN-titulo-2">Entrada de material</h2>
+    
+                    <div style="text-align: left;">     
+                        <div class="list FWM-fixing-form">
+                            <span class="span FWM-span-form">Nombre del material:</span>
+                            <input type="text" name="" id="1" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form">Folio del material:</span>
+                            <input type="text" name="" id="2" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form">Fecha de recepción:</span>
+                            <input type="text" name="" id="3" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form">Nombre del Supervisor/ Ejecutivo quien recibe:</span>
+                            <input type="text" name="" id="4" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <span class="span FWM-span-form">Cantidad recibida:</span>
+                            <input type="text" name="" id="5" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+
+                            <div class="block grid-resizable-demo" style="margin-bottom: 120px; margin-top: 50px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="" class="boton-equipo" style="background-color: #063E7F; color: white;">Guardar Entrada</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        return {
+            on: {
+                pageInit: function (e, page) {
+                    var id_usuario = localStorage.getItem("id_usuario");
+                    var id_cedula = localStorage.getItem("IdCedula");
+                    
+                    
+                }
+            }  
+        }
+    </script>

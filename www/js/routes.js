@@ -549,6 +549,21 @@ var routes = [
       componentUrl: './pages/formServ39.html',
     },
     {  
+      name: 'formServ40',
+      path: '/formServ40/',
+      componentUrl: './pages/formServ40.html',
+    },
+    {  
+      name: 'formServ41',
+      path: '/formServ41/',
+      componentUrl: './pages/formServ41.html',
+    },
+    {  
+      name: 'formServ42',
+      path: '/formServ42/',
+      componentUrl: './pages/formServ42.html',
+    },
+    {  
       name: 'datosgeneralesServ6',
       path: '/datosgeneralesServ6/',
       componentUrl: './pages/datosgeneralesServ6.html',
@@ -569,6 +584,11 @@ var routes = [
       name: 'yallegueProteus', 
       path: '/yallegueProteus/',
       componentUrl: './pages/yallegueProteus.html',
+    },
+    {  
+      name: 'yallegueProteus2', 
+      path: '/yallegueProteus2/',
+      componentUrl: './pages/yallegueProteus2.html',
     },
     {  
       name: 'menuProteus', 
@@ -1371,6 +1391,160 @@ var routes = [
       componentUrl: './pages/recorridoBennetts2.html',
     },
     //Fin Bennetts
+    //Inicio SURO2
+    {  
+      name: 'yallegueSuroE', 
+      path: '/yallegueSuroE/',
+      componentUrl: './pages/yallegueSuroE.html',
+    },
+    {  
+      name: 'menuSURO2', 
+      path: '/menuSURO2/',
+      componentUrl: './pages/menuSURO2.html',
+    },
+    {  
+      name: 'recorridoSUROE1', 
+      path: '/recorridoSUROE1/',
+      componentUrl: './pages/recorridoSUROE1.html',
+    },
+    {  
+      name: 'recorridoSUROE2', 
+      path: '/recorridoSUROE2/',
+      componentUrl: './pages/recorridoSUROE2.html',
+    },
+    {  
+      name: 'recorridoSUROE3', 
+      path: '/recorridoSUROE3/',
+      componentUrl: './pages/recorridoSUROE3.html',
+    },
+    {  
+      name: 'recorridoSUROE4', 
+      path: '/recorridoSUROE4/',
+      componentUrl: './pages/recorridoSUROE4.html',
+    },
+    {  
+      name: 'recorridoSUROE5', 
+      path: '/recorridoSUROE5/',
+      componentUrl: './pages/recorridoSUROE5.html',
+    },
+    {  
+      name: 'recorridoSUROE6', 
+      path: '/recorridoSUROE6/',
+      componentUrl: './pages/recorridoSUROE6.html',
+    },
+    {  
+      name: 'datosgeneralesSUROE1', 
+      path: '/datosgeneralesSUROE1/',
+      componentUrl: './pages/datosgeneralesSUROE1.html',
+    },
+    {  
+      name: 'datosgeneralesSUROE2', 
+      path: '/datosgeneralesSUROE2/',
+      componentUrl: './pages/datosgeneralesSUROE2.html',
+    },
+    {  
+      name: 'formSUROE10', 
+      path: '/formSUROE10/',
+      componentUrl: './pages/formSUROE10.html',
+    },
+    {  
+      name: 'formSUROE1',
+      path: '/formSUROE1/',
+      componentUrl: './pages/formSUROE1.html',
+    },
+    {  
+      name: 'formSUROE2',
+      path: '/formSUROE2/',
+      componentUrl: './pages/formSUROE2.html',
+    },
+    {  
+      name: 'formSUROE3',
+      path: '/formSUROE3/',
+      componentUrl: './pages/formSUROE3.html',
+    },
+    {  
+      name: 'formSUROE4',
+      path: '/formSUROE4/',
+      componentUrl: './pages/formSUROE4.html',
+    },
+    {  
+      name: 'formSUROE5',
+      path: '/formSUROE5/',
+      componentUrl: './pages/formSUROE5.html',
+    },
+    {  
+      name: 'formSUROE6',
+      path: '/formSUROE6/',
+      componentUrl: './pages/formSUROE6.html',
+    },
+    {  
+      name: 'formSUROE7',
+      path: '/formSUROE7/',
+      componentUrl: './pages/formSUROE7.html',
+    },
+    {  
+      name: 'formSUROE8',
+      path: '/formSUROE8/',
+      componentUrl: './pages/formSUROE8.html',
+    },
+    {  
+      name: 'formSUROE9',
+      path: '/formSUROE9/',
+      componentUrl: './pages/formSUROE9.html',
+    },
+    {  
+      name: 'yallegueSUROE3',
+      path: '/yallegueSUROE3/',
+      componentUrl: './pages/yallegueSUROE3.html',
+    },
+    {  
+      name: 'menuSUROEjecutivo',
+      path: '/menuSUROEjecutivo/',
+      componentUrl: './pages/menuSUROEjecutivo.html',
+    },
+    {  
+      name: 'cierreSUROE1',
+      path: '/cierreSUROE1/',
+      componentUrl: './pages/cierreSUROE1.html',
+    },
+    //Fin SURO2
+    //Inicio devly
+    {  
+      name: 'yalleguedevlyn', 
+      path: '/yalleguedevlyn/',
+      componentUrl: './pages/yalleguedevlyn.html',
+    },
+    {  
+      name: 'recorridoDevlyn', 
+      path: '/recorridoDevlyn/',
+      componentUrl: './pages/recorridoDevlyn.html',
+    },
+    {  
+      name: 'cierreDevlyn', 
+      path: '/cierreDevlyn/',
+      componentUrl: './pages/cierreDevlyn.html',
+    },
+    {  
+      name: 'formDevlyn', 
+      path: '/formDevlyn/',
+      componentUrl: './pages/formDevlyn.html',
+    },
+    {  
+      name: 'datosgeneralesDevlyn', 
+      path: '/datosgeneralesDevlyn/',
+      componentUrl: './pages/datosgeneralesDevlyn.html',
+    },
+    {  
+      name: 'recorridoDevlyn', 
+      path: '/recorridoDevlyn/',
+      componentUrl: './pages/recorridoDevlyn.html',
+    },
+    {  
+      name: 'yamevoyDevlyn', 
+      path: '/yamevoyDevlyn/',
+      componentUrl: './pages/yamevoyDevlyn.html',
+    },
+    //Fin devly 
     //Inicio VIC
     {
       name: 'yallegueVIC',

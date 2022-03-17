@@ -1,0 +1,103 @@
+<style>
+    input[type=text]{
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+    }
+    
+</style>
+<template>
+    <div class="view view-main view-init safe-areas">
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarRecorridoServComedor();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Horas</h2>
+
+                <div style="text-align: left;">     
+                    <div class="list FWM-fixing-form">    
+                        <span class="span FWM-span-form" >Comentarios Generales</span>
+                            <textarea class ="FWM-input" name="" id="comentarios" cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>
+                        <span class="span FWM-span-form">Horas de viaje:</span>
+                            <input type="number" class="FWM-input" id="cantidadViaje" onchange="inputLleno(this.id,this.value), Sumahoras();"/>
+                        <span class="span FWM-span-form">Horas de espera:</span>
+                            <input type="number" class="FWM-input" id="cantidadEspera" onchange="inputLleno(this.id,this.value), Sumahoras();"/>
+                        <!-- <span class="span FWM-span-form">Horas de Trabajo:</span> -->
+                            <input type="number" style="display: none;" class="FWM-input" id="cantidadTrabajo" value="0" onchange="inputLleno(this.id,this.value), Sumahoras();"/>
+                            <br>
+                        <span class="span FWM-span-form">Horas Totales:</span>
+                            <input type="number" class="FWM-input" id="cantidadTotal" value="0" onchange="inputLleno(this.id,this.value)" disabled/>
+                    </div>
+
+                    <div style="display: flex;flex-direction: row;justify-content: space-between; margin-bottom: 20px; margin-top: 80px;">
+                        <button class="btn-next" onclick="app.views.main.router.back('/datosgeneralesServ2/', {force: true, ignoreCache: true, reload: true});">Anterior</button>
+                        <a href="#" class="buble-float link popover-open" data-popover=".popover-links" style="background:cadetblue; width: 20%;">
+                            <i class="material-icons md-light" style="color: #ffffff;font-size: 35px;">book</i>
+                        </a>
+                        <button class="btn-next" onclick="guardarHorasServ();">Siguiente</button>
+                        <!--<button class="btn-next" onclick="app.views.main.router.back('/cierreServInd2/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>-->
+                    </div>
+                <!-- Fin contenido formulario -->
+                <div class="popover popover-links">
+                    <div class="popover-inner">
+                        <div class="list">
+                        <ul>
+                            <li><a class="list-button item-link popover-close" onclick="showTPM()">TPM</a></li>
+                            <li><a class="list-button item-link popover-close" onclick="showManual()">Manual</a></li>
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                $('.preloader').remove();
+                $('.infinite-scroll-preloader').remove();
+
+                var id_cedula = localStorage.getItem("IdCedula");
+
+                databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql(
+                                "Select * from visita_servInd WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    var item = results.rows.item(0);
+                                        $('#cantidadViaje').val(item.H_viaje);
+                                        $('#cantidadEspera').val(item.H_espera);
+                                        $('#cantidadTrabajo').val(item.H_trabajo);
+                                        $('#cantidadTotal').val(item.H_totales);
+                                        $('#comentarios').val(item.comentarios_entrega);
+                                    },
+                                function(tx, error){
+                                    console.log("Error: " + error.message);
+                                    app.preloader.hide();  
+                                }
+                            );  
+                        },
+                        function(error){
+                            console.log("Error: " + error.message);
+                        },
+                        function(){}
+                    );
+
+            }
+        }  
+    }
+</script>

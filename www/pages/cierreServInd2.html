@@ -161,6 +161,16 @@ p {
                     <div id="tab-3" class="page-content tab bg-color-white" style="margin-top: 20px;background-color: rgb(245, 245, 245);">
                         <div class="block">
                             <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
+
+                                <p style="margin: 10px;">
+                                    <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Encuesta</strong></label>
+                                </p>
+
+                                <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
+                                    <a id="btnMuestraEncuesta" class="link sheet-open" href="#" data-sheet=".my-sheet-push"><img src="img/iconsMenu/encuesta3.svg" width="80px" /></a><br /><br />
+                                    <a id="btnQR" class="link popup-open" href="#" data-popup=".popup-calificacion"><img src="img/iconsMenu/qr.svg" width="80px" /></a><br /><br />
+                                </div>
+                                
                                 <div id="firmaElectronica2" style="text-align: center;margin-top: 35px;">
                                     <div style="color: gray;"><b>Firma Electronica</b></div>
                                     <div id="firmaElectro2"></div>
@@ -191,15 +201,6 @@ p {
                                     </div>
                                     <img class="FWM-photo-hide" id="smallImage" src=""/>
                                     <input type="hidden" id="imagenC" name="imagenC"/>
-                                </div>
-
-                                <p>
-                                    <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Encuesta</strong></label>
-                                </p>
-
-                                <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
-                                    <a class="link sheet-open" href="#" data-sheet=".my-sheet-push"><img src="img/iconsMenu/encuesta3.svg" width="80px" /></a><br /><br />
-                                    <a class="link popup-open" href="#" data-popup=".popup-calificacion"><img src="img/iconsMenu/qr.svg" width="80px" /></a><br /><br />
                                 </div>
 
                                 <div class="popup popup-photo" style="text-align: center;">
@@ -292,7 +293,7 @@ p {
                                                 </div>
 
                                                 <div id="encuesta">
-                                                  <form class="list FWM-fixing-form">
+                                                    <form class="list FWM-fixing-form" style="margin: auto;">
                                                     <div>
                                                         <p style="font-size: 1em;">Antes de finalizar el servicio, nos gustaría que nos ayude a responder esta breve encuesta.</p>
                                                         <p style="margin-bottom: 10px; font-size: 1em;">Del 1 a 10, donde 10 es muy probable y 1 poco probable ¿Qué tan probable es que nos recomiende?</p>
@@ -416,6 +417,7 @@ p {
                                     $("#encuesta").css("display", "none");
                                     $("#realizada").css("display", "block");
                                     $("#btnEncuesta").css("display", "none");
+                                    $("#btnQR").css("display", "none");
                                 }
                             },
                             function(tx, error){
@@ -515,6 +517,7 @@ p {
                                     
                                     if (item.foto_sello == undefined){
                                     }else{
+                                    $("#imagenC").val(item.foto_sello);
                                     $("#smallImage").attr("src", item.foto_sello);
                                     $("#smallImage").css("display","block")
                                     $("#photoIcon").attr("src","img/reload.svg");

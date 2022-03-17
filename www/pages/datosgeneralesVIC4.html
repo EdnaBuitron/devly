@@ -127,7 +127,7 @@
                 <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
                 <div class="navbar-inner sliding" style="height: 52px;">
                     <div class="left">
-                        <a href="#" onclick="regresarRecorridoVIC2();">
+                        <a href="javascript:location.reload()" onclick="">
                             <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
                         </a>
                     </div>
@@ -276,6 +276,7 @@
                     
                     var element = document.getElementById('geolocation');
                     $('#geolocation').val(position.coords.latitude+','+position.coords.longitude);
+                    clearSelected();
                 }
                 function onError(error) {
                     swal ("Error en geolicalizacion",error,"error");

@@ -107,13 +107,18 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="">
+                        <a onclick="reprogramarVisitaServ();">Reprogramar Visita</a>
+                    </div>
+
                 </div>  
             </div>
 
-            <div style="display: flex;flex-direction: row;justify-content: space-between; margin-top: 50px; margin-bottom: 20px;">
-                <button class="btn-next">Anterior</button>
+            <div style="display: flex;flex-direction: row;justify-content: end; margin-top: 50px; margin-bottom: 20px; margin-right: 10px;">
                         
-                <button class="btn-next" onclick="app.views.main.router.back('/formServ20/', {force: true, ignoreCache: true, reload: true});">Siguiente</button>
+                <button class="btn-next" onclick="moveReprogramado();">Siguiente</button>
+                <!-- <button class="btn-next" onclick="app.views.main.router.back('/formServ20/', {force: true, ignoreCache: true, reload: true});">Siguiente</button> -->
             </div>
         </div>
     </div>
@@ -128,34 +133,13 @@
                 databaseHandler.db.transaction(
                     function(tx){
                         tx.executeSql(
-                            "Select fecha_entrada from cedulas_general WHERE id_cedula = ?",
-                            [id_cedula],
-                            function(tx, results){
-                                let length = results.rows.length;
-                                for(var i = 0; i< length; i++){
-                                    var item = results.rows.item(i);
-                                    $("#fecha_entrada").val(item.fecha_entrada);
-                                } 
-                            },
-                            function(tx, error){
-                                console.log("Error al guardar cedula: " + error.message);
-                                app.preloader.hide();  
-                            }
-                        );  
-                    },
-                    function(error){},
-                    function(){}
-                );               
-
-                databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql(
                             "Select * from visita_servInd WHERE id_cedula = ?",
                             [id_cedula],
                             function(tx, results){
                                 let length = results.rows.length;
                                 var item = results.rows.item(0);
-                                    console.log(item);
+                                console.log('datos_generales_serv');
+                                console.log(item);
                                     $('#orden').val(item.no_orden);
                                     $('#fecha').val(item.fecha);
                                     $('#cliente').val(item.cliente);
@@ -186,26 +170,269 @@
                 databaseHandler.db.transaction(
                     function(tx){
                         tx.executeSql(
-                            "Select * from cedulas_general WHERE id_cedula = ?",
+                            "Select * from visita_servInd WHERE id_cedula = ?",
                             [id_cedula],
                             function(tx, results){
                                 let length = results.rows.length;
-                                for(var i = 0; i< length; i++){
-                                    var item = results.rows.item(0);
-                                    console.log(item);
-                                } 
+                                var item = results.rows.item(0);
+                                console.log("visita_servInd");
+                                console.log(item);
                             },
                             function(tx, error){
-                                console.log("Error al guardar cedula: " + error.message);
+                                console.log("Error: " + error.message);
                                 app.preloader.hide();  
                             }
                         );  
                     },
-                    function(error){},
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
                     function(){}
-                );     
+                );
 
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from cedulas_general WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('cedulas_general');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from encuesta_serv WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log("encuesta");
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from checklist_servind WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('checklist_servind');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from fotos_check WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('fotos_check');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from papeleta WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('papeleta');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from refacciones WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('refacciones');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from diagnostico_servInd WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('diagnostico_servInd');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from diagnosticos_PMP WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('diagnosticos_PMP');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from datos_eq WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('datos_eq');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from diagnostico_servIndHBE WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('diagnostico_servIndHBE');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from fotos_diagnostico WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                var item = results.rows.item(0);
+                                console.log('fotos_diagnostico');
+                                console.log(item);
+                            },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){
+                        console.log("Error: " + error.message);
+                    },
+                    function(){}
+                );
             }
-        }
+        }  
     }
 </script>

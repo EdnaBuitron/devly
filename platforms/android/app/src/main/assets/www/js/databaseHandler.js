@@ -882,7 +882,7 @@ var databaseHandler = {
                     }
                 );
                 tx.executeSql(
-                    "create table if not exists visita_servInd(id_visita integer primary key, id_cedula integer, no_orden text, fecha text, foto_llegada blob, tipo_servicio text, id_cliente integer, cliente text, nombre_comercial text, sucursal_cliente text, direccion text, ciudad text, telefono text, correo text, equipo text, marca text, modelo text, serie text, ml text, voltaje text, amp text, wc text, tierra_fisica text, falla_reportada text, como_encontro integer, foto_diagnostico blob, comentarios_entrega text, diagnotico_corecto text, trabajo_realizado text, como_entrego integer, papeleta text, refacciones text, viaticos text, H_viaje text, H_espera text, H_trabajo text, H_totales text, firma_cliente blob,firma_tecnico blob ,foto_sello blob, foto_salida blob, id_equipo text)",
+                    "create table if not exists visita_servInd(id_visita integer primary key, id_cedula integer, no_orden text, fecha text, foto_llegada blob, tipo_servicio text, id_cliente integer, cliente text, nombre_comercial text, sucursal_cliente text, direccion text, ciudad text, telefono text, correo text, equipo text, marca text, modelo text, serie text, ml text, voltaje text, amp text, wc text, tierra_fisica text, falla_reportada text, como_encontro integer, foto_diagnostico blob, comentarios_entrega text, diagnotico_corecto text, trabajo_realizado text, como_entrego integer, papeleta text, refacciones text, viaticos text, H_viaje text, H_espera text, H_trabajo text, H_totales text, firma_cliente blob,firma_tecnico blob ,foto_sello blob, foto_salida blob, id_equipo text,fecha_cliente text, estatus_ced text,id_servidor integer, fecha_papeleta text)",
                     [],
                     function(tx, results){
                       //console.log("Se creo datos_generales correcto");
@@ -932,15 +932,16 @@ var databaseHandler = {
                     }                
                 );
                 tx.executeSql(
-                    "create table if not exists datos_generales_serv(id_datos integer primary key, id_cedula integer, no_orden text, fecha text, foto_llegada blob, tipo_servicio text, id_cliente integer, cliente text, nombre_comercial text, sucursal_cliente text, direccion text, ciudad text, telefono text, correo text, equipo text, marca text, modelo text, serie text, ml text, firma_cliente blob, firma_tecnico blob, foto_sello blob, foto_salida blob)",
+                    "create table if not exists datos_generales_serv(id_datos integer primary key, id_cedula integer, no_orden text, fecha text, foto_llegada blob, tipo_servicio text, id_cliente integer, cliente text, nombre_comercial text, sucursal_cliente text, direccion text, ciudad text, telefono text, correo text, equipo text, marca text, modelo text, serie text, ml text, firma_cliente blob,fecha_cliente text, firma_tecnico blob, foto_sello blob, foto_salida blob, tecnico text, estatus_ced text,id_servidor integer, fecha_papeleta text)",
                     [],
                     function(tx, results){
-                      //console.log("Se creo datos_generales correcto");
+                        console.log("Se creo datos_generales correcto");
                     },
                     function(tx, error){
                         console.error("Error al crear la tabla datos generales Serv: " + error.message);
                     }
-                );////tabla de diagnostico rational 
+                );
+                ////tabla de diagnostico rational 
                 tx.executeSql(
                     "create table if not exists diagnostico_servInd(id_diagnostico integer primary key, id_cedula integer,foto_diagnostico blob,falla_en text, diagnostico text, sw text, usbInfo text,usbHa text, filtro text, extracion text)",
                     [],
@@ -1148,13 +1149,37 @@ var databaseHandler = {
                         }
                     );  
                 }
+                //Inicio Devlyn
+                if(empresa== "Devlyn"){
+                    tx.executeSql(
+                        "Create table if not exists evidenciaDevlyn(id_evidencia integer primary key,id_cedula integer,tema text,observacion text,foto blob,fecha_registro text)",
+                        [],
+                        function(tx,results){
+                            console.log("Se creo evidencia Fotografica Devlyn correctamente!")
+                        },
+                        function(tx,results){
+                            console.error("Error al crear la tabla de evidencia Devlyn")
+                        }                
+                    );
+                    tx.executeSql(
+                        "Create table if not exists datosDevlyn(id_datos integer primary key,id_cedula integer,id_proveedor text,foto_entrada blob,proveedor text, sucursal text, rfc text,fecha text,nombre_cliente text,foto_salida blob,foto_llegada blob,firma_cliente blob,fecha_cliente text,fecha_llegada text)",
+                        [],
+                        function(tx,results){
+                             console.log("Se creo reporte datosDevlyn correctamente!")
+                        },
+                        function(tx,results){
+                            console.error("Error al crear la tabla datosDevlyn")
+                        }                
+                    );
+                }
+                //Fin Devlyn
                 if(empresa == "Proteus"){
                     //Datos generales
                     tx.executeSql(
                         "create table if not exists datos_generales_proteus(id_datos_generales integer primary key,id_cedula text,orden_servicio text,foto_entrada blob,razon_social text,ruc text,local text,direccion text,nombre_contacto text,telefono1 text,telefono2 text,email text,tipo_servicio text, firma_cliente blob,fecha_cliente text,foto_salida blob, cargo text, dni text)",
                         [],
                         function(tx, results){
-                            console.log("Se creo Datos Generales Proteus correctamente!");
+                            // console.log("Se creo Datos Generales Proteus correctamente!");
                         },
                         function(tx, error){
                             console.error("Error al crear la tabla de datos_generales_proteus: " + error.message);
@@ -1165,7 +1190,7 @@ var databaseHandler = {
                         "create table if not exists datos_equipos_proteus(id_equipo integer primary key,id_cedula text,id_cliente text,modelo text,marca text,ubicacion text)",
                         [],
                         function(tx, results){
-                            console.log("Se creo Datos Equipos Proteus correctamente!");
+                            // console.log("Se creo Datos Equipos Proteus correctamente!");
                         },
                         function(tx, error){
                             console.error("Error al crear la tabla de datos_equipos_proteus: " + error.message);
@@ -1176,7 +1201,7 @@ var databaseHandler = {
                         "create table if not exists reposicion_proteus(id_reposicion integer primary key,id_cedula text,kit_micro text,micro_activados text,nivelador text,observaciones text)",
                         [],
                         function(tx, results){
-                            console.log("Se creo Reposicion Proteus correctamente!");
+                            // console.log("Se creo Reposicion Proteus correctamente!");
                         },
                         function(tx, error){
                             console.error("Error al crear la tabla de reposicion_proteus: " + error.message);
@@ -1187,7 +1212,7 @@ var databaseHandler = {
                         "create table if not exists evidencias_proteus(id_evidencia integer primary key,id_cedula text,comentario text,foto blob,fecha text, page text)",
                         [],
                         function(tx, results){
-                            console.log("Se creo Evidencias Proteus correctamente!");
+                            // console.log("Se creo Evidencias Proteus correctamente!");
                         },
                         function(tx, error){
                             console.error("Error al crear la tabla de evidencias_proteus: " + error.message);
@@ -1198,7 +1223,7 @@ var databaseHandler = {
                         "create table if not exists fotos_proteus(id_foto integer primary key,id_cedula text,fase text,apartado text, foto blob, fecha text)",
                         [],
                         function(tx, results){
-                            console.log("Se creo Fotos Proteus correctamente!");
+                            // console.log("Se creo Fotos Proteus correctamente!");
                         },
                         function(tx, error){
                             console.error("Error al crear la tabla de fotos_proteus: " + error.message);
@@ -1209,7 +1234,7 @@ var databaseHandler = {
                         "create table if not exists check_limpieza(id_limpieza integer primary key,id_cedula text,fallos text,comentarios text, componente text, piezas text)",
                         [],
                         function(tx, results){
-                            console.log("Se creo Check Limpieza correctamente!");
+                            // console.log("Se creo Check Limpieza correctamente!");
                         },
                         function(tx, error){
                             console.error("Error al crear la tabla de check_limpieza: " + error.message);
@@ -1220,7 +1245,7 @@ var databaseHandler = {
                         "create table if not exists check_revision(id_limpieza integer primary key,id_cedula text, fuente text, fallos text,comentarios text, componente text, piezas text,observaciones text)",
                         [],
                         function(tx, results){
-                            console.log("Se creo Check revision correctamente!");
+                            // console.log("Se creo Check revision correctamente!");
                         },
                         function(tx, error){
                             console.error("Error al crear la tabla de check_revision: " + error.message);
@@ -1231,7 +1256,7 @@ var databaseHandler = {
                         "create table if not exists mmto_correctivo(id_mmto integer primary key,id_cedula text, reparacion text, funcionamiento text)",
                         [],
                         function(tx, results){
-                            console.log("Se creo Mmto Correctivo correctamente!");
+                            // console.log("Se creo Mmto Correctivo correctamente!");
                         },
                         function(tx, error){
                             console.error("Error al crear la tabla de mmto_correctivo: " + error.message);
